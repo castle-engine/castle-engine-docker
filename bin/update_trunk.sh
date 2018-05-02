@@ -6,7 +6,7 @@ set -eu
 # Change with new FPC version ------------------------------------------------
 
 FPC_TRUNK_VERSION='3.1.1'
-FPC_STABLE_VERSION='3.0.2'
+FPC_STABLE_VERSION='3.0.4'
 
 # FPC SVN checkout/update --------------------------------------------------------
 
