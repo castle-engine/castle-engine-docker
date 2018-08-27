@@ -11,67 +11,13 @@
 # ln -s trunk android-default
 # ls -Flah
 
-# ----------------------------------------------------------------------------
-# Replace in document below 3.0.4 with your latest FPC version!
+# ---------------------------------------------------------------------------
 
-rm -Rf /usr/local/fpclazarus/3.0.4/fpc/ # if you want to clean previous
-mkdir -p /usr/local/fpclazarus/3.0.4/fpc/
+# BEFORE DOING ALL BELOW IT'S EASIEST TO SEARCH+REPLACE THE VERSION NUMBER TO NEW ONE.
 
-rm -Rf /tmp/fpcinst/
-mkdir /tmp/fpcinst/
-cd /tmp/fpcinst/
-
-# ----------------------------------------------------------------------------
-# install official version for Linux i386 (architecture currently on michalis.ii)
-
-# see https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/ for links
-wget https://sourceforge.net/projects/freepascal/files/Linux/3.0.4/fpc-3.0.4.i386-linux.tar/download --output-document fpc.tar
-tar xvf fpc.tar
-cd fpc-3.0.4.i386-linux/
-./install.sh
-# Choose /usr/local/fpclazarus/3.0.4/fpc/ as install prefix.
-# Note: to make /etc/fpc.cfg work (it contains /usr/local/fpclazarus/$fpcversion),
-# you really need to name it "3.0.4", not anything else.
-# You can later make symlinks to it, like default or android-default.
-
-# If the above tries to do something with /etc/fpc.cfg, REVERT IT.
-# We want to maintain /etc/fpc.cfg manually.
-# If necessary, you can do this:
-less /etc/fpc.cfg
-cp -f /etc/fpc.bak /etc/fpc.cfg
-chmod 644 /etc/fpc.cfg
-less /etc/fpc.cfg
-
-# For now, just remove fppkg stuff.
-mv -f /etc/fppkg* .
-ls -Flah /etc/fp*
-
-# ----------------------------------------------------------------------------
-# install sources
-
-cd /tmp/fpcinst/
-wget https://sourceforge.net/projects/freepascal/files/Source/3.0.4/fpc-3.0.4.source.tar.gz/download --output-document src.tar.gz
-tar xzvf src.tar.gz
-mv fpc-3.0.4 /usr/local/fpclazarus/3.0.4/fpc/src
-
-# ----------------------------------------------------------------------------
-# Fix permissions (may be bad because of my restrictive umask)
-
-/usr/local/fpclazarus/bin/fix_permissions.sh
-
-# ----------------------------------------------------------------------------
-# Check
-
-su jenkins
-
-  cd /tmp/
-  . /usr/local/fpclazarus/bin/setup.sh 3.0.4
-  fpc -l
-  echo "begin Writeln('Hello from FPC'); end." > ${USER}_fpclazarus_test.lpr
-  fpc ${USER}_fpclazarus_test.lpr
-  ./${USER}_fpclazarus_test
-
-C-d # exit su jenkins
+# Run this as root (sudo).
+# Current dir doesn't matter.
+/usr/local/fpclazarus/bin/add_new_fpc_version_native.sh 3.0.4
 
 # ----------------------------------------------------------------------------
 # Add i386-win32 cross version
@@ -79,139 +25,25 @@ C-d # exit su jenkins
 # http://wiki.lazarus.freepascal.org/Cross_compiling
 # http://wiki.lazarus.freepascal.org/Cross_compiling_for_Win32_under_Linux
 
-cd /tmp/fpcinst/
-# Copy sources, to not pollute the clean sources
-cp -R /usr/local/fpclazarus/3.0.4/fpc/src/ src-for-i386-win32
-cd src-for-i386-win32
-
-# include the fpc version to bootstrap - same or previous
-. /usr/local/fpclazarus/bin/setup.sh 3.0.4
-
-make crossall OS_TARGET=win32 CPU_TARGET=i386
-
-rm -Rf /tmp/fpcinst/test-install
-mkdir -p /tmp/fpcinst/test-install
-make crossinstall OS_TARGET=win32 CPU_TARGET=i386 PREFIX=/tmp/fpcinst/test-install
-mv /tmp/fpcinst/test-install/lib/fpc/3.0.4/units/i386-win32/ /usr/local/fpclazarus/3.0.4/fpc/lib/fpc/3.0.4/units/
-ls -Flah /usr/local/fpclazarus/3.0.4/fpc/lib/fpc/3.0.4/units/
-
-# ----------------------------------------------------------------------------
-# Fix permissions, check Windows/i386
-
-/usr/local/fpclazarus/bin/fix_permissions.sh
-
-su jenkins
-
-  cd /tmp/
-  . /usr/local/fpclazarus/bin/setup.sh 3.0.4
-  fpc -Twin32 -Pi386 -l
-  echo "begin Writeln('Hello from FPC'); end." > ${USER}_fpclazarus_test.lpr
-  fpc -Twin32 -Pi386 ${USER}_fpclazarus_test.lpr
-  file ${USER}_fpclazarus_test.exe
-
-C-d # exit su jenkins
+# Run this as root (sudo).
+# Current dir doesn't matter.
+/usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh 3.0.4 win32 i386
 
 # ----------------------------------------------------------------------------
 # Add Windows/x86_64 cross version
 
-cd /tmp/fpcinst/
-cp -R /usr/local/fpclazarus/3.0.4/fpc/src/ src-for-x86_64-win64
-cd src-for-x86_64-win64
-
-# include the fpc version to bootstrap - same or previous
-. /usr/local/fpclazarus/bin/setup.sh 3.0.4
-
-make crossall OS_TARGET=win64 CPU_TARGET=x86_64
-
-rm -Rf /tmp/fpcinst/test-install
-mkdir -p /tmp/fpcinst/test-install
-make crossinstall OS_TARGET=win64 CPU_TARGET=x86_64 PREFIX=/tmp/fpcinst/test-install
-mv /tmp/fpcinst/test-install/lib/fpc/3.0.4/units/x86_64-win64/ /usr/local/fpclazarus/3.0.4/fpc/lib/fpc/3.0.4/units/
-mv /tmp/fpcinst/test-install/lib/fpc/3.0.4/ppcrossx64 /usr/local/fpclazarus/3.0.4/fpc/lib/fpc/3.0.4/
-ln -s /usr/local/fpclazarus/3.0.4/fpc/lib/fpc/3.0.4/ppcrossx64 /usr/local/fpclazarus/3.0.4/fpc/bin/
-ls -Flah /usr/local/fpclazarus/3.0.4/fpc/lib/fpc/3.0.4/units/
-ls -Flah /usr/local/fpclazarus/3.0.4/fpc/lib/fpc/3.0.4/
+# Run this as root (sudo).
+# Current dir doesn't matter.
+/usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh 3.0.4 win64 x86_64
 
 # ----------------------------------------------------------------------------
-# Fix permissions, check Windows/x86_64
+# Add Lazarus
 
-/usr/local/fpclazarus/bin/fix_permissions.sh
+# Run this as root (sudo).
+# Current dir doesn't matter.
+/usr/local/fpclazarus/bin/add_new_fpc_version_lazarus.sh 3.0.4 1.8.0
 
-su jenkins
-
-  cd /tmp/
-  . /usr/local/fpclazarus/bin/setup.sh 3.0.4
-  ppcrossx64 -l
-  fpc -Twin64 -Px86_64 -l
-  echo "begin Writeln('Hello from FPC'); end." > ${USER}_fpclazarus_test.lpr
-  fpc -Twin64 -Px86_64 ${USER}_fpclazarus_test.lpr
-  file ${USER}_fpclazarus_test.exe
-
-C-d # exit su jenkins
-
-# ----------------------------------------------------------------------------
-# Get Lazarus
-
-cd /usr/local/fpclazarus/3.0.4/
-rm -Rf lazarus
-wget https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%201.8.0/lazarus-1.8.0.tar.gz/download --output-document lazarus-src.tar.gz
-tar xzvf lazarus-src.tar.gz
-rm -f lazarus-src.tar.gz
-
-# ----------------------------------------------------------------------------
-# Compile Lazarus
-
-cd /usr/local/fpclazarus/3.0.4/lazarus/
-make
-make OS_TARGET=win32
-make OS_TARGET=win64 CPU_TARGET=x86_64
-
-# Not really useful
-# rm -Rf /tmp/fpcinst/laz-temp-install/
-# mkdir /tmp/fpcinst/laz-temp-install/
-# make install INSTALL_PREFIX=/tmp/fpcinst/laz-temp-install/
-
-ln -s ../../lazarus/lazarus /usr/local/fpclazarus/3.0.4/fpc/bin/lazarus-ide
-ln -s ../../lazarus/tools/lazres /usr/local/fpclazarus/3.0.4/fpc/bin/
-ln -s ../../lazarus/tools/lrstolfm /usr/local/fpclazarus/3.0.4/fpc/bin/
-ln -s ../../lazarus/startlazarus /usr/local/fpclazarus/3.0.4/fpc/bin/
-ln -s ../../lazarus/tools/updatepofiles /usr/local/fpclazarus/3.0.4/fpc/bin/
-# We simply have a single lazbuild implementation,
-# symlink it only to have all binaries in one directory.
-ln -s /usr/local/fpclazarus/bin/lazbuild /usr/local/fpclazarus/3.0.4/fpc/bin/
-
-# ----------------------------------------------------------------------------
-# Fix permissions, check Lazarus
-
-/usr/local/fpclazarus/bin/fix_permissions.sh
-
-su jenkins
-
-  . /usr/local/fpclazarus/bin/setup.sh 3.0.4
-
-  lazarus-ide
-  lazbuild --version
-  lazres
-  lrstolfm
-  startlazarus
-  updatepofiles
-
-  cd /var/lib/jenkins/workspace/castle_game_engine_build/
-  make clean
-
-  . /usr/local/fpclazarus/bin/setup.sh 3.0.4
-  # lazbuild should be an alias that uses --lazarusdir=... always
-  lazbuild packages/castle_base.lpk
-  lazbuild packages/castle_components.lpk
-  lazbuild --os=win32 --cpu=i386 packages/castle_components.lpk
-  lazbuild --os=win64 --cpu=x86_64 packages/castle_components.lpk
-  cat ~/.lazarus/environmentoptions.xml # may not exist
-  cat ~/.michalis-lazarus/3.0.4/environmentoptions.xml
-  # should contain proper <LazarusDirectory Value="..." />
-
-C-d # exit su jenkins
-
-# Make it default?
+# Make it default? ------------------------------------------------------
 
 rm -f /usr/local/fpclazarus/default
 ln -s 3.0.4 /usr/local/fpclazarus/default
@@ -220,24 +52,21 @@ ls -Flah /usr/local/fpclazarus/
 # ----------------------------------------------------------------------------
 # Check everything
 
+Check by visiting
+http://michalis.ii.uni.wroc.pl/castle-engine-snapshots/
+http://michalis.ii.uni.wroc.pl/castle-engine-snapshots/latest/compilation_output.log
+http://michalis.ii.uni.wroc.pl/pasdoc-snapshots/
+http://michalis.ii.uni.wroc.pl/pasdoc-snapshots/latest/compilation_output.log
+
 su michalis
 
-  # No longer possible, CGE snapshots are in Jenkins
-  # castle_engine_snapshot_environment
-  # # Check by visiting
-  # # http://michalis.ii.uni.wroc.pl/castle-engine-snapshots/
-  # # http://michalis.ii.uni.wroc.pl/castle-engine-snapshots/latest/compilation_output.log
+  # I can even switch default FPC:
+  sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.0
+  . /usr/local/fpclazarus/bin/setup.sh default
+  fpc -l
 
-  # No longer possible, PasDoc snapshots are in Jenkins
-  # pasdoc_snapshot
-  # # Check by visiting
-  # # http://michalis.ii.uni.wroc.pl/pasdoc-snapshots/
-  # # http://michalis.ii.uni.wroc.pl/pasdoc-snapshots/latest/compilation_output.log
-
-  # # I can even switch default FPC:
-  # sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.0
-  # pasdoc_snapshot
-  # sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.4
-  # pasdoc_snapshot
+  sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.4
+  . /usr/local/fpclazarus/bin/setup.sh default
+  fpc -l
 
 C-d # exit su michalis
