@@ -1,13 +1,25 @@
 #!/bin/bash
 set -eux
 
+# Compile and add Lazarus, with units for native and cross-compiling.
+# At the beginning it removes existing Lazarus version in the same directory,
+# to reliably add new one.
+# The given Lazarus version (in $2) is only used to download proper zip archive,
+# it doesn't determine any dir name.
+#
+# Run this as root (sudo).
+# Current dir doesn't matter.
+
 FPC_VERSION="$1"
 LAZARUS_VERSION="$2"
 shift 2
 
+#LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download"
+LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%201.6.4/lazarus-1.6.4-0.tar.gz/download"
+
 cd /usr/local/fpclazarus/${FPC_VERSION}/
 rm -Rf lazarus
-wget https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download --output-document lazarus-src.tar.gz
+wget "${LAZARUS_URL}" --output-document lazarus-src.tar.gz
 tar xzvf lazarus-src.tar.gz
 rm -f lazarus-src.tar.gz
 
@@ -77,4 +89,4 @@ cat ~/.michalis-lazarus/${FPC_VERSION}/environmentoptions.xml
 
 EOF
 
-echo 'DONE OK.'
+echo "OK: Lazarus ${LAZARUS_VERSION} based on FPC ${FPC_VERSION}."

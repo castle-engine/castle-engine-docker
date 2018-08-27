@@ -12,61 +12,16 @@
 # ls -Flah
 
 # ---------------------------------------------------------------------------
+# Current setup:
 
-# BEFORE DOING ALL BELOW IT'S EASIEST TO SEARCH+REPLACE THE VERSION NUMBER TO NEW ONE.
+# Hack LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%201.6.4/lazarus-1.6.4-0.tar.gz/download"
+# Note: not possible to compile CGE with this anymore.
+sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.0 1.6.4
 
-# Run this as root (sudo).
-# Current dir doesn't matter.
-/usr/local/fpclazarus/bin/add_new_fpc_version_native.sh 3.0.4
+# Hack LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%201.6.4/lazarus-1.6.4-0.tar.gz/download"
+sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 
-# ----------------------------------------------------------------------------
-# Add i386-win32 cross version
-# References:
-# http://wiki.lazarus.freepascal.org/Cross_compiling
-# http://wiki.lazarus.freepascal.org/Cross_compiling_for_Win32_under_Linux
+sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 1.8.0
 
-# Run this as root (sudo).
-# Current dir doesn't matter.
-/usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh 3.0.4 win32 i386
-
-# ----------------------------------------------------------------------------
-# Add Windows/x86_64 cross version
-
-# Run this as root (sudo).
-# Current dir doesn't matter.
-/usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh 3.0.4 win64 x86_64
-
-# ----------------------------------------------------------------------------
-# Add Lazarus
-
-# Run this as root (sudo).
-# Current dir doesn't matter.
-/usr/local/fpclazarus/bin/add_new_fpc_version_lazarus.sh 3.0.4 1.8.0
-
-# Make it default? ------------------------------------------------------
-
-rm -f /usr/local/fpclazarus/default
-ln -s 3.0.4 /usr/local/fpclazarus/default
-ls -Flah /usr/local/fpclazarus/
-
-# ----------------------------------------------------------------------------
-# Check everything
-
-Check by visiting
-http://michalis.ii.uni.wroc.pl/castle-engine-snapshots/
-http://michalis.ii.uni.wroc.pl/castle-engine-snapshots/latest/compilation_output.log
-http://michalis.ii.uni.wroc.pl/pasdoc-snapshots/
-http://michalis.ii.uni.wroc.pl/pasdoc-snapshots/latest/compilation_output.log
-
-su michalis
-
-  # I can even switch default FPC:
-  sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.0
-  . /usr/local/fpclazarus/bin/setup.sh default
-  fpc -l
-
-  sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.4
-  . /usr/local/fpclazarus/bin/setup.sh default
-  fpc -l
-
-C-d # exit su michalis
+# Make last stable default:
+sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.4

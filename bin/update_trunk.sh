@@ -28,11 +28,7 @@ fi
 
 # Prepare Android ------------------------------------------------------------
 
-# This is a subset of /usr/local/android/setup.sh
-BASE_ANDROID=/usr/local/android/
-export ANDROID_HOME="${BASE_ANDROID}"android-sdk-linux/
-export ANDROID_NDK_HOME="${BASE_ANDROID}"android-ndk-r10c/
-export PATH="${ANDROID_HOME}"tools/:"${ANDROID_HOME}"platform-tools/:"${ANDROID_NDK_HOME}"toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86/bin/:"${ANDROID_NDK_HOME}":"${PATH}"
+source /usr/local/android/setup_only_android.sh
 
 # FPC Build and install ----------------------------------------------------------
 
@@ -66,7 +62,7 @@ set_ppc_symlink ()
 
 set_ppc_symlink ppc386
 set_ppc_symlink ppcx64
-#set_ppc_symlink ppcrossx64
+set_ppc_symlink ppcrossx64
 set_ppc_symlink ppcross386
 set_ppc_symlink ppcrossarm
 

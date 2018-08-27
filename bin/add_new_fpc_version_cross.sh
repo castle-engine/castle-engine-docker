@@ -1,6 +1,15 @@
 #!/bin/bash
 set -eux
 
+# Compile and add FPC cross-compiler.
+#
+# Run this as root (sudo).
+# Current dir doesn't matter.
+#
+# References:
+# http://wiki.lazarus.freepascal.org/Cross_compiling
+# http://wiki.lazarus.freepascal.org/Cross_compiling_for_Win32_under_Linux
+
 FPC_VERSION="$1"
 FPC_OS="$2"
 FPC_CPU="$3"
@@ -57,4 +66,5 @@ file jenkins_fpclazarus_test.exe
 
 EOF
 
-echo 'DONE OK.'
+echo "OK: FPC ${FPC_VERSION} cross-compiler for ${FPC_OS} / ${FPC_CPU}."
+

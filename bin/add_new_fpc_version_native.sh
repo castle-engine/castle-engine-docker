@@ -1,6 +1,14 @@
 #!/bin/bash
 set -eux
 
+# Compile and add FPC native version.
+# At the beginning it removes existing FPC version in the same directory,
+# to reliably add new one.
+# The given version determines both links to download and directory names.
+#
+# Run this as root (sudo).
+# Current dir doesn't matter.
+
 FPC_VERSION="$1"
 shift 1
 
@@ -71,11 +79,15 @@ set -eux
 
 cd /tmp/
 . /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
+
+set +e
 fpc -l
+set -e # Ignore exit status, this always fails with "error: no source code"
+
 echo "begin Writeln('Hello from FPC'); end." > jenkins_fpclazarus_test.lpr
 fpc jenkins_fpclazarus_test.lpr
 ./jenkins_fpclazarus_test
 
 EOF
 
-echo 'DONE OK.'
+echo "OK: FPC ${FPC_VERSION} (for host CPU, ${FPC_HOST_CPU})."
