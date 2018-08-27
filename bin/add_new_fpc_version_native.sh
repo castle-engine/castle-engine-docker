@@ -5,8 +5,8 @@ FPC_VERSION="$1"
 shift 1
 
 # The architecture native to michalis.ii.uni.wroc.pl, name consistent with FPC tar.gz files
-#FPC_ARCH=i386
-FPC_ARCH=x86_64
+#FPC_HOST_CPU=i386
+FPC_HOST_CPU=x86_64
 
 # clean previous
 rm -Rf /usr/local/fpclazarus/${FPC_VERSION}/fpc/
@@ -17,12 +17,12 @@ mkdir /tmp/fpcinst/
 cd /tmp/fpcinst/
 
 # ----------------------------------------------------------------------------
-# install official version for Linux with $FPC_ARCH
+# install official version for Linux with $FPC_HOST_CPU
 
 # see https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/ for links
-wget https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_ARCH}-linux.tar/download --output-document fpc.tar
+wget https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux.tar/download --output-document fpc.tar
 tar xvf fpc.tar
-cd fpc-${FPC_VERSION}.${FPC_ARCH}-linux/
+cd fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux/
 
 cp -f /etc/fpc.cfg /etc/fpc.cfg.michalis-backup
 

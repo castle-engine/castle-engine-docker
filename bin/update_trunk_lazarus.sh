@@ -25,7 +25,7 @@ fi
 cd "${LAZARUS_SOURCE_DIR}"
 . /usr/local/fpclazarus/bin/setup.sh "${FPC_TRUNK_VERSION}"
 make
-make OS_TARGET=win32
+make OS_TARGET=win32 CPU_TARGET=i386
 make OS_TARGET=win64 CPU_TARGET=x86_64
 
 # Remove previous symlinks, if any

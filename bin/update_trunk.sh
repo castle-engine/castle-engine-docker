@@ -3,10 +3,15 @@ set -eu
 
 # Use this on michalis.ii to update FPC from trunk now.
 
-# Change with new FPC version ------------------------------------------------
+# Configurable section -----------------------------------------------------------
 
+# Change with new FPC version
 FPC_TRUNK_VERSION='3.1.1'
 FPC_STABLE_VERSION='3.0.4'
+
+# The architecture native to michalis.ii.uni.wroc.pl, name consistent with FPC tar.gz files
+#FPC_HOST_CPU=i386
+FPC_HOST_CPU=x86_64
 
 # FPC SVN checkout/update --------------------------------------------------------
 
@@ -61,7 +66,8 @@ set_ppc_symlink ()
 
 set_ppc_symlink ppc386
 set_ppc_symlink ppcx64
-set_ppc_symlink ppcrossx64
+#set_ppc_symlink ppcrossx64
+set_ppc_symlink ppcross386
 set_ppc_symlink ppcrossarm
 
 # Fix permissions ------------------------------------------------------------
@@ -78,7 +84,7 @@ set_ppc_symlink ppcrossarm
 . /usr/local/fpclazarus/bin/setup.sh "${FPC_TRUNK_VERSION}"
 echo 'New FPC version logo:'
 fpc -l
-fpc -Tlinux -Pi386 -l | head -n 1
+fpc -Tlinux -P${FPC_HOST_CPU} -l | head -n 1
 fpc -Twin32 -Pi386 -l | head -n 1
 fpc -Twin64 -Px86_64 -l | head -n 1
 fpc -Tandroid -Parm -l | head -n 1
