@@ -5,7 +5,7 @@ set -eu
 
 # Change with new FPC version ------------------------------------------------
 
-FPC_TRUNK_VERSION='3.1.1'
+FPC_TRUNK_VERSION='3.3.1'
 
 # Lazarus SVN checkout/update --------------------------------------------------------
 

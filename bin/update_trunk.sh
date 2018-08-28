@@ -6,7 +6,7 @@ set -eu
 # Configurable section -----------------------------------------------------------
 
 # Change with new FPC version
-FPC_TRUNK_VERSION='3.1.1'
+FPC_TRUNK_VERSION='3.3.1'
 FPC_STABLE_VERSION='3.0.4'
 
 # The architecture native to michalis.ii.uni.wroc.pl, name consistent with FPC tar.gz files
@@ -79,8 +79,10 @@ set_ppc_symlink ppcrossarm
 
 . /usr/local/fpclazarus/bin/setup.sh "${FPC_TRUNK_VERSION}"
 echo 'New FPC version logo:'
+set +e
 fpc -l
 fpc -Tlinux -P${FPC_HOST_CPU} -l | head -n 1
 fpc -Twin32 -Pi386 -l | head -n 1
 fpc -Twin64 -Px86_64 -l | head -n 1
 fpc -Tandroid -Parm -l | head -n 1
+set -e # ignore exit, "fpc .. -l" always makes error "No source file name in command line"
