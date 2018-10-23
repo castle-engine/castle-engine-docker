@@ -28,7 +28,7 @@ cd /tmp/fpcinst/
 # install official version for Linux with $FPC_HOST_CPU
 
 # see https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/ for links
-wget https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux.tar/download --output-document fpc.tar
+wget "${WGET_OPTIONS:-}" https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux.tar/download --output-document fpc.tar
 tar xvf fpc.tar
 cd fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux/
 
@@ -63,7 +63,7 @@ ls -Flah /etc/fp*
 # install sources
 
 cd /tmp/fpcinst/
-wget https://sourceforge.net/projects/freepascal/files/Source/${FPC_VERSION}/fpc-${FPC_VERSION}.source.tar.gz/download --output-document src.tar.gz
+wget "${WGET_OPTIONS:-}" https://sourceforge.net/projects/freepascal/files/Source/${FPC_VERSION}/fpc-${FPC_VERSION}.source.tar.gz/download --output-document src.tar.gz
 tar xzvf src.tar.gz
 mv fpc-${FPC_VERSION} /usr/local/fpclazarus/${FPC_VERSION}/fpc/src
 

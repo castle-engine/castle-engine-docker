@@ -22,7 +22,7 @@ fi
 
 cd /usr/local/fpclazarus/${FPC_VERSION}/
 rm -Rf lazarus
-wget "${LAZARUS_URL}" --output-document lazarus-src.tar.gz
+wget "${WGET_OPTIONS:-}" "${LAZARUS_URL}" --output-document lazarus-src.tar.gz
 tar xzvf lazarus-src.tar.gz
 rm -f lazarus-src.tar.gz
 
