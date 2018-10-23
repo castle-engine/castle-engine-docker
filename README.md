@@ -14,5 +14,6 @@ Includes various prerequisites of Castle Game Engine:
 
 Note that this Docker image is not, and doesn't try to be, "slim". If you're looking for a small Docker image with FPC, this isn't it. This Docker image is packed with a lot of sofware, to have a full-featured environment for jobs inside [Automatic Cloud Builds for Castle Game Engine projects](https://jenkins.castle-engine.io/).
 
-Authors: Michalis Kamburelis
+Author: Michalis Kamburelis
+
 License: GPL >= 2.

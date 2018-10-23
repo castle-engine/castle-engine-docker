@@ -45,6 +45,8 @@ ENV PATH="${PATH}:/usr/local/android/android-sdk/android-sdk/tools/:\
 COPY sdk-tools-linux.zip /usr/local/android/android-sdk/sdk-tools-linux.zip
 RUN cd /usr/local/android/android-sdk/ && unzip sdk-tools-linux.zip
 
+RUN yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses
+
 RUN /usr/local/android/android-sdk/tools/bin/sdkmanager --install \
   "platforms;android-${CGE_JENKINS_ANDROID_PLATFORM}" \
   "extras;google;google_play_services" \
