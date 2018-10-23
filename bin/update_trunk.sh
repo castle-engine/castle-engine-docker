@@ -26,10 +26,6 @@ else
   svn update "${FPC_SOURCE_DIR}"
 fi
 
-# Prepare Android ------------------------------------------------------------
-
-source /usr/local/android/setup_only_android.sh
-
 # FPC Build and install ----------------------------------------------------------
 
 FPC_INSTALL_DIR=/usr/local/fpclazarus/"${FPC_TRUNK_VERSION}"/fpc/
