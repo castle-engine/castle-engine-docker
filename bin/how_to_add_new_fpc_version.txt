@@ -14,11 +14,9 @@
 # ---------------------------------------------------------------------------
 # Current setup:
 
-# Hack LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%201.6.4/lazarus-1.6.4-0.tar.gz/download"
 # Note: not possible to compile CGE with this anymore.
 sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.0 1.6.4
 
-# Hack LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%201.6.4/lazarus-1.6.4-0.tar.gz/download"
 sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 
 sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 1.8.0
