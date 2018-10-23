@@ -43,7 +43,7 @@ echo 'Running FPC installer.'
 # Note: to make /etc/fpc.cfg work (it contains /usr/local/fpclazarus/$fpcversion),
 # you really need to name this directory "${FPC_VERSION}", not anything else.
 # You can later make symlinks to it, like default or android-default.
-local FPC_INSTALL_DIR="/usr/local/fpclazarus/${FPC_VERSION}/fpc/"
+FPC_INSTALL_DIR="/usr/local/fpclazarus/${FPC_VERSION}/fpc/"
 echo "Choosen ${FPC_INSTALL_DIR} as install prefix."
 
 # Pass to install.sh 4 lines:
