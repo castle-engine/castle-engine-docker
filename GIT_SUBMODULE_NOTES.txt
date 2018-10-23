@@ -1,0 +1,11 @@
+See https://git-scm.com/book/en/v2/Git-Tools-Submodules
+
+Once:
+git submodule add git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git
+git add .gitmodules fpclazarus-switchable
+git commit -m "fpclazarus-switchable as GIT submodule"
+git push origin master
+
+Atfer cloning this:
+git submodule init
+git submodule update
