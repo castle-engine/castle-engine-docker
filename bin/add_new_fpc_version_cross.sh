@@ -46,25 +46,5 @@ for F in /tmp/fpcinst/test-install/lib/fpc/${FPC_VERSION}/ppcross*; do
   ls -Flah /usr/local/fpclazarus/${FPC_VERSION}/fpc/lib/fpc/${FPC_VERSION}/
 done
 
-echo 'Testing as jenkins ------------------------------------------------------'
-
-# TODO: below assumes that OS in win32/win64, as we add .exe extension.
-
-su jenkins <<EOF
-set -eux
-
-cd /tmp/
-. /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
-
-set +e
-fpc -T${FPC_OS} -P${FPC_CPU} -l
-set -e # ignore exit, it always makes error "No source file name in command line"
-
-echo "begin Writeln('Hello from FPC'); end." > jenkins_fpclazarus_test.lpr
-fpc -T${FPC_OS} -P${FPC_CPU} jenkins_fpclazarus_test.lpr
-file jenkins_fpclazarus_test.exe
-
-EOF
-
 echo "OK: FPC ${FPC_VERSION} cross-compiler for ${FPC_OS} / ${FPC_CPU}."
 

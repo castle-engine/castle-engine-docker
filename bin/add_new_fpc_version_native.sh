@@ -39,18 +39,24 @@ rm -f /etc/fpc.cfg
 
 echo '------------------------------------------------------------------------'
 echo 'Running FPC installer.'
-echo "Choose /usr/local/fpclazarus/${FPC_VERSION}/fpc/ as install prefix."
+
 # Note: to make /etc/fpc.cfg work (it contains /usr/local/fpclazarus/$fpcversion),
-# you really need to name it "${FPC_VERSION}", not anything else.
+# you really need to name this directory "${FPC_VERSION}", not anything else.
 # You can later make symlinks to it, like default or android-default.
-./install.sh
+local FPC_INSTALL_DIR="/usr/local/fpclazarus/${FPC_VERSION}/fpc/"
+echo "Choosen ${FPC_INSTALL_DIR} as install prefix."
+
+# Pass to install.sh 4 lines:
+# - install dir
+# - 3x "No" for "Install Textmode IDE", "Install documentation", "Install demos".
+echo -e "${FPC_INSTALL_DIR}\nN\nN\nN\n" | ./install.sh
 
 # We want to maintain /etc/fpc.cfg manually.
 rm -f /etc/fpc.cfg
-ln -s /etc/fpc.cfg /usr/local/fpclazarus/fpc.cfg
+ln -s /usr/local/fpclazarus/fpc.cfg /etc/fpc.cfg
 
 echo '---------------------------------------------------------------------'
-echo 'Reverted /etc/fpc.cfg. Make sure it looks OK:'
+echo 'Using hardcoded /etc/fpc.cfg. Make sure it looks OK:'
 cat /etc/fpc.cfg
 echo 'End of /etc/fpc.cfg ---------------------------------------------'
 
@@ -71,26 +77,5 @@ mv fpc-${FPC_VERSION} /usr/local/fpclazarus/${FPC_VERSION}/fpc/src
 # Fix permissions (may be bad because of my restrictive umask)
 
 /usr/local/fpclazarus/bin/fix_permissions.sh
-
-# ----------------------------------------------------------------------------
-# Check
-
-echo 'Testing as jenkins ------------------------------------------------------'
-
-su jenkins <<EOF
-set -eux
-
-cd /tmp/
-. /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
-
-set +e
-fpc -l
-set -e # Ignore exit status, this always fails with "error: no source code"
-
-echo "begin Writeln('Hello from FPC'); end." > jenkins_fpclazarus_test.lpr
-fpc jenkins_fpclazarus_test.lpr
-./jenkins_fpclazarus_test
-
-EOF
 
 echo "OK: FPC ${FPC_VERSION} (for host CPU, ${FPC_HOST_CPU})."
