@@ -32,7 +32,10 @@ wget https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-
 tar xvf fpc.tar
 cd fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux/
 
-cp -f /etc/fpc.cfg /etc/fpc.cfg.michalis-backup
+# We will restore it after installation of FPC.
+# For now, remove it, to make sure no links to our /usr/local/fpclazarus/fpc.cfg
+# remain, and so it remains unmodified (paranoid).
+rm -f /etc/fpc.cfg
 
 echo '------------------------------------------------------------------------'
 echo 'Running FPC installer.'
@@ -42,9 +45,9 @@ echo "Choose /usr/local/fpclazarus/${FPC_VERSION}/fpc/ as install prefix."
 # You can later make symlinks to it, like default or android-default.
 ./install.sh
 
-# The above may modify /etc/fpc.cfg, REVERT IT.
 # We want to maintain /etc/fpc.cfg manually.
-mv -f /etc/fpc.cfg.michalis-backup /etc/fpc.cfg
+rm -f /etc/fpc.cfg
+ln -s /etc/fpc.cfg /usr/local/fpclazarus/fpc.cfg
 
 echo '---------------------------------------------------------------------'
 echo 'Reverted /etc/fpc.cfg. Make sure it looks OK:'
