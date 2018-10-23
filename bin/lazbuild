@@ -8,5 +8,5 @@ set -eu
 
 # Call the real lazbuild, with proper --lazarusdir
 /usr/local/fpclazarus/"${FPCLAZARUS_VERSION}"/lazarus/lazbuild \
-  --primary-config-path="${HOME}/.michalis-lazarus/${FPCLAZARUS_REAL_VERSION}" \
+  --primary-config-path="${HOME}/.cge-jenkins-lazarus/${FPCLAZARUS_REAL_VERSION}" \
   --lazarusdir=/usr/local/fpclazarus/"${FPCLAZARUS_VERSION}"/lazarus "$@"
