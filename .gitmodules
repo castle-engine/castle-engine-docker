@@ -1,0 +1,3 @@
+[submodule "fpclazarus-switchable"]
+	path = fpclazarus-switchable
+	url = git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git
