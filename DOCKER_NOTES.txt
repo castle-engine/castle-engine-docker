@@ -1,0 +1,29 @@
+## Install docker
+
+https://docs.docker.com/install/linux/docker-ce/debian/#set-up-the-repository
+https://docs.docker.com/install/linux/linux-postinstall/
+
+## Get Debian image
+
+https://hub.docker.com/_/debian/
+docker pull debian:stable
+
+## Building our image in Dockerfile:
+
+See:
+- https://docs.docker.com/get-started/part2/
+- Dockerfile reference:
+  https://docs.docker.com/engine/reference/builder/
+- Dockerfile best practices:
+- https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+- See also other FPC Dockerfiles:
+  https://github.com/cmplopes/alpine-freepascal/blob/master/3.0.4/Dockerfile
+
+The main "caveat" of Dockerfiles is to remember that results are cached.
+If a given stack of commands was already executed,
+the resulting image (it's files) is used, without executing the command again.
+So e.g. "apt-get update && apt-get install ..." is not repeated
+if the command did not change,
+thus applications are not updated to the latest versions at each "build.sh" call.
+This is usually OK (or at least acceptable, as you gain speed)
+but needs to be remembered.
