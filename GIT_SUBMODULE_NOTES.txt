@@ -6,6 +6,6 @@ git add .gitmodules fpclazarus-switchable
 git commit -m "fpclazarus-switchable as GIT submodule"
 git push origin master
 
-Atfer cloning this:
+After cloning this:
 git submodule init
 git submodule update
