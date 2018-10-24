@@ -39,7 +39,8 @@ ENV ANDROID_HOME=/usr/local/android/android-sdk/
 ENV ANDROID_NDK_HOME=/usr/local/android/android-sdk/ndk-bundle/
 ENV PATH="${PATH}:/usr/local/android/android-sdk/tools/:\
 /usr/local/android/android-sdk/platform-tools/:\
-/usr/local/android/android-sdk/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/:\
+/usr/local/android/android-sdk/ndk-bundle/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/:\
+/usr/local/android/android-sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64/bin/:\
 /usr/local/android/android-sdk/ndk-bundle/"
 
 COPY sdk-tools-linux.zip /usr/local/android/android-sdk/sdk-tools-linux.zip
