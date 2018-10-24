@@ -15,7 +15,7 @@ shift 2
 /usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh ${FPC_VERSION} win32 i386
 /usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh ${FPC_VERSION} win64 x86_64
 
-if [ "${FPC_VERSION}" = '3.0.0' || "${FPC_VERSION}" = '3.0.2' ]; then
+if [ "${FPC_VERSION}" = '3.0.0' -o "${FPC_VERSION}" = '3.0.2' ]; then
   echo 'Not building cross-compiler for FPC ${FPC_VERSION}, too old'
 else
   /usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh ${FPC_VERSION} android arm
