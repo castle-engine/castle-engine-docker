@@ -40,6 +40,9 @@ make clean crossall crossinstall OS_TARGET=win64 CPU_TARGET=x86_64 INSTALL_PREFI
 make clean crossall crossinstall \
   OS_TARGET=android CPU_TARGET=arm CROSSOPT="-CfVFPV3" \
   INSTALL_PREFIX="${FPC_INSTALL_DIR}"
+make clean crossall crossinstall \
+  OS_TARGET=android CPU_TARGET=aarch64 CROSSOPT="-CfVFPV3" \
+  INSTALL_PREFIX="${FPC_INSTALL_DIR}"
 
 # Set symlinks ---------------------------------------------------------------
 
