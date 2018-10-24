@@ -35,12 +35,12 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 ENV CGE_JENKINS_ANDROID_PLATFORM=23
 ENV CGE_JENKINS_ANDROID_BUILD_TOOLS=23.0.2
 
-ENV ANDROID_HOME=/usr/local/android/android-sdk/android-sdk/
-ENV ANDROID_NDK_HOME=/usr/local/android/android-sdk/android-sdk/ndk-bundle/
-ENV PATH="${PATH}:/usr/local/android/android-sdk/android-sdk/tools/:\
-/usr/local/android/android-sdk/android-sdk/platform-tools/:\
-/usr/local/android/android-sdk/android-sdk/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/:\
-/usr/local/android/android-sdk/android-sdk/ndk-bundle/"
+ENV ANDROID_HOME=/usr/local/android/android-sdk/
+ENV ANDROID_NDK_HOME=/usr/local/android/android-sdk/ndk-bundle/
+ENV PATH="${PATH}:/usr/local/android/android-sdk/tools/:\
+/usr/local/android/android-sdk/platform-tools/:\
+/usr/local/android/android-sdk/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/:\
+/usr/local/android/android-sdk/ndk-bundle/"
 
 COPY sdk-tools-linux.zip /usr/local/android/android-sdk/sdk-tools-linux.zip
 RUN cd /usr/local/android/android-sdk/ && unzip sdk-tools-linux.zip
