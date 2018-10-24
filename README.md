@@ -12,6 +12,8 @@ Includes various prerequisites of Castle Game Engine:
 
 - Tools to generate [compressed textures](https://castle-engine.io/creating_data_auto_generated_textures.php): NVidia Texture Tools, PowerVR Texture Tools, AMD Compressonator.
 
+- Latest version of [PasDoc](https://github.com/pasdoc/pasdoc/wiki) from GitHub.
+
 Note that this Docker image is not, and doesn't try to be, "slim". If you're looking for a small Docker image with FPC, this isn't it. This Docker image is packed with a lot of sofware, to have a full-featured environment for jobs inside [Automatic Cloud Builds for Castle Game Engine projects](https://jenkins.castle-engine.io/).
 
 Author: Michalis Kamburelis
