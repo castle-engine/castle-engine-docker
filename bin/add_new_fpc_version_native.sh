@@ -12,7 +12,7 @@ set -eux
 FPC_VERSION="$1"
 shift 1
 
-# The architecture native to michalis.ii.uni.wroc.pl, name consistent with FPC tar.gz files
+# The architecture native to current host, name consistent with FPC tar.gz files
 #FPC_HOST_CPU=i386
 FPC_HOST_CPU=x86_64
 

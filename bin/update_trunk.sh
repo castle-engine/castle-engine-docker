@@ -1,7 +1,11 @@
 #!/bin/bash
 set -eu
 
-# Use this on michalis.ii to update FPC from trunk now.
+# Use this to update FPC from trunk now.
+
+FPC_SVN_REVISION="$1"
+LAZARUS_SVN_REVISION="$2"
+shift 2
 
 # Configurable section -----------------------------------------------------------
 
@@ -9,7 +13,7 @@ set -eu
 FPC_TRUNK_VERSION='3.3.1'
 FPC_STABLE_VERSION='3.0.4'
 
-# The architecture native to michalis.ii.uni.wroc.pl, name consistent with FPC tar.gz files
+# The architecture native to current host, name consistent with FPC tar.gz files
 #FPC_HOST_CPU=i386
 FPC_HOST_CPU=x86_64
 
@@ -21,9 +25,9 @@ if [ '!' -d "${FPC_SOURCE_DIR}" ]; then
   echo 'First FPC checkout'
   mkdir -p "${FPC_SOURCE_DIR_PARENT}"
   cd "${FPC_SOURCE_DIR_PARENT}"
-  svn co http://svn.freepascal.org/svn/fpc/trunk `basename ${FPC_SOURCE_DIR}`
+  svn co -r "${FPC_SVN_REVISION}" http://svn.freepascal.org/svn/fpc/trunk `basename ${FPC_SOURCE_DIR}`
 else
-  svn update "${FPC_SOURCE_DIR}"
+  svn update -r "${FPC_SVN_REVISION}" "${FPC_SOURCE_DIR}"
 fi
 
 # FPC Build and install ----------------------------------------------------------
@@ -72,7 +76,7 @@ set_ppc_symlink ppcrossarm
 # ----------------------------------------------------------------------------
 # After updating FPC, always update also Lazarus, to recompile it with latest FPC trunk
 
-/usr/local/fpclazarus/bin/update_trunk_lazarus.sh
+/usr/local/fpclazarus/bin/update_trunk_lazarus.sh "${LAZARUS_SVN_REVISION}"
 
 # Test new compiler ----------------------------------------------------------
 

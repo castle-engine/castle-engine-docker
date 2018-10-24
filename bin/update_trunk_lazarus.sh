@@ -1,7 +1,10 @@
 #!/bin/bash
 set -eu
 
-# Use this on michalis.ii to update Lazarus from trunk, based on FPC trunk.
+# Use this to update Lazarus from trunk, based on FPC trunk.
+
+LAZARUS_SVN_REVISION="$1"
+shift 1
 
 # Change with new FPC version ------------------------------------------------
 
@@ -15,9 +18,9 @@ if [ '!' -d "${LAZARUS_SOURCE_DIR}" ]; then
   echo 'First Lazarus checkout'
   mkdir -p "${LAZARUS_SOURCE_DIR_PARENT}"
   cd "${LAZARUS_SOURCE_DIR_PARENT}"
-  svn co https://svn.freepascal.org/svn/lazarus/trunk `basename ${LAZARUS_SOURCE_DIR}`
+  svn co -r "${LAZARUS_SVN_REVISION}" https://svn.freepascal.org/svn/lazarus/trunk `basename ${LAZARUS_SOURCE_DIR}`
 else
-  svn update "${LAZARUS_SOURCE_DIR}"
+  svn update -r "${LAZARUS_SVN_REVISION}" "${LAZARUS_SOURCE_DIR}"
 fi
 
 # Build ----------------------------------------------------------------------
