@@ -25,7 +25,9 @@ fi
 
 # Remove useless temp files, to conserve Docker image size
 rm -Rf /tmp/fpcinst/
-# Remove FPC sources, to conserve Docker image size
-rm -Rf /usr/local/fpclazarus/${FPC_VERSION}/fpc/src/
+# Remove FPC sources and docs --  useless in a container, to conserve Docker image size
+rm -Rf /usr/local/fpclazarus/${FPC_VERSION}/fpc/src/ \
+       /usr/local/fpclazarus/${FPC_VERSION}/fpc/man/ \
+       /usr/local/fpclazarus/${FPC_VERSION}/fpc/share/doc/
 
 echo "OK: FPC ${FPC_VERSION} and Lazarus ${LAZARUS_VERSION} installed completely."

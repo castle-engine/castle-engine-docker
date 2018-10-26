@@ -22,6 +22,9 @@ if [ '!' -d "${LAZARUS_SOURCE_DIR}" ]; then
 else
   svn update -r "${LAZARUS_SVN_REVISION}" "${LAZARUS_SOURCE_DIR}"
 fi
+# Remove .svn, to conserve Docker container size
+# (for now, this breaks running "svn update" above, but we don't really care -- Docker container can be just rebuilt).
+rm -Rf "${LAZARUS_SOURCE_DIR}"/.svn/
 
 # Build ----------------------------------------------------------------------
 

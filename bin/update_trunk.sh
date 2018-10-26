@@ -81,8 +81,10 @@ set_ppc_symlink ppcrossarm
 
 # Conserve disk space ------------------------------------------------------
 
-# Remove FPC sources, to conserve Docker image size
-rm -Rf /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/src/
+# Remove FPC sources and docs --  useless in a container, to conserve Docker image size
+rm -Rf /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/src/ \
+       /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/man/ \
+       /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/share/doc/
 
 # Test new compiler ----------------------------------------------------------
 
