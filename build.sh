@@ -58,12 +58,13 @@ do_test ()
 
 do_upload ()
 {
+  export DOCKER_ID_USER="kambi"
   docker login
-  docker tag image kambi/castle-engine-cloud-builds-tools:cge-none
-  docker push kambi/castle-engine-cloud-builds-tools:cge-none
+  docker tag castle-engine-cloud-builds-tools:cge-none "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
+  docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
 }
 
-#do_prerequisites
+do_prerequisites
 do_build
-#do_test
-# TODO: do_upload
+do_test
+do_upload
