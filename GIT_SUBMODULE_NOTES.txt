@@ -14,3 +14,11 @@ To move submodule, "git mv" just works
 ( https://stackoverflow.com/questions/4604486/how-do-i-move-an-existing-git-submodule-within-a-git-repository ):
 git mv fpclazarus-switchable docker-context/fpclazarus-switchable
 (commit and push it, as usual, and do "submodule update" as above).
+
+Readd remote:
+cd docker-context/fpclazarus-switchable
+git remote add gitlab git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git
+git status # ups, head detached?
+git checkout -b temp-branch
+git checkout master
+git merge temp-branch
