@@ -7,13 +7,16 @@ IFS=$'\n\t'
 # and developing the Dockerfile would be a bit more difficult
 # (it's simply easier to change fpclazarus-switchable/ dir without committing
 # each change, during testing).
-if [ ! -d fpclazarus-switchable ]; then
-  git clone git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git
-else
-  cd docker-context/fpclazarus-switchable/
-  git pull --rebase
-  cd ../../
-fi
+#
+# Later: let this be managed using GIT submodules.
+#
+# if [ ! -d docker-context/fpclazarus-switchable ]; then
+#   git clone git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git docker-context/fpclazarus-switchable
+# else
+#   cd docker-context/fpclazarus-switchable/
+#   git pull --rebase
+#   cd ../../
+# fi
 
 # This could also be downloaded inside container.
 # But it's faster (during Dockerfile development),
@@ -25,6 +28,7 @@ fi
 # - and then copy URL of the download.
 cd docker-context/
 wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output-document=sdk-tools-linux.zip
+rm -Rf tools/
 unzip sdk-tools-linux.zip
 rm -f sdk-tools-linux.zip
 cd ../
