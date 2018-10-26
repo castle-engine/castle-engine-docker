@@ -13,12 +13,14 @@ FROM debian:stable
 #   with CGE CastleWindow backend (pulls a lot of other -dev packages)
 # - subversion is for gettting FPC/Lazarus trunk
 # - default-jdk is for Android SDK
+# - unzip is needed by Android sdkmanager
 RUN apt-get update && \
   apt-get -y install \
     wget \
     libgtkglext1-dev \
     subversion \
-    default-jdk
+    default-jdk \
+    unzip
 
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
