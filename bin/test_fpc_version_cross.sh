@@ -12,7 +12,8 @@ shift 3
 bash <<EOF
 # TODO: below assumes that OS in win32/win64, as we add .exe extension.
 
-cd /tmp/
+mkdir -p /tmp/fpc-test/
+cd /tmp/fpc-test/
 . /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
 
 set +e
@@ -23,3 +24,6 @@ echo "begin Writeln('Hello from FPC'); end." > jenkins_fpclazarus_test.lpr
 fpc -T${FPC_OS} -P${FPC_CPU} jenkins_fpclazarus_test.lpr
 file jenkins_fpclazarus_test.exe
 EOF
+
+# Remove temp files, conserve Docker image size
+rm -Rf /tmp/fpc-test/

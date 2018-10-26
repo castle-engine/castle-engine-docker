@@ -8,7 +8,8 @@ FPC_VERSION="$1"
 shift 1
 
 bash <<EOF
-cd /tmp/
+mkdir -p /tmp/fpc-test/
+cd /tmp/fpc-test/
 . /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
 
 set +e
@@ -19,3 +20,6 @@ echo "begin Writeln('Hello from FPC'); end." > jenkins_fpclazarus_test.lpr
 fpc jenkins_fpclazarus_test.lpr
 ./jenkins_fpclazarus_test
 EOF
+
+# Remove temp files, conserve Docker image size
+rm -Rf /tmp/fpc-test/
