@@ -27,7 +27,7 @@ fi
 # TODO: uncomment
 #wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output-document=sdk-tools-linux.zip
 
-docker build -t castle-engine-cloud-builds-tools .
+docker build -t castle-engine-cloud-builds-tools:no-cge docker-context/
 
 # TODO: use below
 # docker images
