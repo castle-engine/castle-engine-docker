@@ -27,3 +27,7 @@ if the command did not change,
 thus applications are not updated to the latest versions at each "build.sh" call.
 This is usually OK (or at least acceptable, as you gain speed)
 but needs to be remembered.
+
+## Test
+
+docker run --name cge-test -it castle-engine-cloud-builds-tools

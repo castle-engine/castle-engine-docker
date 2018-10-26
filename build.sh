@@ -10,9 +10,8 @@ IFS=$'\n\t'
 if [ ! -d fpclazarus-switchable ]; then
   git clone git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git
 else
-  # TODO: uncomment
-  cd fpclazarus-switchable/
-  # git pull --rebase
+  cd docker-context/fpclazarus-switchable/
+  git pull --rebase
   cd ../
 fi
 
@@ -24,8 +23,11 @@ fi
 # - "Command line tools only",
 # - click on dialog where you accept the license,
 # - and then copy URL of the download.
-# TODO: uncomment
-#wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output-document=sdk-tools-linux.zip
+cd docker-context/
+wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output-document=sdk-tools-linux.zip
+unzip sdk-tools-linux.zip
+rm -f sdk-tools-linux.zip
+cd ../
 
 docker build -t castle-engine-cloud-builds-tools:no-cge docker-context/
 
