@@ -85,8 +85,5 @@ ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_REAL_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
 
 CMD echo 'Started container with CGE Cloud Builds Tools.' && \
-  echo 'Test FPC "default" version:' && \
-  bash -c 'source /usr/local/fpclazarus/bin/setup.sh default' && \
-  echo 'Performing all the tests:' && \
-  /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.2 1.6.4 && \
-  /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
+  'Default FPC version:' && \
+  fpc -l

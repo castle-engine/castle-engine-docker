@@ -30,4 +30,5 @@ but needs to be remembered.
 
 ## Test
 
-docker run --name cge-test -it castle-engine-cloud-builds-tools
+docker rm cge-test
+docker run --name cge-test -it castle-engine-cloud-builds-tools:cge-none
