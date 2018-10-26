@@ -29,7 +29,7 @@ unzip sdk-tools-linux.zip
 rm -f sdk-tools-linux.zip
 cd ../
 
-docker build -t castle-engine-cloud-builds-tools:no-cge docker-context/
+docker build -t castle-engine-cloud-builds-tools:cge-none docker-context/
 
 # TODO: use below
 # docker images

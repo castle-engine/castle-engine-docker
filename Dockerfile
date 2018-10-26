@@ -21,10 +21,10 @@ RUN apt-get update && \
     default-jdk
 
 # Makes wget output shorter and better
-ENV WGET_OPTIONS --progress=bar:force:noscroll
+ENV WGET_OPTIONS="--progress=bar:force:noscroll"
 
 # Matches Debian default-jdk result
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
 
 # Android SDK, NDK -----------------------------------------------------------
 
@@ -75,9 +75,16 @@ RUN /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
 # Make last stable default:
 RUN /usr/local/fpclazarus/bin/set_default.sh 3.0.4
 
+# Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
+# These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
+ENV FPCLAZARUS_VERSION="3.0.4"
+ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
+ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_REAL_VERSION}"
+ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
+
 CMD echo 'Started container with CGE Cloud Builds Tools.' && \
   echo 'Test FPC "default" version:' && \
-  . /usr/local/fpclazarus/bin/setup.sh default && \
+  bash -c 'source /usr/local/fpclazarus/bin/setup.sh default' && \
   echo 'Performing all the tests:' && \
   /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.2 1.6.4 && \
   /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
