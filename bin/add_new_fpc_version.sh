@@ -23,4 +23,9 @@ fi
 
 /usr/local/fpclazarus/bin/add_new_fpc_version_lazarus.sh ${FPC_VERSION} ${LAZARUS_VERSION}
 
+# Remove useless temp files, to conserve Docker image size
+rm -Rf /tmp/fpcinst/
+# Remove FPC sources, to conserve Docker image size
+rm -Rf /usr/local/fpclazarus/${FPC_VERSION}/fpc/src/
+
 echo "OK: FPC ${FPC_VERSION} and Lazarus ${LAZARUS_VERSION} installed completely."

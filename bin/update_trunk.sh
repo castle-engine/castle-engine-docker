@@ -79,6 +79,11 @@ set_ppc_symlink ppcrossarm
 
 /usr/local/fpclazarus/bin/update_trunk_lazarus.sh "${LAZARUS_SVN_REVISION}"
 
+# Conserve disk space ------------------------------------------------------
+
+# Remove FPC sources, to conserve Docker image size
+rm -Rf /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/src/
+
 # Test new compiler ----------------------------------------------------------
 
 . /usr/local/fpclazarus/bin/setup.sh "${FPC_TRUNK_VERSION}"
