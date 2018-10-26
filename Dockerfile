@@ -74,7 +74,8 @@ RUN chown -R root:staff /usr/local/fpclazarus/ && \
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 1.8.0
 
-RUN /usr/local/fpclazarus/bin/update_trunk.sh
+RUN /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
+
 # Make last stable default:
 RUN /usr/local/fpclazarus/bin/set_default.sh 3.0.4
 
