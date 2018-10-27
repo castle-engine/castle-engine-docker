@@ -1,6 +1,7 @@
 # -*- mode: shell-script -*-
 #
-# Dockerfile that defines the Docker image for CGE cloud builds tools.
+# Dockerfile that defines the base Docker image for CGE cloud builds tools.
+# This image contains prerequisites (like FPC and Android SDK) but not CGE.
 # Used by build.sh.
 
 FROM debian:stable
@@ -84,6 +85,7 @@ ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_REAL_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
 
-CMD echo 'Started container with CGE Cloud Builds Tools.' && \
-  'Default FPC version:' && \
-  fpc -l
+CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
+  echo 'Default FPC version (can be changed using /usr/local/fpclazarus/bin/setup.sh):' && \
+  fpc -iV && \
+  echo 'This is a "no-cge" container, so it contains various prerequisites, but not Castle Game Engine itself!'

@@ -38,33 +38,69 @@ do_prerequisites ()
 
 do_build ()
 {
-  docker build -t castle-engine-cloud-builds-tools:cge-none -f Dockerfile docker-context/
+  docker build -t castle-engine-cloud-builds-tools:cge-none -f Dockerfile.no-cge docker-context.no-cge/
 }
 
 # Run tests
 do_test ()
 {
-  docker rm cge-test
-  docker run --name cge-test -it castle-engine-cloud-builds-tools:cge-none
-  docker start cge-test
+  docker rm test-without-cge
+  docker run --name test-without-cge -it castle-engine-cloud-builds-tools:cge-none
+  docker start test-without-cge
   echo 'Test setting FPC versions:'
-  docker exec cge-test bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
-  docker exec cge-test bash -c 'source /usr/local/fpclazarus/bin/setup.sh trunk'
+  docker exec test-without-cge bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
+  docker exec test-without-cge bash -c 'source /usr/local/fpclazarus/bin/setup.sh trunk'
   echo 'Performing all the tests:'
-  docker exec cge-test /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.2 1.6.4
-  docker exec cge-test /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
-  docker rm cge-test
+  docker exec test-without-cge /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.2 1.6.4
+  docker exec test-without-cge /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
+  docker rm test-without-cge
 }
 
-do_upload ()
+do_build_cge ()
+{
+  local CGE_VERSION_LABEL="$1"
+  local CGE_VERSION_TAG="$2"
+  shift 2
+
+  rm -Rf docker-context.cge/castle-engine/ # cleanup at beginning too, to be sure
+  cd docker-context.cge/
+  git https://github.com/castle-engine/castle-engine/
+  if [ -n "${CGE_VERSION_TAG}" ]; then
+    git checkout tags/"${CGE_VERSION_TAG}"
+  fi
+  cd ../
+
+  # Note that regardless of "${CGE_VERSION_LABEL}",
+  # we use the same Dockerfile.cge .
+  # That's right, the images differ only in having different CGE code.
+
+  docker build -t castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" -f Dockerfile.cge docker-context.cge/
+
+  rm -Rf docker-context.cge/castle-engine/ # cleanup
+
+  docker rm test-with-cge
+  docker run --name test-with-cge -it castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
+  docker start test-with-cge
+  docker exec test-with-cge /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
+  docker rm test-with-cge
+}
+
+do_upload_all ()
 {
   export DOCKER_ID_USER="kambi"
   docker login
   docker tag castle-engine-cloud-builds-tools:cge-none "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
+  docker tag castle-engine-cloud-builds-tools:cge-stable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
+  docker tag castle-engine-cloud-builds-tools:cge-unstable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
+  docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
+  docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
 }
 
-do_prerequisites
+
+# do_prerequisites
 do_build
-do_test
-do_upload
+# do_test
+do_build_cge stable v6.4
+do_build_cge unstable ''
+do_upload_all
