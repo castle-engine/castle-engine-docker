@@ -12,10 +12,10 @@ do_prerequisites ()
   #
   # Later: let this be managed using GIT submodules.
   #
-  # if [ ! -d docker-context/fpclazarus-switchable ]; then
-  #   git clone git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git docker-context/fpclazarus-switchable
+  # if [ ! -d docker-context.no-cge/fpclazarus-switchable ]; then
+  #   git clone git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git docker-context.no-cge/fpclazarus-switchable
   # else
-  #   cd docker-context/fpclazarus-switchable/
+  #   cd docker-context.no-cge/fpclazarus-switchable/
   #   git pull --rebase
   #   cd ../../
   # fi
@@ -28,7 +28,7 @@ do_prerequisites ()
   # - "Command line tools only",
   # - click on dialog where you accept the license,
   # - and then copy URL of the download.
-  cd docker-context/
+  cd docker-context.no-cge/
   wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output-document=sdk-tools-linux.zip
   rm -Rf tools/
   unzip sdk-tools-linux.zip
