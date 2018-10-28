@@ -4,9 +4,14 @@ IFS=$'\n\t'
 
 function finish ()
 {
+  # These are paranoid cleanups, during normal execution these should be removed anyway:
   rm -f docker-context.no-cge/sdk-tools-linux.zip
-  docker rm test-without-cge
-  docker rm test-with-cge
+  set +e
+  docker rm test-without-cge > /dev/null
+  docker rm test-with-cge > /dev/null
+  set -e # ignore if no such container
+
+  # This is necessary cleanup, during normal execution be don't bother trying to remove it:
   rm -Rf docker-context.cge/castle-engine/
 }
 trap finish EXIT
