@@ -2,6 +2,15 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+function finish ()
+{
+  rm -f docker-context.no-cge/sdk-tools-linux.zip
+  docker rm test-without-cge
+  docker rm test-with-cge
+  rm -Rf docker-context.cge/castle-engine/
+}
+trap finish EXIT
+
 do_prerequisites ()
 {
   # This could also be downloaded inside the container,
@@ -44,16 +53,17 @@ do_build ()
 # Run tests
 do_test ()
 {
-  docker rm test-without-cge
-  docker run --name test-without-cge -it castle-engine-cloud-builds-tools:cge-none
-  docker start test-without-cge
+  IFS=$' \n\t'
+  local DOCKER_TEST='docker run --name test-without-cge --rm -it castle-engine-cloud-builds-tools:cge-none'
+  $DOCKER_TEST
   echo 'Test setting FPC versions:'
-  docker exec test-without-cge bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
-  docker exec test-without-cge bash -c 'source /usr/local/fpclazarus/bin/setup.sh trunk'
+  $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
+  $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh trunk'
   echo 'Performing all the tests:'
-  docker exec test-without-cge /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.2 1.6.4
-  docker exec test-without-cge /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
-  docker rm test-without-cge
+  $DOCKER_TEST /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.2 1.6.4
+  $DOCKER_TEST /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
+  # back to strict mode
+  IFS=$'\n\t'
 }
 
 do_build_cge ()
@@ -64,7 +74,7 @@ do_build_cge ()
 
   rm -Rf docker-context.cge/castle-engine/ # cleanup at beginning too, to be sure
   cd docker-context.cge/
-  git https://github.com/castle-engine/castle-engine/
+  git clone https://github.com/castle-engine/castle-engine/
   if [ -n "${CGE_VERSION_TAG}" ]; then
     git checkout tags/"${CGE_VERSION_TAG}"
   fi
@@ -76,13 +86,12 @@ do_build_cge ()
 
   docker build -t castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" -f Dockerfile.cge docker-context.cge/
 
-  rm -Rf docker-context.cge/castle-engine/ # cleanup
-
-  docker rm test-with-cge
-  docker run --name test-with-cge -it castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
-  docker start test-with-cge
-  docker exec test-with-cge /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
-  docker rm test-with-cge
+  IFS=$' \n\t'
+  local DOCKER_TEST="docker run --name test-with-cge --rm -it castle-engine-cloud-builds-tools:cge-${CGE_VERSION_LABEL}"
+  $DOCKER_TEST
+  $DOCKER_TEST bash -c 'cd /usr/local/castle-engine/examples/fps_game/ && castle-engine compile'
+  # back to strict mode
+  IFS=$'\n\t'
 }
 
 do_upload_all ()
@@ -98,9 +107,9 @@ do_upload_all ()
 }
 
 
-# do_prerequisites
-do_build
-# do_test
+#do_prerequisites
+#do_build
+#do_test
 do_build_cge stable v6.4
 do_build_cge unstable ''
 do_upload_all
