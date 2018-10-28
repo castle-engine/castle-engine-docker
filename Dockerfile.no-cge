@@ -23,7 +23,8 @@ RUN apt-get update && \
     subversion \
     default-jdk \
     unzip \
-    binutils-mingw-w64
+    binutils-mingw-w64 \
+    libnvtt-bin
 
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
@@ -74,7 +75,6 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 1.8.0
-
 RUN /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
 
 # Make last stable default:
