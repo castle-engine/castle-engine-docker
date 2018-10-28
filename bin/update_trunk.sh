@@ -21,14 +21,23 @@ FPC_HOST_CPU=x86_64
 
 FPC_SOURCE_DIR=/usr/local/fpclazarus/"${FPC_TRUNK_VERSION}"/fpc/src
 FPC_SOURCE_DIR_PARENT="`dirname \"${FPC_SOURCE_DIR}\"`"
-if [ '!' -d "${FPC_SOURCE_DIR}" ]; then
-  echo 'First FPC checkout'
-  mkdir -p "${FPC_SOURCE_DIR_PARENT}"
-  cd "${FPC_SOURCE_DIR_PARENT}"
-  svn co -r "${FPC_SVN_REVISION}" http://svn.freepascal.org/svn/fpc/trunk `basename ${FPC_SOURCE_DIR}`
-else
-  svn update -r "${FPC_SVN_REVISION}" "${FPC_SOURCE_DIR}"
-fi
+FPC_SOURCE_DIR_BASENAME="`basename \"${FPC_SOURCE_DIR}\"`"
+
+# For now, no point in alternative "svn update" path
+# if [ '!' -d "${FPC_SOURCE_DIR}" ]; then
+
+echo 'FPC checkout:'
+mkdir -p "${FPC_SOURCE_DIR_PARENT}"
+cd "${FPC_SOURCE_DIR_PARENT}"
+svn co -r "${FPC_SVN_REVISION}" http://svn.freepascal.org/svn/fpc/trunk "${FPC_SOURCE_DIR_BASENAME}"
+cd "${FPC_SOURCE_DIR_BASENAME}"
+patch -p0 < /usr/local/fpclazarus/fpc-trunk.patch
+cd ../
+
+# For now, no point in alternative "svn update" path
+# else
+#   svn update -r "${FPC_SVN_REVISION}" "${FPC_SOURCE_DIR}"
+# fi
 
 # FPC Build and install ----------------------------------------------------------
 

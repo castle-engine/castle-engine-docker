@@ -1,0 +1,28 @@
+Index: utils/h2pas/fpmake.pp
+===================================================================
+--- utils/h2pas/fpmake.pp	(wersja 40002)
++++ utils/h2pas/fpmake.pp	(kopia robocza)
+@@ -29,9 +29,21 @@
+ 
+     P.Options.Add('-Sg');
+ 
+-    p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('pyacc', Defaults.BuildOS), '$(SOURCE) $(DEST)','h2pas.pas','h2pas.y');
+-    p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('plex', Defaults.BuildOS), '$(SOURCE) $(DEST)','scan.pas','scan.l');
++    { Sometimes it tries to execute in Docker, and then fails with:
++    
++      [ 48%] Compiled package utils-fprcp
++      Start compiling package utils-h2pas for target x86_64-linux.
++      Executing command "/usr/local/fpclazarus/3.0.4/fpc/bin/pyacc h2pas/h2pas.y h2pas/h2pas.pas"
++      The installer encountered the following error:
++      External command "/usr/local/fpclazarus/3.0.4/fpc/bin/pyacc h2pas/h2pas.y h2pas/h2pas.pas" failed with exit code 256. Console output:
++      TP Yacc Version 4.1a [April 2000], Copyright (c) 1990-2000 Albert Graef
+ 
++      FATAL: cannot open file /usr/lib/fpc/lexyacc/yyparse.cod
++    }
++    
++    // p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('pyacc', Defaults.BuildOS), '$(SOURCE) $(DEST)','h2pas.pas','h2pas.y');
++    // p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('plex', Defaults.BuildOS), '$(SOURCE) $(DEST)','scan.pas','scan.l');
++
+     T:=P.Targets.AddProgram('h2pas.pas');
+     T.Dependencies.AddUnit('h2poptions');
+     T.Dependencies.AddUnit('h2plexlib');
