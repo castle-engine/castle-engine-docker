@@ -1,3 +1,0 @@
-[submodule "fpclazarus-switchable"]
-	path = docker-context.no-cge/fpclazarus-switchable
-	url = git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git
