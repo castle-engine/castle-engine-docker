@@ -15,13 +15,15 @@ FROM debian:stable
 # - subversion is for gettting FPC/Lazarus trunk
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
+# - binutils-mingw-w64 for CGE build tool cross-compiling to Windows (32 and 64)
 RUN apt-get update && \
   apt-get -y install \
     wget \
     libgtkglext1-dev \
     subversion \
     default-jdk \
-    unzip
+    unzip \
+    binutils-mingw-w64
 
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"

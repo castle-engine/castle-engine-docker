@@ -117,9 +117,9 @@ do_upload_all ()
 }
 
 
-#do_prerequisites
-#do_build
-#do_test
-#do_build_cge stable v6.4
-#do_build_cge unstable master
+do_prerequisites
+do_build
+do_test
+do_build_cge stable v6.4
+do_build_cge unstable master
 do_upload_all
