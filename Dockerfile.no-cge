@@ -79,6 +79,10 @@ RUN /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
 
 # Make last stable default:
 RUN /usr/local/fpclazarus/bin/set_default.sh 3.0.4
+# Setup symlinks for FPC versions "trunk" and "android-default"
+RUN cd /usr/local/fpclazarus/ && \
+    ln -s 3.3.1 trunk && \
+    ln -s default android-default
 
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
