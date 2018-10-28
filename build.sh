@@ -18,22 +18,6 @@ trap finish EXIT
 
 do_prerequisites ()
 {
-  # This could also be downloaded inside the container,
-  # but then we would need to provide GitLab password inside container,
-  # and developing the Dockerfile would be a bit more difficult
-  # (it's simply easier to change fpclazarus-switchable/ dir without committing
-  # each change, during testing).
-  #
-  # Later: let this be managed using GIT submodules.
-  #
-  # if [ ! -d docker-context.no-cge/fpclazarus-switchable ]; then
-  #   git clone git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git docker-context.no-cge/fpclazarus-switchable
-  # else
-  #   cd docker-context.no-cge/fpclazarus-switchable/
-  #   git pull --rebase
-  #   cd ../../
-  # fi
-
   # This could also be downloaded inside container.
   # But it's faster (during Dockerfile development),
   # to download it only once, outside of the container.
