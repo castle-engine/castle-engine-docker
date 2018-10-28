@@ -8,7 +8,8 @@ FROM kambi/castle-engine-cloud-builds-tools:cge-none
 
 COPY castle-engine/ /usr/local/castle-engine/
 ENV CASTLE_ENGINE_PATH="/usr/local/castle-engine/"
-RUN make -C "${CASTLE_ENGINE_PATH}" tools install
+# Build tools, install tools, remove temp files after compilation
+RUN make -C "${CASTLE_ENGINE_PATH}" tools install clean
 
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
   echo 'Default FPC version (can be changed using /usr/local/fpclazarus/bin/setup.sh):' && \

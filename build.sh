@@ -7,8 +7,8 @@ function finish ()
   # These are paranoid cleanups, during normal execution these should be removed anyway:
   rm -f docker-context.no-cge/sdk-tools-linux.zip
   set +e
-  docker rm test-without-cge > /dev/null
-  docker rm test-with-cge > /dev/null
+  docker rm test-without-cge > /dev/null 2>&1
+  docker rm test-with-cge > /dev/null 2>&1
   set -e # ignore if no such container
 
   # This is necessary cleanup, during normal execution be don't bother trying to remove it:
@@ -79,9 +79,14 @@ do_build_cge ()
 
   rm -Rf docker-context.cge/castle-engine/ # cleanup at beginning too, to be sure
   cd docker-context.cge/
-  git clone https://github.com/castle-engine/castle-engine/
-  if [ -n "${CGE_VERSION_TAG}" ]; then
-    git checkout tags/"${CGE_VERSION_TAG}"
+  # Using --depth 1 to remove history from clone.
+  # This makes clone faster, and (more important) makes resulting Docker image smaller.
+  git clone --depth 1 --single-branch --branch "${CGE_VERSION_TAG}" https://github.com/castle-engine/castle-engine/
+  # Add "make tools" target for CGE 6.4
+  if [ "${CGE_VERSION_TAG}" = v6.4 ]; then
+    cd castle-engine/
+    patch -p1 < ../../cge-6.4.patch
+    cd ../
   fi
   cd ../
 
@@ -115,6 +120,6 @@ do_upload_all ()
 #do_prerequisites
 #do_build
 #do_test
-do_build_cge stable v6.4
-do_build_cge unstable ''
+#do_build_cge stable v6.4
+#do_build_cge unstable master
 do_upload_all
