@@ -1,0 +1,12 @@
+#!/bin/bash
+set -eu
+
+# Use different --primary-config-path for different FPC versions.
+# This way we don't reuse stored FPC path from previous invocations
+# (with different FPC versions active),
+# but we do reuse memory about which packages are available.
+
+# Call the real lazbuild, with proper --lazarusdir
+/usr/local/fpclazarus/"${FPCLAZARUS_VERSION}"/lazarus/lazbuild \
+  --primary-config-path="${HOME}/.cge-jenkins-lazarus/${FPCLAZARUS_REAL_VERSION}" \
+  --lazarusdir=/usr/local/fpclazarus/"${FPCLAZARUS_VERSION}"/lazarus "$@"

@@ -1,0 +1,25 @@
+# -*- mode: shell-script -*-
+
+# ----------------------------------------------------------------------------
+# Initial setup of /usr/local/fpclazarus/ infrastructure:
+
+# mkdir /usr/local/fpclazarus/
+# chown -R root:staff /usr/local/fpclazarus/
+# chmod -R a+rX /usr/local/fpclazarus/
+
+# cd /usr/local/fpclazarus/
+# ln -s trunk android-default
+# ls -Flah
+
+# ---------------------------------------------------------------------------
+# Current setup:
+
+# Note: not possible to compile CGE with this anymore.
+sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.0 1.6.4
+
+sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
+
+sudo /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 1.8.0
+
+# Make last stable default:
+sudo /usr/local/fpclazarus/bin/set_default.sh 3.0.4
