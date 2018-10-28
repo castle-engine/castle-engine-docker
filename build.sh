@@ -88,22 +88,30 @@ do_build_cge ()
   IFS=$'\n\t'
 }
 
-do_upload_all ()
+do_upload_no_cge ()
 {
   export DOCKER_ID_USER="kambi"
   docker login
   docker tag castle-engine-cloud-builds-tools:cge-none "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
+  docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
+}
+
+do_upload_cge ()
+{
+  export DOCKER_ID_USER="kambi"
+  docker login
   docker tag castle-engine-cloud-builds-tools:cge-stable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
   docker tag castle-engine-cloud-builds-tools:cge-unstable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
-  docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
 }
 
-
 do_prerequisites
 do_build
 do_test
+# Do this before do_build_cge, as Dockerfile.cge uses images from Dockerhub.
+do_upload_no_cge
+
 do_build_cge stable v6.4
 do_build_cge unstable master
-do_upload_all
+do_upload_cge
