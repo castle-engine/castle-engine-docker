@@ -16,15 +16,18 @@ FROM debian:stable
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
 # - binutils-mingw-w64 for CGE build tool cross-compiling to Windows (32 and 64)
+# - zip for CGE build tool (to package to zip)
+# - libnvtt-bin for CGE build tool (to generate compressed textures)
 RUN apt-get update && \
   apt-get -y install \
-    wget \
-    libgtkglext1-dev \
-    subversion \
-    default-jdk \
-    unzip \
     binutils-mingw-w64 \
-    libnvtt-bin
+    default-jdk \
+    libgtkglext1-dev \
+    libnvtt-bin \
+    subversion \
+    unzip \
+    wget \
+    zip
 
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
