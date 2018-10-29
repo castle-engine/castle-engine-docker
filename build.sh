@@ -90,21 +90,20 @@ do_build_cge ()
 
 do_upload_no_cge ()
 {
-  export DOCKER_ID_USER="kambi"
-  docker login
   docker tag castle-engine-cloud-builds-tools:cge-none "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
 }
 
 do_upload_cge ()
 {
-  export DOCKER_ID_USER="kambi"
-  docker login
   docker tag castle-engine-cloud-builds-tools:cge-stable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
   docker tag castle-engine-cloud-builds-tools:cge-unstable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
 }
+
+export DOCKER_ID_USER="kambi"
+docker login --username="${DOCKER_ID_USER}" # start with this, because this is interactive
 
 do_prerequisites
 do_build
