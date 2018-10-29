@@ -115,6 +115,10 @@ do_upload_cge ()
 export DOCKER_ID_USER="kambi"
 docker login --username="${DOCKER_ID_USER}" # start with this, because this is interactive
 
+LOG_FILE="build-$$.log"
+echo "Logging to ${LOG_FILE}"
+exec > "${LOG_FILE}" 2>&1
+
 do_prerequisites
 do_build
 do_test
