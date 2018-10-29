@@ -2,8 +2,12 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+ORIGINAL_DIR=`pwd`
+
 function finish ()
 {
+  cd $ORIGINAL_DIR
+
   # These are paranoid cleanups, during normal execution these should be removed anyway:
   rm -f docker-context.no-cge/sdk-tools-linux.zip
   set +e
