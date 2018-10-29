@@ -2,6 +2,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# cleanup --------------------------------------------------------------------------
+
 ORIGINAL_DIR=`pwd`
 
 function finish ()
@@ -19,6 +21,8 @@ function finish ()
   rm -Rf docker-context.cge/castle-engine/
 }
 trap finish EXIT
+
+# functions ---------------------------------------------------------------------
 
 do_prerequisites ()
 {
@@ -105,6 +109,8 @@ do_upload_cge ()
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
 }
+
+# main ---------------------------------------------------------------------------
 
 export DOCKER_ID_USER="kambi"
 docker login --username="${DOCKER_ID_USER}" # start with this, because this is interactive
