@@ -98,12 +98,16 @@ do_build_cge ()
 
 do_upload_no_cge ()
 {
+  export DOCKER_ID_USER="kambi"
+  cat docker_password.txt | docker login --username="${DOCKER_ID_USER}" --password-stdin
   docker tag castle-engine-cloud-builds-tools:cge-none "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-none
 }
 
 do_upload_cge ()
 {
+  export DOCKER_ID_USER="kambi"
+  cat docker_password.txt | docker login --username="${DOCKER_ID_USER}" --password-stdin
   docker tag castle-engine-cloud-builds-tools:cge-stable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
   docker tag castle-engine-cloud-builds-tools:cge-unstable "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-unstable
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-stable
@@ -111,9 +115,6 @@ do_upload_cge ()
 }
 
 # main ---------------------------------------------------------------------------
-
-export DOCKER_ID_USER="kambi"
-docker login --username="${DOCKER_ID_USER}" # start with this, because this is interactive
 
 LOG_FILE="build-$$.log"
 echo "Logging to ${LOG_FILE}"

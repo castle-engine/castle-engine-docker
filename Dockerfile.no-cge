@@ -94,6 +94,19 @@ ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_REAL_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
 
+# TODO
+
+# TODO: merge this with higher Android SDK installation
+# Relaxed permissions in Android SDK, to allow Gradle to auto-install
+# additional components, e.g. SDK platforms that are not default in the CGE build tool
+# (CastleEngineManifest.xml can specify non-default versions).
+RUN yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses && \
+  /usr/local/android/android-sdk/tools/bin/sdkmanager --install \
+  "platform-tools" && \
+  chmod -R a=rwX /usr/local/android/android-sdk/
+
+# Command to run by default ----------------------------------------------------
+
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
   echo 'Default FPC version (can be changed using /usr/local/fpclazarus/bin/setup.sh):' && \
   fpc -iV && \
