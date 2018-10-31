@@ -18,7 +18,7 @@ shift 2
 if [ "${FPC_VERSION}" = '3.0.0' -o "${FPC_VERSION}" = '3.0.2' ]; then
   echo 'Not building cross-compiler for FPC ${FPC_VERSION}, too old'
 else
-  /usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh ${FPC_VERSION} android arm
+  /usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh ${FPC_VERSION} android arm CROSSOPT="-CfVFPV3"
 fi
 
 /usr/local/fpclazarus/bin/add_new_fpc_version_lazarus.sh ${FPC_VERSION} ${LAZARUS_VERSION}
