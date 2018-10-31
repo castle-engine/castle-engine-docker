@@ -18,6 +18,7 @@ FROM debian:stable
 # - binutils-mingw-w64 for CGE build tool cross-compiling to Windows (32 and 64)
 # - zip for CGE build tool (to package to zip)
 # - libnvtt-bin for CGE build tool (to generate compressed textures)
+# - git (and svn too) may be useful for jobs that manually do "git clone / svn checkout"
 RUN apt-get update && \
   apt-get -y install \
     binutils-mingw-w64 \
@@ -27,7 +28,8 @@ RUN apt-get update && \
     subversion \
     unzip \
     wget \
-    zip
+    zip \
+    git
 
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
@@ -53,9 +55,19 @@ ENV PATH="${PATH}:/usr/local/android/android-sdk/tools/:\
 COPY tools/ /usr/local/android/android-sdk/tools/
 
 # Install Android SDK and NDK.
+#
 # Note: android-cge-default-platform is used by our fpc.cfg
+#
+# Note: Relaxed permissions (chmod) in Android SDK, to allow Gradle to auto-install
+# additional components, e.g. SDK platforms that are not default in the CGE build tool
+# (CastleEngineManifest.xml can specify non-default versions).
+#
+# Note about mips: This is to woraround
+# https://github.com/castle-engine/castle-engine/wiki/Android-SDK-and-NDK-troubleshooting#error-no-toolchains-found-in-the-ndk-toolchains-folder-for-abi-with-prefix-mipsel-linux-android
+
 RUN yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses && \
   /usr/local/android/android-sdk/tools/bin/sdkmanager --install \
+  "platform-tools" \
   "platforms;android-${CGE_JENKINS_ANDROID_PLATFORM}" \
   "extras;google;google_play_services" \
   "build-tools;${CGE_JENKINS_ANDROID_BUILD_TOOLS}" \
@@ -64,7 +76,10 @@ RUN yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses && \
   ln -s \
     /usr/local/android/android-sdk/ndk-bundle/platforms/android-"${CGE_JENKINS_ANDROID_PLATFORM}" \
     /usr/local/android/android-sdk/ndk-bundle/platforms/android-cge-default-platform && \
-  echo 'source /usr/local/fpclazarus/bin/setup.sh android-default' > /usr/local/android/setup.sh
+  echo 'source /usr/local/fpclazarus/bin/setup.sh android-default' > /usr/local/android/setup.sh && \
+  mkdir -p $ANDROID_NDK_HOME/toolchains/mipsel-linux-android-4.9/prebuilt/linux-x86_64 && \
+  mkdir -p $ANDROID_NDK_HOME/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64 && \
+  chmod -R a=rwX /usr/local/android/android-sdk/
 
 # FPC + Lazarus --------------------------------------------------------------
 
@@ -93,17 +108,6 @@ ENV FPCLAZARUS_VERSION="3.0.4"
 ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_REAL_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
-
-# TODO
-
-# TODO: merge this with higher Android SDK installation
-# Relaxed permissions in Android SDK, to allow Gradle to auto-install
-# additional components, e.g. SDK platforms that are not default in the CGE build tool
-# (CastleEngineManifest.xml can specify non-default versions).
-RUN yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses && \
-  /usr/local/android/android-sdk/tools/bin/sdkmanager --install \
-  "platform-tools" && \
-  chmod -R a=rwX /usr/local/android/android-sdk/
 
 # Command to run by default ----------------------------------------------------
 

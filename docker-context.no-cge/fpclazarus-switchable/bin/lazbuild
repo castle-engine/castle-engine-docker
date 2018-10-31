@@ -6,6 +6,15 @@ set -eu
 # (with different FPC versions active),
 # but we do reuse memory about which packages are available.
 
+# By default, Docker in Jenkins has useless $HOME = /, which is not writeable,
+# thus ${HOME}/.cge-jenkins-lazarus cannot be created,
+# thus CGE packages cannot be compiled inside.
+# Note that $HOME seems to be reset at each bash invocation,
+# so we fix it specifically in this script.
+if [ "${HOME}" = "/" ]; then
+  export HOME="${WORKSPACE}"
+fi
+
 # Call the real lazbuild, with proper --lazarusdir
 /usr/local/fpclazarus/"${FPCLAZARUS_VERSION}"/lazarus/lazbuild \
   --primary-config-path="${HOME}/.cge-jenkins-lazarus/${FPCLAZARUS_REAL_VERSION}" \
