@@ -19,7 +19,7 @@ FROM debian:stable
 # - zip for CGE build tool (to package to zip)
 # - libnvtt-bin for CGE build tool (to generate compressed textures)
 RUN apt-get update && \
-  apt-get -y install \
+  apt-get --no-install-recommends -y install \
     binutils-mingw-w64 \
     default-jdk \
     libgtkglext1-dev \
@@ -27,7 +27,8 @@ RUN apt-get update && \
     subversion \
     unzip \
     wget \
-    zip
+    zip && \
+  rm -rf /var/lib/apt/lists/*
 
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
