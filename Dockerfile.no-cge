@@ -12,13 +12,12 @@ FROM debian:stable
 # - wget is for downloading in /usr/local/fpclazarus/bin/add_new_fpc_version.sh
 # - libgtkglext1-dev is for compiling applications on Linux
 #   with CGE CastleWindow backend (pulls a lot of other -dev packages)
-# - subversion is for gettting FPC/Lazarus trunk
+# - subversion is for gettting FPC/Lazarus trunk (but we will remove it later)
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
 # - binutils-mingw-w64 for CGE build tool cross-compiling to Windows (32 and 64)
 # - zip for CGE build tool (to package to zip)
 # - libnvtt-bin for CGE build tool (to generate compressed textures)
-# - git (and svn too) may be useful for jobs that manually do "git clone / svn checkout"
 RUN apt-get update && \
   apt-get -y install \
     binutils-mingw-w64 \
@@ -28,8 +27,7 @@ RUN apt-get update && \
     subversion \
     unzip \
     wget \
-    zip \
-    git
+    zip
 
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
@@ -94,6 +92,9 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 1.8.0
 RUN /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
+
+# Converse disk space by removing svn
+RUN apt-get purge subversion && apt-get --purge autoremove
 
 # Make last stable default:
 RUN /usr/local/fpclazarus/bin/set_default.sh 3.0.4
