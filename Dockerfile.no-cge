@@ -19,6 +19,7 @@ FROM debian:stable
 # - zip for CGE build tool (to package to zip)
 # - libnvtt-bin for CGE build tool (to generate compressed textures)
 # - libc6-i386 lib32stdc++6 lib32z1 are for Android SDK (see aidl problems, https://github.com/castle-engine/castle-engine/wiki/Android-SDK-and-NDK-troubleshooting#errors-when-executing-aidl-on-64-bit-x86_64-linux )
+# - make to compile FPC, and for various jobs
 RUN apt-get update && \
   apt-get --no-install-recommends -y install \
     binutils-mingw-w64 \
@@ -26,6 +27,7 @@ RUN apt-get update && \
     libgtkglext1-dev \
     libnvtt-bin \
     subversion \
+    make \
     unzip \
     wget \
     libc6-i386 lib32stdc++6 lib32z1 \
