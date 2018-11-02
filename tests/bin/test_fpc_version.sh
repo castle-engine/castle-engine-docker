@@ -8,6 +8,10 @@ FPC_VERSION="$1"
 LAZARUS_VERSION="$2"
 shift 2
 
+# Install "file" utility
+sudo apt-get update
+sudo apt-get --no-install-recommends -y install file
+
 /usr/local/fpclazarus/bin/test_fpc_version_native.sh ${FPC_VERSION}
 /usr/local/fpclazarus/bin/test_fpc_version_cross.sh ${FPC_VERSION} win32 i386
 /usr/local/fpclazarus/bin/test_fpc_version_cross.sh ${FPC_VERSION} win64 x86_64

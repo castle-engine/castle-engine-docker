@@ -51,14 +51,14 @@ do_build ()
 do_test ()
 {
   IFS=$' \n\t'
-  local DOCKER_TEST='docker run --name test-without-cge --rm -it castle-engine-cloud-builds-tools:cge-none'
+  local DOCKER_TEST="docker run --name test-without-cge --rm --volume=`pwd`/tests:/usr/local/tests/:ro -it castle-engine-cloud-builds-tools:cge-none"
   $DOCKER_TEST
   echo 'Test setting FPC versions:'
   $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
   $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh trunk'
   echo 'Performing all the tests:'
-  $DOCKER_TEST /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.2 1.6.4
-  $DOCKER_TEST /usr/local/fpclazarus/bin/test_fpc_version.sh 3.0.4 1.8.0
+  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.2 1.6.4
+  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.4 1.8.0
   # back to strict mode
   IFS=$'\n\t'
 }
@@ -120,8 +120,8 @@ LOG_FILE="build-$$.log"
 echo "Logging to ${LOG_FILE}"
 exec > "${LOG_FILE}" 2>&1
 
-do_prerequisites
-do_build
+#do_prerequisites
+#do_build
 do_test
 # Do this before do_build_cge, as Dockerfile.cge uses images from Dockerhub.
 do_upload_no_cge
