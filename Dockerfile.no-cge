@@ -28,6 +28,7 @@ RUN apt-get update && \
     libnvtt-bin \
     subversion \
     make \
+    patch \
     unzip \
     wget \
     libc6-i386 lib32stdc++6 lib32z1 \
@@ -96,10 +97,7 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 1.8.0
-# TODO merge with higher line
-RUN apt-get update && \
-  apt-get --no-install-recommends -y install patch && \
-  /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
+RUN /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
 
 # We could remove subversion package now...
 # but it would not save disk space, since previous layers already record the state with subversion installed.

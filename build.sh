@@ -120,8 +120,8 @@ LOG_FILE="build-$$.log"
 echo "Logging to ${LOG_FILE}"
 exec > "${LOG_FILE}" 2>&1
 
-#do_prerequisites
-#do_build
+do_prerequisites
+do_build
 do_test
 # Do this before do_build_cge, as Dockerfile.cge uses images from Dockerhub.
 do_upload_no_cge
