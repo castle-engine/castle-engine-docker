@@ -1,4 +1,4 @@
 *~
 docker-context.no-cge/tools/
 docker_password.txt
-build-*.log
+logs/build-*.log

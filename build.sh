@@ -116,7 +116,7 @@ do_upload_cge ()
 
 # main ---------------------------------------------------------------------------
 
-LOG_FILE="build-$$.log"
+LOG_FILE="logs/build-$$.log"
 echo "Logging to ${LOG_FILE}"
 exec > "${LOG_FILE}" 2>&1
 
