@@ -15,7 +15,8 @@ FROM debian:stable
 # - subversion is for gettting FPC/Lazarus trunk (but we will remove it later)
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
-# - binutils-mingw-w64 for CGE build tool cross-compiling to Windows (32 and 64)
+# - binutils-mingw-w64 and gcc
+#   for CGE build tool cross-compiling to Windows (32 and 64), it needs resource compiler
 # - zip for CGE build tool (to package to zip)
 # - libnvtt-bin for CGE build tool (to generate compressed textures)
 # - libc6-i386 lib32stdc++6 lib32z1 are for Android SDK (see aidl problems, https://github.com/castle-engine/castle-engine/wiki/Android-SDK-and-NDK-troubleshooting#errors-when-executing-aidl-on-64-bit-x86_64-linux )
@@ -24,6 +25,7 @@ RUN apt-get update && \
   apt-get --no-install-recommends -y install \
     binutils-mingw-w64 \
     default-jdk \
+    gcc \
     libgtkglext1-dev \
     libnvtt-bin \
     subversion \
