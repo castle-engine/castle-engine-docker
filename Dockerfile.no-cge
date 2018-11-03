@@ -115,7 +115,7 @@ RUN cd /usr/local/fpclazarus/ && \
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
 ENV FPCLAZARUS_VERSION="3.0.4"
 ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
-ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_REAL_VERSION}"
+ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
 
 # Command to run by default ----------------------------------------------------
