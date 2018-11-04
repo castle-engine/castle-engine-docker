@@ -101,6 +101,6 @@ do_upload ()
 
   export DOCKER_ID_USER="kambi"
   cat docker_password.txt | docker login --username="${DOCKER_ID_USER}" --password-stdin
-  docker tag castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_TAG}" "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_TAG}"
-  docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_TAG}"
+  docker tag castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
+  docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
 }
