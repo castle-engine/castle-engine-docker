@@ -85,6 +85,12 @@ do_build_cge ()
   # That's right, the images differ only in having different CGE code.
 
   docker build -t castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" -f Dockerfile.cge docker-context.cge/
+}
+
+do_test_cge ()
+{
+  local CGE_VERSION_LABEL="$1"
+  shift 1
 
   IFS=$' \n\t'
   local DOCKER_TEST="docker run --name test-with-cge --rm -it castle-engine-cloud-builds-tools:cge-${CGE_VERSION_LABEL}"

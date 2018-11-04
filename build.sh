@@ -17,6 +17,9 @@ do_test
 do_upload none
 
 do_build_cge stable v6.4
-do_build_cge unstable master
+do_test_cge stable
 do_upload stable
+
+do_build_cge unstable master
+do_test_cge unstable
 do_upload unstable
