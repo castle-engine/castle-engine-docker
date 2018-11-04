@@ -19,6 +19,9 @@ function finish ()
 
   # This is necessary cleanup, during normal execution be don't bother trying to remove it:
   rm -Rf docker-context.cge/castle-engine/
+
+  echo "Build finished, ${LOG_FILE} tail:"
+  tail "${LOG_FILE}"
 }
 trap finish EXIT
 
