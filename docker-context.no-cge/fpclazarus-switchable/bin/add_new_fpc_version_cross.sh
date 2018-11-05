@@ -13,7 +13,7 @@ set -eux
 FPC_VERSION="$1"
 FPC_OS="$2"
 FPC_CPU="$3"
-# rest of parameters are passed to make crossinstall
+# rest of parameters are passed to "make crossall"
 shift 3
 
 cd /tmp/fpcinst/
@@ -24,11 +24,11 @@ cd src-for-${FPC_CPU}-${FPC_OS}
 # include the fpc version to bootstrap - same or previous
 . /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
 
-make crossall OS_TARGET=${FPC_OS} CPU_TARGET=${FPC_CPU}
+make crossall OS_TARGET=${FPC_OS} CPU_TARGET=${FPC_CPU} "$@"
 
 rm -Rf /tmp/fpcinst/test-install
 mkdir -p /tmp/fpcinst/test-install
-make crossinstall OS_TARGET=${FPC_OS} CPU_TARGET=${FPC_CPU} PREFIX=/tmp/fpcinst/test-install "$@"
+make crossinstall OS_TARGET=${FPC_OS} CPU_TARGET=${FPC_CPU} PREFIX=/tmp/fpcinst/test-install
 mv /tmp/fpcinst/test-install/lib/fpc/${FPC_VERSION}/units/${FPC_CPU}-${FPC_OS}/ /usr/local/fpclazarus/${FPC_VERSION}/fpc/lib/fpc/${FPC_VERSION}/units/
 ls -Flah /usr/local/fpclazarus/${FPC_VERSION}/fpc/lib/fpc/${FPC_VERSION}/units/
 
@@ -48,4 +48,3 @@ for F in /tmp/fpcinst/test-install/lib/fpc/${FPC_VERSION}/ppcross*; do
 done
 
 echo "OK: FPC ${FPC_VERSION} cross-compiler for ${FPC_OS} / ${FPC_CPU}."
-
