@@ -18,8 +18,8 @@ pipeline {
     }
     stage('Start Dependent Jobs') {
       steps {
-        build job: 'unholy_society'
-        build job: 'escape_universe'
+        build job: 'unholy_society', wait: false
+        build job: 'escape_universe', wait: false
       }
     }
   }
