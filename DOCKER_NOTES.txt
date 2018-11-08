@@ -31,4 +31,7 @@ but needs to be remembered.
 ## Test
 
 docker rm cge-test
-docker run --name cge-test -it castle-engine-cloud-builds-tools:cge-none
+docker run --rm -it castle-engine-cloud-builds-tools:cge-none bash
+# see cge unstable versions
+docker run --rm castle-engine-cloud-builds-tools:cge-unstable
+docker run --rm kambi/castle-engine-cloud-builds-tools:cge-unstable
