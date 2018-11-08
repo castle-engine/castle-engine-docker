@@ -15,4 +15,6 @@ CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
   echo 'Default FPC version (can be changed using /usr/local/fpclazarus/bin/setup.sh):' && \
   fpc -iV && \
   echo 'Castle Game Engine version:' && \
-  castle-engine --version
+  castle-engine --version && \
+  echo 'Last Castle Game Engine commit:' && \
+  cat /usr/local/castle-engine/last_commit.txt
