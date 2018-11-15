@@ -20,6 +20,8 @@ pipeline {
       steps {
         build job: 'unholy_society', wait: false
         build job: 'escape_universe', wait: false
+        build job: 'wyrd_forest/master', wait: false
+        build job: 'darkest_before_the_dawn/master', wait: false
       }
     }
   }
