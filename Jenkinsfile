@@ -4,7 +4,8 @@
 */
 
 pipeline {
-  agent any
+  /* run this on michalis.ii, because that's where docker_password.txt file lies */
+  agent { label 'web-michalis-ii-uni-wroc-pl' }
   stages {
     stage('Rebuild Docker Image') {
       steps {
