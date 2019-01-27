@@ -23,6 +23,7 @@ pipeline {
         build job: 'wyrd_forest/master', wait: false
         build job: 'darkest_before_the_dawn/master', wait: false
         build job: 'view3dscene/master', wait: false
+        build job: 'silhouette/master', wait: false
       }
     }
   }
