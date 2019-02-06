@@ -70,8 +70,11 @@ COPY tools/ /usr/local/android/android-sdk/tools/
 #
 # Note about mips: This is to woraround
 # https://github.com/castle-engine/castle-engine/wiki/Android-SDK-and-NDK-troubleshooting#error-no-toolchains-found-in-the-ndk-toolchains-folder-for-abi-with-prefix-mipsel-linux-android
+#
+# Note that there's 1 license "January 16, 2019" that seems not available to accept
+# before installing. So accept licenses *after* sdkmanager --install too.
 
-RUN yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses && \
+RUN ( yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses ) && \
   /usr/local/android/android-sdk/tools/bin/sdkmanager --install \
   "platform-tools" \
   "platforms;android-${CGE_JENKINS_ANDROID_PLATFORM}" \
@@ -79,6 +82,7 @@ RUN yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses && \
   "build-tools;${CGE_JENKINS_ANDROID_BUILD_TOOLS}" \
   "extras;android;m2repository" \
   "ndk-bundle" && \
+  ( yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses ) && \
   ln -s \
     /usr/local/android/android-sdk/ndk-bundle/platforms/android-"${CGE_JENKINS_ANDROID_PLATFORM}" \
     /usr/local/android/android-sdk/ndk-bundle/platforms/android-cge-default-platform && \
