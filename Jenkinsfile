@@ -24,6 +24,8 @@ pipeline {
         build job: 'darkest_before_the_dawn/master', wait: false
         build job: 'view3dscene/master', wait: false
         build job: 'silhouette/master', wait: false
+        build job: 'dragon_squash', wait: false
+        build job: 'dark_dragon', wait: false
       }
     }
   }
