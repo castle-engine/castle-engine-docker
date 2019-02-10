@@ -45,6 +45,14 @@ ENV WGET_OPTIONS="--progress=bar:force:noscroll"
 # Matches Debian default-jdk result
 ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
 
+# PowerVR texture tools ------------------------------------------------------
+
+# See https://github.com/floooh/oryol/tree/master/tools
+# License on https://github.com/floooh/oryol/blob/master/tools/PowerVR_SDK_End_User_Licence_Agreement.txt
+RUN wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?raw=true' \
+  --output-document /usr/local/bin/PVRTexToolCLI && \
+  chmod +x /usr/local/bin/PVRTexToolCLI
+
 # Android SDK, NDK -----------------------------------------------------------
 
 # We call thes variables CGE_JENKINS_xxx, to make it clear that CGE *ignores them*,
