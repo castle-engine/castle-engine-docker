@@ -59,6 +59,7 @@ RUN wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?
 # they are only useful for Dockerfile and scripts inside this Docker container.
 ENV CGE_JENKINS_ANDROID_PLATFORM=27
 ENV CGE_JENKINS_ANDROID_BUILD_TOOLS=27.0.3
+ENV CGE_JENKINS_ANDROID_NDK_PLATFORM=16
 
 ENV ANDROID_HOME=/usr/local/android/android-sdk/
 ENV ANDROID_NDK_HOME=/usr/local/android/android-sdk/ndk-bundle/
@@ -94,8 +95,8 @@ RUN ( yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses ) && 
   "ndk-bundle" && \
   ( yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses ) && \
   ln -s \
-    /usr/local/android/android-sdk/ndk-bundle/platforms/android-"${CGE_JENKINS_ANDROID_PLATFORM}" \
-    /usr/local/android/android-sdk/ndk-bundle/platforms/android-cge-default-platform && \
+    /usr/local/android/android-sdk/ndk-bundle/platforms/android-"${CGE_JENKINS_ANDROID_NDK_PLATFORM}" \
+    /usr/local/android/android-sdk/ndk-bundle/platforms/android-cge-ndk-platform && \
   echo 'source /usr/local/fpclazarus/bin/setup.sh android-default' > /usr/local/android/setup.sh && \
   mkdir -p $ANDROID_NDK_HOME/toolchains/mipsel-linux-android-4.9/prebuilt/linux-x86_64 && \
   mkdir -p $ANDROID_NDK_HOME/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64 && \
