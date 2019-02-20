@@ -81,6 +81,7 @@ set_ppc_symlink ppcx64
 set_ppc_symlink ppcrossx64
 set_ppc_symlink ppcross386
 set_ppc_symlink ppcrossarm
+set_ppc_symlink ppcrossa64 # aarch64
 
 # Fix permissions ------------------------------------------------------------
 
