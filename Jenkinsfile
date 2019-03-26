@@ -8,7 +8,12 @@ pipeline {
   stages {
     stage('Rebuild Docker Image') {
       steps {
-        sh './build-cge-unstable.sh'
+        withCredentials([
+          string(credentialsId: 'docker-user', variable: 'docker_user'),
+          string(credentialsId: 'docker-password', variable: 'docker_password')
+        ]) {
+          sh './build-cge-unstable.sh'
+	}
       }
     }
     stage('Remove Unused Docker Images') {
