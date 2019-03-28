@@ -38,6 +38,11 @@ do_prerequisites ()
   unzip sdk-tools-linux.zip
   rm -f sdk-tools-linux.zip
   cd ../
+
+  cd docker-context.no-cge/
+  rm -Rf pasdoc/
+  git clone https://github.com/pasdoc/pasdoc/
+  cd ../
 }
 
 do_build ()

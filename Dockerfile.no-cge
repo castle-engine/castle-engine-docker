@@ -137,6 +137,12 @@ ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
 
+# PasDoc ---------------------------------------------------------------------
+
+COPY pasdoc/ /usr/local/pasdoc/
+RUN cd /usr/local/pasdoc/ && make build-fpc-default build-tools
+ENV PATH="${PATH}:/usr/local/pasdoc/bin/"
+
 # Command to run by default ----------------------------------------------------
 
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
