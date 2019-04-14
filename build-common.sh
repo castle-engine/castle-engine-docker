@@ -105,6 +105,11 @@ do_test_cge ()
   IFS=$'\n\t'
 }
 
+if [ '(' "${docker_user:-}" = '' ')' -o '(' "${docker_password:-}" = '' ')' ]; then
+  echo 'Docker user/password environment variables not defined (or empty), uploading would fail.'
+  exit 1
+fi
+
 do_upload ()
 {
   local CGE_VERSION_LABEL="$1"
