@@ -143,18 +143,6 @@ COPY pasdoc/ /usr/local/pasdoc/
 RUN cd /usr/local/pasdoc/ && make build-fpc-default build-tools
 ENV PATH="${PATH}:/usr/local/pasdoc/bin/"
 
-# GotHub --------------------------------------------------------------------
-
-# created gothub binary by:
-#   sudo apt install golang
-#   export GOPATH=$HOME/go
-#   go get github.com/itchio/gothub
-#   mv $HOME/go/bin/gothub docker-context.no-cge/
-#   rm -Rf $HOME/go
-
-COPY gothub /usr/local/bin/
-RUN chmod +x /usr/local/bin/gothub
-
 # Command to run by default ----------------------------------------------------
 
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
