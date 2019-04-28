@@ -32,6 +32,7 @@ pipeline {
         build job: 'dragon_squash', wait: false
         build job: 'dark_dragon', wait: false
         build job: 'castle_game/master', wait: false
+        build job: 'castle_view_image/master', wait: false
       }
     }
   }
