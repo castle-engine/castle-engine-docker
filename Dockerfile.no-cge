@@ -57,8 +57,8 @@ RUN wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?
 
 # We call thes variables CGE_JENKINS_xxx, to make it clear that CGE *ignores them*,
 # they are only useful for Dockerfile and scripts inside this Docker container.
-ENV CGE_JENKINS_ANDROID_PLATFORM=27
-ENV CGE_JENKINS_ANDROID_BUILD_TOOLS=27.0.3
+ENV CGE_JENKINS_ANDROID_PLATFORM=28
+ENV CGE_JENKINS_ANDROID_BUILD_TOOLS=28.0.3
 ENV CGE_JENKINS_ANDROID_NDK_32_PLATFORM=16
 ENV CGE_JENKINS_ANDROID_NDK_64_PLATFORM=21
 
@@ -118,7 +118,7 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.2
-RUN /usr/local/fpclazarus/bin/update_trunk.sh 40019 59348
+RUN /usr/local/fpclazarus/bin/update_trunk.sh 42921 61813
 
 # We could remove subversion package now...
 # but it would not save disk space, since previous layers already record the state with subversion installed.
