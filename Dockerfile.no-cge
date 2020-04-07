@@ -4,7 +4,15 @@
 # This image contains prerequisites (like FPC and Android SDK) but not CGE.
 # Used by build.sh.
 
-FROM debian:stable
+FROM debian:stretch
+
+# TODO: upgrade to latest Debian stable.
+#
+# Problem: Java version. We need Java 8, required by Android SDK to work.
+# See https://github.com/castle-engine/castle-engine/wiki/Android#install-java .
+# Getting it in stretch is super-easy (just install default-jdk), getting it in newer Debian
+# is super complicated, as it's no longer supported.
+# Ideally, Android toolchain should no longer require Java 8 some day...
 
 # Install and configure Debian tools -----------------------------------------
 
