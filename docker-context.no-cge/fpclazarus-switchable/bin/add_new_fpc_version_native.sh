@@ -28,9 +28,16 @@ cd /tmp/fpcinst/
 # install official version for Linux with $FPC_HOST_CPU
 
 # see https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/ for links
-wget "${WGET_OPTIONS:-}" https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux.tar/download --output-document fpc.tar
+if [ "${FPC_VERSION}" = '3.0.2' -o  "${FPC_VERSION}" = '3.0.4' ]; then
+  FPC_URL="https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux.tar/download"
+  FPC_SUBDIR="fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux"
+else
+  FPC_URL="https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}-${FPC_HOST_CPU}-linux.tar/download"
+  FPC_SUBDIR="fpc-${FPC_VERSION}-${FPC_HOST_CPU}-linux"
+fi
+wget "${WGET_OPTIONS:-}" "${FPC_URL}" --output-document fpc.tar
 tar xvf fpc.tar
-cd fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux/
+cd "${FPC_SUBDIR}"
 
 # We will restore it after installation of FPC.
 # For now, remove it, to make sure no links to our /usr/local/fpclazarus/fpc.cfg
