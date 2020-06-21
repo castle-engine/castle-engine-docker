@@ -128,13 +128,17 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.2
-RUN /usr/local/fpclazarus/bin/update_trunk.sh 42921 61813
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.8
+# trunk revisions updated on 2020-06-20
+# Last FPC revision is now 45666, but it fails to build (ppudump doesn't compile),
+# moving one revision before last change https://svn.freepascal.org/cgi-bin/viewvc.cgi/trunk/compiler/utils/ppuutils/?view=log
+RUN /usr/local/fpclazarus/bin/update_trunk.sh 45595 63408
 
 # We could remove subversion package now...
 # but it would not save disk space, since previous layers already record the state with subversion installed.
 
 # Make last stable default:
-RUN /usr/local/fpclazarus/bin/set_default.sh 3.0.4
+RUN /usr/local/fpclazarus/bin/set_default.sh 3.2.0
 # Setup symlinks for FPC versions "trunk" and "android-default"
 RUN cd /usr/local/fpclazarus/ && \
     ln -s 3.3.1 trunk && \
@@ -142,7 +146,7 @@ RUN cd /usr/local/fpclazarus/ && \
 
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
-ENV FPCLAZARUS_VERSION="3.0.4"
+ENV FPCLAZARUS_VERSION="3.2.0"
 ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"

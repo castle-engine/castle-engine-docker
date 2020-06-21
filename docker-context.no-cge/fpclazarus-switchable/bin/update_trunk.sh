@@ -11,7 +11,7 @@ shift 2
 
 # Change with new FPC version
 FPC_TRUNK_VERSION='3.3.1'
-FPC_STABLE_VERSION='3.0.4'
+FPC_STABLE_VERSION='3.2.0'
 
 # The architecture native to current host, name consistent with FPC tar.gz files
 #FPC_HOST_CPU=i386

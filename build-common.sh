@@ -62,6 +62,7 @@ do_test ()
   echo 'Performing all the tests:'
   $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.2 1.6.4
   $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.4 1.8.0
+  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.2.0 2.0.8
   # back to strict mode
   IFS=$'\n\t'
 }
@@ -80,7 +81,8 @@ do_build_cge ()
   cd castle-engine/
   # Add "make tools" target for CGE 6.4
   if [ "${CGE_VERSION_TAG}" = v6.4 ]; then
-    patch -p1 < ../../cge-6.4.patch
+    patch -p1 < ../../cge-64.patch
+    patch -p1 < ../../cge-64-fpc320.patch
   fi
   git log -1 > last_commit.txt
   cd ../../
