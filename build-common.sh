@@ -79,11 +79,6 @@ do_build_cge ()
   # This makes clone faster, and (more important) makes resulting Docker image smaller.
   git clone --depth 1 --single-branch --branch "${CGE_VERSION_TAG}" https://github.com/castle-engine/castle-engine/
   cd castle-engine/
-  # Add "make tools" target for CGE 6.4
-  if [ "${CGE_VERSION_TAG}" = v6.4 ]; then
-    patch -p1 < ../../cge-64.patch
-    patch -p1 < ../../cge-64-fpc320.patch
-  fi
   git log -1 > last_commit.txt
   cd ../../
 

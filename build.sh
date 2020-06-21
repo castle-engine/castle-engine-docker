@@ -16,7 +16,7 @@ do_test
 # Do this before do_build_cge, as Dockerfile.cge uses images from Dockerhub.
 do_upload none
 
-do_build_cge stable v6.4
+do_build_cge stable v6.4-fixes
 do_test_cge stable
 do_upload stable
 
