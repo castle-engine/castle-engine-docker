@@ -117,3 +117,14 @@ do_upload ()
   docker tag castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
 }
+
+# Upload to github packages, see https://github.com/castle-engine/castle-engine/packages?package_type=Docker
+do_upload_github ()
+{
+  local CGE_VERSION_LABEL="$1"
+  shift 1
+
+  echo "${docker_github_token}" | docker login docker.pkg.github.com --username="${docker_github_user}" --password-stdin
+  docker tag castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" docker.pkg.github.com/castle-engine/castle-engine/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
+  docker push docker.pkg.github.com/castle-engine/castle-engine/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
+}

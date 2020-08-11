@@ -57,10 +57,9 @@ make clean crossall crossinstall \
 make clean crossall crossinstall \
   OS_TARGET=android CPU_TARGET=arm CROSSOPT="-CfVFPV3" \
   INSTALL_PREFIX="${FPC_INSTALL_DIR}"
-# TODO: why does this fail?
-# make clean crossall crossinstall \
-#   OS_TARGET=android CPU_TARGET=aarch64 \
-#   INSTALL_PREFIX="${FPC_INSTALL_DIR}"
+make clean crossall crossinstall \
+  OS_TARGET=android CPU_TARGET=aarch64 \
+  INSTALL_PREFIX="${FPC_INSTALL_DIR}"
 
 # Set symlinks ---------------------------------------------------------------
 
