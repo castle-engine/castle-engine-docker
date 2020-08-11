@@ -1,5 +1,7 @@
 *~
 docker-context.no-cge/tools/
+
 docker-context.no-cge/pasdoc/
 docker_password.txt
+github_token.txt
 logs/build-*.log
