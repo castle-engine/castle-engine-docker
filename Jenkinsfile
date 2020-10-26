@@ -21,34 +21,20 @@ pipeline {
         sh './remove_unused_docker_images.sh'
       }
     }
-    stage('Start Dependent Jobs') {
-      steps {
-        build job: 'unholy_society', wait: false
-        build job: 'escape_universe', wait: false
-        build job: 'wyrd_forest/master', wait: false
-        build job: 'darkest_before_the_dawn/master', wait: false
-        build job: 'view3dscene/master', wait: false
-        build job: 'silhouette/master', wait: false
-        build job: 'dragon_squash', wait: false
-        build job: 'dark_dragon', wait: false
-        build job: 'castle_game/master', wait: false
-        build job: 'castle_view_image/master', wait: false
-      }
-    }
   }
   post {
     regression {
-      mail to: 'michalis.kambi@gmail.com',
+      mail to: 'michalis@castle-engine.io',
         subject: "[jenkins] Build started failing: ${currentBuild.fullDisplayName}",
         body: "See the build details on ${env.BUILD_URL}"
     }
     failure {
-      mail to: 'michalis.kambi@gmail.com',
+      mail to: 'michalis@castle-engine.io',
         subject: "[jenkins] Build failed: ${currentBuild.fullDisplayName}",
         body: "See the build details on ${env.BUILD_URL}"
     }
     fixed {
-      mail to: 'michalis.kambi@gmail.com',
+      mail to: 'michalis@castle-engine.io',
         subject: "[jenkins] Build is again successfull: ${currentBuild.fullDisplayName}",
         body: "See the build details on ${env.BUILD_URL}"
     }
