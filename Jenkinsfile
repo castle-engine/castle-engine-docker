@@ -6,7 +6,7 @@
 pipeline {
   triggers {
     pollSCM('H/4 * * * *')
-    upstream(upstreamProjects: 'castle_game_engine/master', threshold: hudson.model.Result.SUCCESS)
+    upstream(upstreamProjects: 'castle_game_engine_organization/castle-engine/master', threshold: hudson.model.Result.SUCCESS)
   }
   agent any
   stages {

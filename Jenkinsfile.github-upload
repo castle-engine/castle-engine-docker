@@ -5,7 +5,7 @@
 
 pipeline {
   triggers {
-    upstream(upstreamProjects: 'castle_game_engine/master', threshold: hudson.model.Result.SUCCESS)
+    upstream(upstreamProjects: 'castle_game_engine_organization/castle-engine/master', threshold: hudson.model.Result.SUCCESS)
   }
   agent { label 'web-jenkins' }
   stages {
