@@ -128,7 +128,7 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 1.6.4
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.2
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.8
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.10
 # trunk revisions updated on 2020-06-20
 # Last FPC revision is now 45666, but it fails to build (ppudump doesn't compile),
 # moving one revision before last change https://svn.freepascal.org/cgi-bin/viewvc.cgi/trunk/compiler/utils/ppuutils/?view=log

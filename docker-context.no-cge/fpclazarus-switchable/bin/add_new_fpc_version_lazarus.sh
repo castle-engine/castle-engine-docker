@@ -14,11 +14,17 @@ FPC_VERSION="$1"
 LAZARUS_VERSION="$2"
 shift 2
 
-if [ "${LAZARUS_VERSION}" = '1.6.4' ]; then
-  LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
-else
-  LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download"
-fi
+case "${LAZARUS_VERSION}" in
+  '1.6.4')
+    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
+    ;;
+  '2.0.10')
+    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-2.tar.gz/download"
+    ;;
+  *)
+    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download"
+    ;;
+esac
 
 cd /usr/local/fpclazarus/${FPC_VERSION}/
 rm -Rf lazarus
