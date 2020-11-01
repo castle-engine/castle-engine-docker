@@ -31,6 +31,7 @@ FROM debian:stretch
 # - make to compile FPC, and for various jobs
 # - file is used by Android compilation (although it seems it works without it too, but there's some error about "file" binary missing)
 # - curl for TestFairy uploaded
+# - git for "make tests" in pasdoc
 RUN apt-get update && \
   apt-get --no-install-recommends -y install \
     curl \
@@ -38,6 +39,7 @@ RUN apt-get update && \
     default-jdk \
     file \
     gcc \
+    git \
     libgtkglext1-dev \
     libnvtt-bin \
     subversion \
