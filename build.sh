@@ -6,6 +6,7 @@ source build-common.sh
 
 # main ---------------------------------------------------------------------------
 
+mkdir -p logs/
 LOG_FILE="logs/build-$$.log"
 echo "Logging to ${LOG_FILE}"
 exec > "${LOG_FILE}" 2>&1
