@@ -60,9 +60,9 @@ do_test ()
   $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
   $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh trunk'
   echo 'Performing all the tests:'
-  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.2 1.6.4
-  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.4 1.8.0
-  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.2.0 2.0.8
+  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.2
+  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.4
+  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.2.0
   # back to strict mode
   IFS=$'\n\t'
 }

@@ -1,12 +1,10 @@
 #!/bin/bash
 set -eux
 
-# Test what add_new_fpc_version_native.sh did.
-# Pass the same arguments.
+# Test Lazarus with FPC/Lazarus combination from $1.
 
 FPC_VERSION="$1"
-LAZARUS_VERSION="$2"
-shift 2
+shift 1
 
 mkdir -p /tmp/lazarus-test/
 cd /tmp/lazarus-test/
