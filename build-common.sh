@@ -41,7 +41,7 @@ do_prerequisites ()
 
   cd docker-context.no-cge/
   rm -Rf pasdoc/
-  git clone https://github.com/pasdoc/pasdoc/
+  git clone --depth 1 --single-branch --branch master https://github.com/pasdoc/pasdoc/
   cd ../
 }
 

@@ -5,3 +5,10 @@ docker-context.no-cge/pasdoc/
 docker_password.txt
 github_token.txt
 logs/build-*.log
+
+# FPC/Lazarus/build tool outputs
+docker-context.cge/castle-engine-projects/build-lazarus-packages/build_lazarus_packages
+docker-context.cge/castle-engine-projects/get-android-resources/*.apk
+lib
+castle-engine-output
+*.lps
