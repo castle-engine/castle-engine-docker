@@ -71,13 +71,14 @@ ENV CGE_JENKINS_ANDROID_NDK_64_PLATFORM=21
 
 ENV ANDROID_HOME=/usr/local/android/android-sdk/
 ENV ANDROID_NDK_HOME=/usr/local/android/android-sdk/ndk-bundle/
-ENV PATH="${PATH}:/usr/local/android/android-sdk/tools/:\
+# TODO: do we need path to cmdline-tools/latest ? if yes, why not add bin/ subdir?
+ENV PATH="${PATH}:/usr/local/android/android-sdk/cmdline-tools/latest/:\
 /usr/local/android/android-sdk/platform-tools/:\
 /usr/local/android/android-sdk/ndk-bundle/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/:\
 /usr/local/android/android-sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64/bin/:\
 /usr/local/android/android-sdk/ndk-bundle/"
 
-COPY tools/ /usr/local/android/android-sdk/tools/
+COPY cmdline-tools/ /usr/local/android/android-sdk/cmdline-tools/latest/
 
 # Install Android SDK and NDK.
 #
@@ -93,15 +94,15 @@ COPY tools/ /usr/local/android/android-sdk/tools/
 # Note that there's 1 license "January 16, 2019" that seems not available to accept
 # before installing. So accept licenses *after* sdkmanager --install too.
 
-RUN ( yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses ) && \
-  /usr/local/android/android-sdk/tools/bin/sdkmanager --install \
+RUN ( yes | /usr/local/android/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses ) && \
+  /usr/local/android/android-sdk/cmdline-tools/latest/bin/sdkmanager --install \
   "platform-tools" \
   "platforms;android-${CGE_JENKINS_ANDROID_PLATFORM}" \
   "extras;google;google_play_services" \
   "build-tools;${CGE_JENKINS_ANDROID_BUILD_TOOLS}" \
   "extras;android;m2repository" \
   "ndk-bundle" && \
-  ( yes | /usr/local/android/android-sdk/tools/bin/sdkmanager --licenses ) && \
+  ( yes | /usr/local/android/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses ) && \
   ln -s \
     /usr/local/android/android-sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/arm-linux-androideabi/"${CGE_JENKINS_ANDROID_NDK_32_PLATFORM}" \
     /usr/local/android/ndk-libs-for-cge-arm && \

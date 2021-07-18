@@ -9,7 +9,7 @@ function finish ()
   cd $ORIGINAL_DIR
 
   # These are paranoid cleanups, during normal execution these should be removed anyway:
-  rm -f docker-context.no-cge/sdk-tools-linux.zip
+  rm -f docker-context.no-cge/android-cmdline-tools-linux.zip
   set +e
   docker rm test-without-cge > /dev/null 2>&1
   docker rm test-with-cge > /dev/null 2>&1
@@ -35,11 +35,10 @@ do_prerequisites ()
   cd docker-context.no-cge/
   # latest version as of 2021-07-18
   wget 'https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip' \
-    --output-document=sdk-tools-linux.zip
-  rm -Rf tools/
-  unzip sdk-tools-linux.zip
-  mv cmdline-tools tools # the zip contains directory cmdline-tools now
-  rm -f sdk-tools-linux.zip
+    --output-document=android-cmdline-tools-linux.zip
+  rm -Rf cmdline-tools/
+  unzip android-cmdline-tools-linux.zip
+  rm -f android-cmdline-tools-linux.zip
   cd ../
 
   cd docker-context.no-cge/
