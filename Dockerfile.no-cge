@@ -4,15 +4,7 @@
 # This image contains prerequisites (like FPC and Android SDK) but not CGE.
 # Used by build.sh.
 
-FROM debian:stretch
-
-# TODO: upgrade to latest Debian stable.
-#
-# Problem: Java version. We need Java 8, required by Android SDK to work.
-# See https://github.com/castle-engine/castle-engine/wiki/Android#install-java .
-# Getting it in stretch is super-easy (just install default-jdk), getting it in newer Debian
-# is super complicated, as it's no longer supported.
-# Ideally, Android toolchain should no longer require Java 8 some day...
+FROM debian:buster
 
 # Install and configure Debian tools -----------------------------------------
 
@@ -54,8 +46,11 @@ RUN apt-get update && \
 # Makes wget output shorter and better
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
 
-# Matches Debian default-jdk result
-ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
+# Matches Debian default-jdk result, see
+# https://packages.debian.org/buster/default-jdk
+# https://packages.debian.org/buster/amd64/openjdk-11-jdk/filelist
+# https://packages.debian.org/buster/amd64/openjdk-11-jdk-headless/filelist
+ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
 
 # PowerVR texture tools ------------------------------------------------------
 
@@ -135,28 +130,30 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 #    chmod -R a+rX /usr/local/fpclazarus/
 
 # About Lazarus versions:
-# - for latest FPC stable 3.2.0 (used by default, used for official releases):
-#   we want latest Lazarus stable (as it contains GTK2 fixes for right-clicking after Andrzej fixes).
+# - for latest FPC stable 3.2.2 (used by default, used for official releases) we want latest Lazarus stable.
+#   Note that Lazarus 2.0.12 contains GTK2 fixes for right-clicking after Andrzej fixes.
 # - for FPC 3.0.2:
 #   we originally used 1.6.4 (this is Lazarus version that first shipped with FPC 3.0.2).
-#   Bumped to 2.0.0, even Debian stable has 2.0.0: https://packages.debian.org/buster/lazarus , no point in supporting earlier Lazarus versions.
+#   Bumped to 2.0.0, even Debian stable has 2.0.0: https://packages.debian.org/buster/lazarus ,
+#   no point in supporting earlier Lazarus versions.
 # - for FPC versions between, try latest Lazarus version possible that works.
 
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 2.0.0
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.12
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.0.12
 
-# FPC/Lazarus trunk revisions last updated on 2021-03-17
+# FPC/Lazarus trunk revisions last updated on 2021-07-18
 # See
 # - https://svn.freepascal.org/cgi-bin/viewvc.cgi?view=revision
 # - https://svn.freepascal.org/cgi-bin/viewvc.cgi/?root=lazarus
-RUN /usr/local/fpclazarus/bin/update_trunk.sh 48998 64830
+RUN /usr/local/fpclazarus/bin/update_trunk.sh 49616 65471
 
 # We could remove subversion package now...
 # but it would not save disk space, since previous layers already record the state with subversion installed.
 
 # Make last stable default:
-RUN /usr/local/fpclazarus/bin/set_default.sh 3.2.0
+RUN /usr/local/fpclazarus/bin/set_default.sh 3.2.2
 # Setup symlinks for FPC versions "trunk" and "android-default"
 RUN cd /usr/local/fpclazarus/ && \
     ln -s 3.3.1 trunk && \
@@ -164,7 +161,7 @@ RUN cd /usr/local/fpclazarus/ && \
 
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
-ENV FPCLAZARUS_VERSION="3.2.0"
+ENV FPCLAZARUS_VERSION="3.2.2"
 ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
