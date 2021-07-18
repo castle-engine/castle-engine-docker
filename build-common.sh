@@ -33,9 +33,12 @@ do_prerequisites ()
   # - click on dialog where you accept the license,
   # - and then copy URL of the download.
   cd docker-context.no-cge/
-  wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output-document=sdk-tools-linux.zip
+  # latest version as of 2021-07-18
+  wget 'https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip' \
+    --output-document=sdk-tools-linux.zip
   rm -Rf tools/
   unzip sdk-tools-linux.zip
+  mv cmdline-tools tools # the zip contains directory cmdline-tools now
   rm -f sdk-tools-linux.zip
   cd ../
 
