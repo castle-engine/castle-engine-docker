@@ -28,12 +28,13 @@ cd /tmp/fpcinst/
 # install official version for Linux with $FPC_HOST_CPU
 
 # see https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/ for links
-if [ "${FPC_VERSION}" = '3.0.2' -o  "${FPC_VERSION}" = '3.0.4' ]; then
-  FPC_URL="https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux.tar/download"
-  FPC_SUBDIR="fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux"
-else
+if [ "${FPC_VERSION}" = '3.2.0' ]; then
   FPC_URL="https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}-${FPC_HOST_CPU}-linux.tar/download"
   FPC_SUBDIR="fpc-${FPC_VERSION}-${FPC_HOST_CPU}-linux"
+else
+  # suitable for 3.0.2, 3.0.4, 3.2.2. So 3.2.0 was just an exception in the middle.
+  FPC_URL="https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux.tar/download"
+  FPC_SUBDIR="fpc-${FPC_VERSION}.${FPC_HOST_CPU}-linux"
 fi
 wget "${WGET_OPTIONS:-}" "${FPC_URL}" --output-document fpc.tar
 tar xvf fpc.tar

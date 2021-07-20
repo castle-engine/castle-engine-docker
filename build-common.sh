@@ -65,6 +65,7 @@ do_test ()
   $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.2
   $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.4
   $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.2.0
+  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.2.2
   # back to strict mode
   IFS=$'\n\t'
 }
@@ -72,14 +73,14 @@ do_test ()
 do_build_cge ()
 {
   local CGE_VERSION_LABEL="$1"
-  local CGE_VERSION_TAG="$2"
+  local CGE_VERSION_BRANCH="$2"
   shift 2
 
   rm -Rf docker-context.cge/castle-engine/ # cleanup at beginning too, to be sure
   cd docker-context.cge/
   # Using --depth 1 to remove history from clone.
   # This makes clone faster, and (more important) makes resulting Docker image smaller.
-  git clone --depth 1 --single-branch --branch "${CGE_VERSION_TAG}" https://github.com/castle-engine/castle-engine/
+  git clone --depth 1 --single-branch --branch "${CGE_VERSION_BRANCH}" https://github.com/castle-engine/castle-engine/
   cd castle-engine/
   git log -1 > last_commit.txt
   cd ../../
