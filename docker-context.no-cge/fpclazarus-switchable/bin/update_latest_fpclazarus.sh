@@ -3,8 +3,8 @@ set -eu
 
 # Use this to update FPC from trunk now.
 
-FPC_SVN_REVISION="$1"
-LAZARUS_SVN_REVISION="$2"
+FPC_GIT_HASH="$1"
+LAZARUS_GIT_HASH="$2"
 shift 2
 
 # Configurable section -----------------------------------------------------------
@@ -17,27 +17,25 @@ FPC_STABLE_VERSION='3.2.0'
 #FPC_HOST_CPU=i386
 FPC_HOST_CPU=x86_64
 
-# FPC SVN checkout/update --------------------------------------------------------
+# FPC GIT clone ---------------------------------------------------------------
 
 FPC_SOURCE_DIR=/usr/local/fpclazarus/"${FPC_TRUNK_VERSION}"/fpc/src
 FPC_SOURCE_DIR_PARENT="`dirname \"${FPC_SOURCE_DIR}\"`"
 FPC_SOURCE_DIR_BASENAME="`basename \"${FPC_SOURCE_DIR}\"`"
 
-# For now, no point in alternative "svn update" path
-# if [ '!' -d "${FPC_SOURCE_DIR}" ]; then
-
-echo 'FPC checkout:'
+echo 'FPC clone:'
 mkdir -p "${FPC_SOURCE_DIR_PARENT}"
 cd "${FPC_SOURCE_DIR_PARENT}"
-svn co -r "${FPC_SVN_REVISION}" http://svn.freepascal.org/svn/fpc/trunk "${FPC_SOURCE_DIR_BASENAME}"
+git clone --depth 1 --single-branch --branch main https://gitlab.com/freepascal.org/fpc/source.git "${FPC_SOURCE_DIR_BASENAME}"
+
 cd "${FPC_SOURCE_DIR_BASENAME}"
+git checkout "${FPC_GIT_HASH}"
+
+# Remove .git, to conserve Docker container size
+rm -Rf "${LAZARUS_SOURCE_DIR}"/.git/
+
 patch -p0 < /usr/local/fpclazarus/fpc-trunk.patch
 cd ../
-
-# For now, no point in alternative "svn update" path
-# else
-#   svn update -r "${FPC_SVN_REVISION}" "${FPC_SOURCE_DIR}"
-# fi
 
 # FPC Build and install ----------------------------------------------------------
 
@@ -90,7 +88,7 @@ set_ppc_symlink ppcrossa64 # aarch64
 # ----------------------------------------------------------------------------
 # After updating FPC, always update also Lazarus, to recompile it with latest FPC trunk
 
-/usr/local/fpclazarus/bin/update_trunk_lazarus.sh "${LAZARUS_SVN_REVISION}"
+/usr/local/fpclazarus/bin/update_latest_lazarus.sh "${LAZARUS_GIT_HASH}"
 
 # Conserve disk space ------------------------------------------------------
 

@@ -3,28 +3,29 @@ set -eu
 
 # Use this to update Lazarus from trunk, based on FPC trunk.
 
-LAZARUS_SVN_REVISION="$1"
+LAZARUS_GIT_HASH="$1"
 shift 1
 
 # Change with new FPC version ------------------------------------------------
 
 FPC_TRUNK_VERSION='3.3.1'
 
-# Lazarus SVN checkout/update --------------------------------------------------------
+# Lazarus GIT clone ----------------------------------------------------------
 
 LAZARUS_SOURCE_DIR=/usr/local/fpclazarus/"${FPC_TRUNK_VERSION}"/lazarus
 LAZARUS_SOURCE_DIR_PARENT="`dirname \"${LAZARUS_SOURCE_DIR}\"`"
-if [ '!' -d "${LAZARUS_SOURCE_DIR}" ]; then
-  echo 'First Lazarus checkout'
-  mkdir -p "${LAZARUS_SOURCE_DIR_PARENT}"
-  cd "${LAZARUS_SOURCE_DIR_PARENT}"
-  svn co -r "${LAZARUS_SVN_REVISION}" https://svn.freepascal.org/svn/lazarus/trunk `basename ${LAZARUS_SOURCE_DIR}`
-else
-  svn update -r "${LAZARUS_SVN_REVISION}" "${LAZARUS_SOURCE_DIR}"
-fi
-# Remove .svn, to conserve Docker container size
-# (for now, this breaks running "svn update" above, but we don't really care -- Docker container can be just rebuilt).
-rm -Rf "${LAZARUS_SOURCE_DIR}"/.svn/
+
+echo 'Lazarus clone:'
+rm -Rf "${LAZARUS_SOURCE_DIR}"
+mkdir -p "${LAZARUS_SOURCE_DIR_PARENT}"
+cd "${LAZARUS_SOURCE_DIR_PARENT}"
+git clone --depth 1 --single-branch --branch main https://gitlab.com/freepascal.org/lazarus/lazarus.git `basename ${LAZARUS_SOURCE_DIR}`
+
+cd "${LAZARUS_SOURCE_DIR}"
+git checkout "${LAZARUS_GIT_HASH}"
+
+# Remove .git, to conserve Docker container size
+rm -Rf "${LAZARUS_SOURCE_DIR}"/.git/
 
 # Build ----------------------------------------------------------------------
 
