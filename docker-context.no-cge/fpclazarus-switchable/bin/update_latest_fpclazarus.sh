@@ -32,7 +32,7 @@ cd "${FPC_SOURCE_DIR_BASENAME}"
 git checkout "${FPC_GIT_HASH}"
 
 # Remove .git, to conserve Docker container size
-rm -Rf "${LAZARUS_SOURCE_DIR}"/.git/
+rm -Rf "${FPC_SOURCE_DIR}"/.git/
 
 patch -p0 < /usr/local/fpclazarus/fpc-trunk.patch
 cd ../
