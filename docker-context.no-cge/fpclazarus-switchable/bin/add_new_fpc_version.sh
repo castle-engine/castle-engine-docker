@@ -27,6 +27,13 @@ else
   /usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh ${FPC_VERSION} android aarch64
 fi
 
+# TODO: we need additional cross lib and bin. Download fpcupdeluxe ones?
+# if [ "${FPC_VERSION}" = '3.0.0' -o "${FPC_VERSION}" = '3.0.2' -o "${FPC_VERSION}" = '3.0.4' -o "${FPC_VERSION}" = '3.2.0' -o "${FPC_VERSION}" = '3.2.2' ]; then
+#   echo 'Not building Android/Aarch64 cross-compiler for FPC ${FPC_VERSION}, too old'
+# else
+#   /usr/local/fpclazarus/bin/add_new_fpc_version_cross.sh ${FPC_VERSION} wasi wasm32
+# fi
+
 /usr/local/fpclazarus/bin/add_new_fpc_version_lazarus.sh ${FPC_VERSION} ${LAZARUS_VERSION}
 
 # Remove useless temp files, to conserve Docker image size
