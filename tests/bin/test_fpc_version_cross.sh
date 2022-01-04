@@ -10,7 +10,7 @@ FPC_CPU="$3"
 shift 3
 
 bash <<EOF
-# TODO: below assumes that OS in win32/win64, as we add .exe extension.
+# TODO: below assumes that OS is win32/win64, as we add .exe extension.
 
 mkdir -p /tmp/fpc-test/
 cd /tmp/fpc-test/
