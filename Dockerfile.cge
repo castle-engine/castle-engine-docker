@@ -15,12 +15,9 @@ COPY castle-engine-projects/ /usr/local/castle-engine-projects/
 
 # TODO: Commented out, as it
 # - doesn't achieve what I wanted, it doesn't make Android stuff cached in Docker without the need to redownload it for every Jenkins build
-# - doesn't work with CGE 6.4-fixes (no --target=android) or 7.0-alpha1 (Gradle 4.4 doesn't work with Java 11)
+# - doesn't work with CGE 7.0-alpha1 (Gradle 4.4 doesn't work with Java 11)
 # RUN cd /usr/local/castle-engine-projects/get-android-resources/ && castle-engine package --target=android && castle-engine clean
 
-# TODO: Commented out, as it
-# - doesn't work with CGE 6.4-fixes
-# - unknown does it cache Lazarus stuff
 RUN cd /usr/local/castle-engine-projects/build-lazarus-packages/ && castle-engine compile && castle-engine clean
 
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
