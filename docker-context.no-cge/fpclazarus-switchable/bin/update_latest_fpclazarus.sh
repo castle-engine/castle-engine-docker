@@ -26,7 +26,8 @@ FPC_SOURCE_DIR_BASENAME="`basename \"${FPC_SOURCE_DIR}\"`"
 echo 'FPC clone:'
 mkdir -p "${FPC_SOURCE_DIR_PARENT}"
 cd "${FPC_SOURCE_DIR_PARENT}"
-git clone --depth 1 --single-branch --branch main https://gitlab.com/freepascal.org/fpc/source.git "${FPC_SOURCE_DIR_BASENAME}"
+# Note: using  --depth 1 would also speed this up, but then doing "git checkout" to historic revisions is not possible
+git clone --single-branch --branch main https://gitlab.com/freepascal.org/fpc/source.git "${FPC_SOURCE_DIR_BASENAME}"
 
 cd "${FPC_SOURCE_DIR_BASENAME}"
 git checkout "${FPC_GIT_HASH}"

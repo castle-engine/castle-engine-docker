@@ -19,7 +19,8 @@ echo 'Lazarus clone:'
 rm -Rf "${LAZARUS_SOURCE_DIR}"
 mkdir -p "${LAZARUS_SOURCE_DIR_PARENT}"
 cd "${LAZARUS_SOURCE_DIR_PARENT}"
-git clone --depth 1 --single-branch --branch main https://gitlab.com/freepascal.org/lazarus/lazarus.git `basename ${LAZARUS_SOURCE_DIR}`
+# Note: using  --depth 1 would also speed this up, but then doing "git checkout" to historic revisions is not possible
+git clone --single-branch --branch main https://gitlab.com/freepascal.org/lazarus/lazarus.git `basename ${LAZARUS_SOURCE_DIR}`
 
 cd "${LAZARUS_SOURCE_DIR}"
 git checkout "${LAZARUS_GIT_HASH}"
