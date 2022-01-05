@@ -1,6 +1,6 @@
 Docker container with Castle Game Engine, FPC cross-compilers and more. Based on Debian stable.
 
-See [CGE Docker usage docs](https://github.com/castle-engine/castle-engine/wiki/Docker). This is also used by used by [Automatic Cloud Builds (Jenkins) for Castle Game Engine projects](https://github.com/castle-engine/castle-engine/wiki/Cloud-Builds-(Jenkins)).
+See [CGE Docker usage docs](https://castle-engine.io/docker). This is also used by used by [Automatic Cloud Builds (Jenkins) for Castle Game Engine projects](https://castle-engine.io/cloud_builds_jenkins).
 
 Includes various prerequisites of Castle Game Engine:
 
