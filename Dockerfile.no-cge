@@ -69,8 +69,8 @@ RUN wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?
 
 # We call thes variables CGE_JENKINS_xxx, to make it clear that CGE *ignores them*,
 # they are only useful for Dockerfile and scripts inside this Docker container.
-ENV CGE_JENKINS_ANDROID_PLATFORM=29
-ENV CGE_JENKINS_ANDROID_BUILD_TOOLS=29.0.3
+ENV CGE_JENKINS_ANDROID_PLATFORM=31
+ENV CGE_JENKINS_ANDROID_BUILD_TOOLS=31.0.0
 ENV CGE_JENKINS_ANDROID_NDK_32_PLATFORM=16
 ENV CGE_JENKINS_ANDROID_NDK_64_PLATFORM=21
 
