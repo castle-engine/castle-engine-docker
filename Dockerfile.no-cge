@@ -178,6 +178,12 @@ COPY pasdoc/ /usr/local/pasdoc/
 RUN cd /usr/local/pasdoc/ && make build-fpc-default build-tools
 ENV PATH="${PATH}:/usr/local/pasdoc/bin/"
 
+# repository_cleanup ---------------------------------------------------------
+
+RUN wget 'https://raw.githubusercontent.com/castle-engine/cge-scripts/master/repository_cleanup' \
+  --output-document /usr/local/bin/repository_cleanup && \
+  chmod +x /usr/local/bin/repository_cleanup
+
 # Command to run by default ----------------------------------------------------
 
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
