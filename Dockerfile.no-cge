@@ -57,13 +57,12 @@ ENV WGET_OPTIONS="--progress=bar:force:noscroll"
 # https://packages.debian.org/buster/amd64/openjdk-11-jdk-headless/filelist
 ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
 
-# PowerVR texture tools ------------------------------------------------------
+# Various binaries -----------------------------------------------------------
 
-# See https://github.com/floooh/oryol/tree/master/tools
-# License on https://github.com/floooh/oryol/blob/master/tools/PowerVR_SDK_End_User_Licence_Agreement.txt
-RUN wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?raw=true' \
-  --output-document /usr/local/bin/PVRTexToolCLI && \
-  chmod +x /usr/local/bin/PVRTexToolCLI
+# Notes about "--chmod" for COPY:
+# https://blog.vamc19.dev/posts/dockerfile-copy-chmod/
+# https://github.com/moby/moby/issues/34819#issuecomment-697130379
+COPY --chmod=755 bin/PVRTexToolCLI bin/repository_cleanup bin/gh /usr/local/bin/
 
 # Android SDK, NDK -----------------------------------------------------------
 
@@ -181,12 +180,6 @@ ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS
 COPY pasdoc/ /usr/local/pasdoc/
 RUN cd /usr/local/pasdoc/ && make build-fpc-default build-tools
 ENV PATH="${PATH}:/usr/local/pasdoc/bin/"
-
-# repository_cleanup ---------------------------------------------------------
-
-RUN wget 'https://raw.githubusercontent.com/castle-engine/cge-scripts/master/repository_cleanup' \
-  --output-document /usr/local/bin/repository_cleanup && \
-  chmod +x /usr/local/bin/repository_cleanup
 
 # Command to run by default ----------------------------------------------------
 

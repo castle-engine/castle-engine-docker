@@ -22,7 +22,8 @@ trap finish EXIT
 
 # functions ---------------------------------------------------------------------
 
-do_prerequisites ()
+# Install Android cmdline tools in docker-context.no-cge/
+do_prerequisite_android_cmdline_tools ()
 {
   # This could also be downloaded inside container.
   # But it's faster (during Dockerfile development),
@@ -40,11 +41,49 @@ do_prerequisites ()
   unzip android-cmdline-tools-linux.zip
   rm -f android-cmdline-tools-linux.zip
   cd ../
+}
 
+# Put PasDoc sources in docker-context.no-cge/
+do_prerequisite_pasdoc_src ()
+{
   cd docker-context.no-cge/
   rm -Rf pasdoc/
   git clone --depth 1 --single-branch --branch master https://github.com/pasdoc/pasdoc/
   cd ../
+}
+
+# Put GitHub CLI ( https://cli.github.com/ ) binary in docker-context.no-cge/bin/
+do_prerequisite_gh_cli ()
+{
+  cd docker-context.no-cge/
+  mkdir -p bin/
+
+  # just pick latest from https://github.com/cli/cli/releases
+  local GH_CLI_VERSION=2.12.1
+  wget https://github.com/cli/cli/releases/download/v"${GH_CLI_VERSION}"/gh_"${GH_CLI_VERSION}"_linux_amd64.tar.gz --output-document gh.tar.gz
+
+  local GH_CLI_DIR=gh_"${GH_CLI_VERSION}"_linux_amd64
+  tar xzvf gh.tar.gz "${GH_CLI_DIR}"/bin/gh
+  mv -f "${GH_CLI_DIR}"/bin/gh bin/gh
+  rm -Rf "${GH_CLI_DIR}" gh.tar.gz
+
+  cd ../
+}
+
+# Put repository_cleanup in docker-context.no-cge/bin/
+do_prerequisite_repository_cleanup ()
+{
+  wget 'https://raw.githubusercontent.com/castle-engine/cge-scripts/master/repository_cleanup' \
+    --output-document docker-context.no-cge/bin/repository_cleanup
+}
+
+# Put PVRTexToolCLI in docker-context.no-cge/bin/
+# See https://github.com/floooh/oryol/tree/master/tools
+# License on https://github.com/floooh/oryol/blob/master/tools/PowerVR_SDK_End_User_Licence_Agreement.txt
+do_prerequisite_PVRTexToolCLI ()
+{
+  wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?raw=true' \
+    --output-document docker-context.no-cge/bin/PVRTexToolCLI
 }
 
 do_build ()
