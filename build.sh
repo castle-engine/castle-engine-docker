@@ -11,12 +11,14 @@ LOG_FILE="logs/build-$$.log"
 echo "Logging to ${LOG_FILE}"
 exec > "${LOG_FILE}" 2>&1
 
+do_prerequisite_cleanup
 do_prerequisite_android_cmdline_tools
 do_prerequisite_pasdoc_src
 do_prerequisite_gh_cli
 do_prerequisite_repository_cleanup
 do_prerequisite_PVRTexToolCLI
 do_prerequisite_compressonator
+
 do_build
 do_test
 # Do this before do_build_cge, as Dockerfile.cge uses images from Dockerhub.

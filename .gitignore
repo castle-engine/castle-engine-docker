@@ -1,7 +1,11 @@
 *~
-docker-context.no-cge/cmdline-tools/
 
+docker-context.no-cge/cmdline-tools/
+docker-context.no-cge/bin/
 docker-context.no-cge/pasdoc/
+docker-context.no-cge/compressonatorcli
+docker-context.no-cge/compressonatorcli.tar.gz
+
 docker_password.txt
 github_token.txt
 logs/build-*.log

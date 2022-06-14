@@ -1,5 +1,8 @@
 # Functions for building Docker images.
 
+# We use "COPY --chmod...", see https://docs.docker.com/develop/develop-images/build_enhancements/
+DOCKER_BUILDKIT=1
+
 # cleanup --------------------------------------------------------------------------
 
 ORIGINAL_DIR=`pwd`
@@ -52,11 +55,16 @@ do_prerequisite_pasdoc_src ()
   cd ../
 }
 
+do_prerequisite_cleanup ()
+{
+  rm -Rf bin/
+  mkdir -p bin/
+}
+
 # Put GitHub CLI ( https://cli.github.com/ ) binary in docker-context.no-cge/bin/
 do_prerequisite_gh_cli ()
 {
   cd docker-context.no-cge/
-  mkdir -p bin/
 
   # just pick latest from https://github.com/cli/cli/releases
   local GH_CLI_VERSION=2.12.1
@@ -90,6 +98,7 @@ do_prerequisite_PVRTexToolCLI ()
 do_prerequisite_compressonator ()
 {
   cd docker-context.no-cge/
+  rm -Rf compressonatorcli compressonatorcli.tar.gz
 
   # Look at https://github.com/GPUOpen-Tools/Compressonator/releases for links
   TARGZ_VERSION=4.2.5150
