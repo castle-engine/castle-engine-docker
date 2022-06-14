@@ -62,7 +62,16 @@ ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
 # Notes about "--chmod" for COPY:
 # https://blog.vamc19.dev/posts/dockerfile-copy-chmod/
 # https://github.com/moby/moby/issues/34819#issuecomment-697130379
-COPY --chmod=755 bin/PVRTexToolCLI bin/repository_cleanup bin/gh /usr/local/bin/
+COPY --chmod=755 \
+  bin/PVRTexToolCLI \
+  bin/repository_cleanup \
+  bin/gh \
+  bin/compressonatorcli \
+  /usr/local/bin/
+
+# Compressonator -------------------------------------------------------------
+
+COPY compressonatorcli /usr/local/compressonatorcli
 
 # Android SDK, NDK -----------------------------------------------------------
 

@@ -86,6 +86,30 @@ do_prerequisite_PVRTexToolCLI ()
     --output-document docker-context.no-cge/bin/PVRTexToolCLI
 }
 
+# Get Compressonator https://gpuopen.com/compressonator/ into docker-context.no-cge/
+do_prerequisite_compressonator ()
+{
+  cd docker-context.no-cge/
+
+  # Look at https://github.com/GPUOpen-Tools/Compressonator/releases for links
+  TARGZ_VERSION=4.2.5150
+  wget https://github.com/GPUOpen-Tools/compressonator/releases/download/V4.2.5185/compressonatorcli_linux_x86_64_"${TARGZ_VERSION}".tar.gz \
+    --output-document compressonatorcli.tar.gz
+  tar xzvf compressonatorcli.tar.gz
+  mv compressonatorcli_linux_x86_64_"${TARGZ_VERSION}"/ compressonatorcli/
+  rm -Rf compressonatorcli/documents compressonatorcli/images # not useful
+
+  cat > bin/compressonatorcli <<EOF
+#!/bin/bash
+set -eu
+# Pass arguments to another compressonatorcli script,
+# which in turn calls compressonatorcli-bin.
+# That next compressonatorcli script must get full absolute path in $0 to work.
+/usr/local/compressonatorcli/compressonatorcli "$@"
+EOF
+  cd ../
+}
+
 do_build ()
 {
   docker build -t castle-engine-cloud-builds-tools:cge-none -f Dockerfile.no-cge docker-context.no-cge/
