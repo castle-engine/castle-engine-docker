@@ -136,24 +136,28 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 #    chmod -R a+rX /usr/local/fpclazarus/
 
 # About Lazarus versions:
-# - for latest FPC stable 3.2.2 (used by default, used for official releases) we want latest Lazarus stable.
+# - For latest FPC stable 3.2.2 (used by default, used for official releases)
+#   we want latest Lazarus stable.
 #   Note that Lazarus 2.0.12 contains GTK2 fixes for right-clicking after Andrzej fixes.
-# - for FPC 3.0.2:
+# - For oldest FPC still supported by latest CGE (this means FPC 3.2.0 now,
+#   https://castle-engine.io/supported_compilers.php ) try oldest Lazarus supported.
+#   To make sure we still compile with older Lazarus versions.
+# - For FPC 3.0.2 (not supported by latest CGE anymore):
 #   we originally used 1.6.4 (this is Lazarus version that first shipped with FPC 3.0.2).
 #   Bumped to 2.0.0, even Debian stable has 2.0.0: https://packages.debian.org/buster/lazarus ,
 #   no point in supporting earlier Lazarus versions.
-# - for FPC versions between, try latest Lazarus version possible that works.
+# - For other FPC versions, in general try latest Lazarus version possible that works.
 
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 2.0.0
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.12
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.0.12
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.2.2
 
-# FPC/Lazarus trunk revisions last updated on 2022-02-07
+# FPC/Lazarus trunk revisions last updated on 2022-06-14
 # See
 # - https://gitlab.com/freepascal.org/fpc/source
 # - https://gitlab.com/freepascal.org/lazarus/lazarus
-RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh 629c1de460917ce2b278443e1befafaed8f5c1be 932d36f20ef70284bcb56bbbd87ef82ba155794e
+RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh d153c75e84df79e2765ee566a40e2e7b4af1e39d 7dfdebb3899e7571009e0d7a2133f88016088af9
 
 # We could remove subversion package now...
 # but it would not save disk space, since previous layers already record the state with subversion installed.
