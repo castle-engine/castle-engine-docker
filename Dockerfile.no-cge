@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 # -*- mode: shell-script -*-
 #
 # Dockerfile that defines the base Docker image for CGE cloud builds tools.
@@ -72,6 +74,7 @@ COPY --chmod=755 \
 # Compressonator -------------------------------------------------------------
 
 COPY compressonatorcli /usr/local/compressonatorcli
+RUN chmod +x /usr/local/compressonatorcli/compressonatorcli /usr/local/compressonatorcli/compressonatorcli-bin
 
 # Android SDK, NDK -----------------------------------------------------------
 

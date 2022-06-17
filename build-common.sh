@@ -1,7 +1,7 @@
 # Functions for building Docker images.
 
 # We use "COPY --chmod...", see https://docs.docker.com/develop/develop-images/build_enhancements/
-DOCKER_BUILDKIT=1
+export DOCKER_BUILDKIT=1
 
 # cleanup --------------------------------------------------------------------------
 
@@ -114,7 +114,7 @@ set -eu
 # Pass arguments to another compressonatorcli script,
 # which in turn calls compressonatorcli-bin.
 # That next compressonatorcli script must get full absolute path in $0 to work.
-/usr/local/compressonatorcli/compressonatorcli "$@"
+/usr/local/compressonatorcli/compressonatorcli "\$@"
 EOF
   cd ../
 }
