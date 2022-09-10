@@ -28,6 +28,7 @@ FROM debian:buster
 # - git for "make tests" in pasdoc
 # - php-cli for "make tests" in pasdoc and in cge-www
 # - asciidoctor, coderay for "make tests" in cge-www
+# - imagemagick for update_image_sizes.sh in cge-www
 RUN apt-get update && \
   apt-get --no-install-recommends -y install \
     asciidoctor \
@@ -38,6 +39,7 @@ RUN apt-get update && \
     file \
     gcc \
     git \
+    imagemagick \
     libgtkglext1-dev \
     libnvtt-bin \
     subversion \
