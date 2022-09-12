@@ -17,7 +17,7 @@ pipeline {
           string(credentialsId: 'docker-password', variable: 'docker_password')
         ]) {
           sh './build-cge-unstable.sh'
-	}
+        }
       }
     }
     stage('Remove Unused Docker Images') {

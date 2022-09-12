@@ -28,6 +28,7 @@ FROM debian:buster
 # - git for "make tests" in pasdoc
 # - php-cli for "make tests" in pasdoc and in cge-www
 # - asciidoctor, coderay for "make tests" in cge-www
+# - imagemagick for update_image_sizes.sh in cge-www
 RUN apt-get update && \
   apt-get --no-install-recommends -y install \
     asciidoctor \
@@ -38,6 +39,7 @@ RUN apt-get update && \
     file \
     gcc \
     git \
+    imagemagick \
     libgtkglext1-dev \
     libnvtt-bin \
     subversion \
@@ -164,11 +166,11 @@ RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.12
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.2.2
 
-# FPC/Lazarus trunk revisions last updated on 2022-06-14
+# FPC/Lazarus trunk revisions last updated on 2022-07-28
 # See
 # - https://gitlab.com/freepascal.org/fpc/source
 # - https://gitlab.com/freepascal.org/lazarus/lazarus
-RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh d153c75e84df79e2765ee566a40e2e7b4af1e39d 7dfdebb3899e7571009e0d7a2133f88016088af9
+RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh d2c2ddb337c3bea49c1fb5b6ad7408fa128b2d53 835c32c6a1d73b2b47db5e29bb8abae84397530d
 
 # We could remove subversion package now...
 # but it would not save disk space, since previous layers already record the state with subversion installed.
