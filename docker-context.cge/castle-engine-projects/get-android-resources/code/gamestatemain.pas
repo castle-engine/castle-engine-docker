@@ -47,8 +47,7 @@ uses SysUtils;
 constructor TStateMain.Create(AOwner: TComponent);
 begin
   inherited;
-  // not in 7.0-alpha1 now
-  // DesignUrl := 'castle-data:/gamestatemain.castle-user-interface';
+  DesignUrl := 'castle-data:/gamestatemain.castle-user-interface';
 end;
 
 procedure TStateMain.Start;
@@ -56,8 +55,7 @@ begin
   inherited;
 
   { Find components, by name, that we need to access from code }
-  // not in 7.0-alpha1 now
-  //LabelFps := DesignedComponent('LabelFps') as TCastleLabel;
+  LabelFps := DesignedComponent('LabelFps') as TCastleLabel;
 end;
 
 procedure TStateMain.Update(const SecondsPassed: Single; var HandleInput: Boolean);

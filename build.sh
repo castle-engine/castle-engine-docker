@@ -25,8 +25,7 @@ do_test
 do_upload none
 do_upload_github none
 
-do_build_cge stable v7.0-alpha.1
-  # v6.4-fixes
+do_build_cge stable v7.0-alpha.2
 do_test_cge stable
 do_upload stable
 do_upload_github stable
