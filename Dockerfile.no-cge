@@ -14,6 +14,7 @@ FROM debian:buster
 # - wget is for downloading in /usr/local/fpclazarus/bin/add_new_fpc_version.sh
 # - libgtkglext1-dev is for compiling applications on Linux
 #   with CGE CastleWindow backend (pulls a lot of other -dev packages)
+#   TODO: libgtkglext1 is not used anymore by CGE, we should replace it with GTK + OpenGL: libglx0 libgtk2.0-dev
 # - subversion is for gettting FPC/Lazarus trunk (but we will remove it later)
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
@@ -29,7 +30,7 @@ FROM debian:buster
 # - php-cli for "make tests" in pasdoc and in cge-www
 # - asciidoctor, coderay for "make tests" in cge-www
 # - imagemagick for update_image_sizes.sh in cge-www
-RUN apt-get update && \
+RUN apt-get --allow-releaseinfo-change update && \
   apt-get --no-install-recommends -y install \
     asciidoctor \
     coderay \
