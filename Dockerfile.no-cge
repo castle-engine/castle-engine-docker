@@ -167,11 +167,11 @@ RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.12
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.2.2
 
-# FPC/Lazarus trunk revisions last updated on 2022-12-27
+# FPC/Lazarus trunk revisions last updated on 2023-03-29
 # See
 # - https://gitlab.com/freepascal.org/fpc/source
 # - https://gitlab.com/freepascal.org/lazarus/lazarus
-RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh 535f11886de9ddcc3bb52a38f6d7cae06e557e96 5f76b3e31c3c6009277e7f69d90944538301c895
+RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh db66d8f0570c3b4ccae736879067d6960feb0342 8ec140d3b2bf46f3945e8c87a10fe7a06f18ab86
 
 # We could remove subversion package now...
 # but it would not save disk space, since previous layers already record the state with subversion installed.
