@@ -24,6 +24,9 @@ case "${LAZARUS_VERSION}" in
   '2.2.2')
     LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
     ;;
+  '2.2.6')
+    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
+    ;;
   *)
     LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download"
     ;;
