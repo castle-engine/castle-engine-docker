@@ -1,9 +1,25 @@
 /* -*- mode: groovy -*-
   Configure how to run our job in Jenkins.
-  See https://castle-engine.io/cloud_builds_jenkins .
+  See https://castle-engine.io/jenkins .
 */
 
 pipeline {
+  options {
+    /* Sometimes Jenkins can go crazy and schedule numerous builds of
+       the same job in a short time (like new escape-universe job scheduled
+       every ~5 minutes, for a total of ~50 jobs, on one Saturday morning).
+       This can easily exhaust both GitLFS quota and disk space on slaves,
+       also causing lots of noise in Jenkins mails.
+       Using disableConcurrentBuilds avoids this. */
+    disableConcurrentBuilds()
+    /* Trying to resume builds when controller restarts usually results
+       in job just being stuck forever. So we disable it. */
+    disableResume()
+    /* Makes failure in any paralel job to stop the build,
+       instead of needlessly trying to finish on one node,
+       when another node already failed. */
+    parallelsAlwaysFailFast()
+  }
   triggers {
     pollSCM('H/4 * * * *')
     upstream(upstreamProjects: 'castle_game_engine_organization/castle-engine/master', threshold: hudson.model.Result.SUCCESS)
