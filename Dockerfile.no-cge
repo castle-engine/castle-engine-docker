@@ -156,14 +156,14 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 # - For oldest FPC still supported by latest CGE (this means FPC 3.2.0 now,
 #   https://castle-engine.io/supported_compilers.php ) try oldest Lazarus supported.
 #   To make sure we still compile with older Lazarus versions.
-# - For FPC 3.0.2 (not supported by latest CGE anymore):
-#   we originally used 1.6.4 (this is Lazarus version that first shipped with FPC 3.0.2).
-#   Bumped to 2.0.0, even Debian stable has 2.0.0: https://packages.debian.org/buster/lazarus ,
-#   no point in supporting earlier Lazarus versions.
 # - For other FPC versions, in general try latest Lazarus version possible that works.
 
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 2.0.0
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
+# Removed versions not supported by CGE anymore
+# (see https://castle-engine.io/supported_compilers.php ),
+# they caused Docker image to be big and GH Actions were failing with disk space.
+#RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 2.0.0
+#RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
+
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.12
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.2.2
 
