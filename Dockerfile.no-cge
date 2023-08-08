@@ -2,27 +2,30 @@
 
 # -*- mode: shell-script -*-
 #
-# Dockerfile that defines the base Docker image for CGE cloud builds tools.
+# This Dockerfile defines the base Docker image for CGE cloud builds tools,
+# exposed as "kambi/castle-engine-cloud-builds-tools:cge-none".
 # This image contains prerequisites (like FPC and Android SDK) but not CGE.
 # Used by build.sh.
 
-FROM debian:buster
+# Base image ------------------------------------------------------------------
+
+# We base on Debian bookworm.
+# It includes Java 17 (just default-jdk gives it), required by Android Gradle Plugin 8.0.1.
+# See https://hub.docker.com/_/debian about "slim" meaning.
+FROM debian:bookworm-slim
 
 # Install and configure Debian tools -----------------------------------------
 
 # Reasons of packages:
 # - wget is for downloading in /usr/local/fpclazarus/bin/add_new_fpc_version.sh
-# - libgtkglext1-dev is for compiling applications on Linux
-#   with CGE CastleWindow backend (pulls a lot of other -dev packages)
-#   TODO: libgtkglext1 is not used anymore by CGE, we should replace it with GTK + OpenGL: libglx0 libgtk2.0-dev
-# - subversion is for gettting FPC/Lazarus trunk (but we will remove it later)
+# - libglx-dev link with OpenGL
+# - libgtk2.0-dev link with GTK 2 (for CGE editor with default LCL backend on Linux)
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
 # - binutils-mingw-w64 and gcc
 #   for CGE build tool cross-compiling to Windows (32 and 64), it needs resource compiler
 # - zip for CGE build tool (to package to zip)
 # - libnvtt-bin for CGE build tool (to generate compressed textures)
-# - libc6-i386 lib32stdc++6 lib32z1 are for Android SDK (see aidl problems, https://castle-engine.io/android_sdk_and_ndk_troubleshooting#_errors_when_executing_aidl_on_64_bit_x86_64_linux )
 # - make to compile FPC, and for various jobs
 # - file is used by Android compilation (although it seems it works without it too, but there's some error about "file" binary missing)
 # - curl for TestFairy uploader
@@ -41,15 +44,14 @@ RUN apt-get --allow-releaseinfo-change update && \
     gcc \
     git \
     imagemagick \
-    libgtkglext1-dev \
+    libglx-dev \
+    libgtk2.0-dev \
     libnvtt-bin \
-    subversion \
     make \
     patch \
     php-cli \
     unzip \
     wget \
-    libc6-i386 lib32stdc++6 lib32z1 \
     zip && \
   rm -rf /var/lib/apt/lists/*
 
