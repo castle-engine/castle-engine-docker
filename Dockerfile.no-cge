@@ -59,10 +59,10 @@ RUN apt-get --allow-releaseinfo-change update && \
 ENV WGET_OPTIONS="--progress=bar:force:noscroll"
 
 # Matches Debian default-jdk result, see
-# https://packages.debian.org/buster/default-jdk
-# https://packages.debian.org/buster/amd64/openjdk-11-jdk/filelist
-# https://packages.debian.org/buster/amd64/openjdk-11-jdk-headless/filelist
-ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+# https://packages.debian.org/bookworm/default-jdk
+# https://packages.debian.org/bookworm/amd64/openjdk-17-jdk/filelist
+# https://packages.debian.org/bookworm/amd64/openjdk-17-jdk-headless/filelist
+ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64/"
 
 # Various binaries -----------------------------------------------------------
 
