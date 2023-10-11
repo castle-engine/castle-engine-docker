@@ -130,7 +130,7 @@ do_build ()
     --build-arg DOCKER_FPCLAZARUS_VERSION=3.2.0
   docker build -t castle-engine-cloud-builds-tools:cge-none-fpc331 -f Dockerfile.no-cge docker-context.no-cge/ \
     --build-arg DOCKER_FPCLAZARUS_VERSION=3.3.1
-}}
+}
 
 # Run tests
 do_test ()
