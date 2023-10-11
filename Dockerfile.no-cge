@@ -240,7 +240,10 @@ ENV FPCLAZARUS_VERSION="3.2.2"
 
 # FPC 3.3.1 ------------------------------------------------------------------
 
-FROM base-without-fpc AS fpc-3.3.1
+# This cannot start from scratch, to build FPC 3.3.1 we need latest stable FPC
+#FROM base-without-fpc AS fpc-3.3.1
+
+FROM fpc-3.2.2 AS fpc-3.3.1
 
 # FPC/Lazarus latest revisions last updated on 2023-03-29
 # See
