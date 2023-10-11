@@ -12,6 +12,7 @@ shift 2
 # Change with new FPC version
 FPC_TRUNK_VERSION='3.3.1'
 FPC_STABLE_VERSION='3.2.0'
+FPC_STABLE_BIN="/usr/local/fpclazarus/bootstrap/ppcx64-${FPC_STABLE_VERSION}"
 
 # The architecture native to current host, name consistent with FPC tar.gz files
 #FPC_HOST_CPU=i386
@@ -45,20 +46,20 @@ mkdir -p "${FPC_INSTALL_DIR}"
 
 cd "${FPC_SOURCE_DIR}"
 # build with last stable fpc
-. /usr/local/fpclazarus/bin/setup.sh "${FPC_STABLE_VERSION}"
-make clean all install INSTALL_PREFIX="${FPC_INSTALL_DIR}"
+make clean all install \
+  INSTALL_PREFIX="${FPC_INSTALL_DIR}" PP="${FPC_STABLE_BIN}"
 make clean crossall crossinstall \
   OS_TARGET=win32 CPU_TARGET=i386 \
-  INSTALL_PREFIX="${FPC_INSTALL_DIR}"
+  INSTALL_PREFIX="${FPC_INSTALL_DIR}" PP="${FPC_STABLE_BIN}"
 make clean crossall crossinstall \
   OS_TARGET=win64 CPU_TARGET=x86_64 \
-  INSTALL_PREFIX="${FPC_INSTALL_DIR}"
+  INSTALL_PREFIX="${FPC_INSTALL_DIR}" PP="${FPC_STABLE_BIN}"
 make clean crossall crossinstall \
   OS_TARGET=android CPU_TARGET=arm CROSSOPT="-CfVFPV3" \
-  INSTALL_PREFIX="${FPC_INSTALL_DIR}"
+  INSTALL_PREFIX="${FPC_INSTALL_DIR}" PP="${FPC_STABLE_BIN}"
 make clean crossall crossinstall \
   OS_TARGET=android CPU_TARGET=aarch64 \
-  INSTALL_PREFIX="${FPC_INSTALL_DIR}"
+  INSTALL_PREFIX="${FPC_INSTALL_DIR}" PP="${FPC_STABLE_BIN}"
 
 # Set symlinks ---------------------------------------------------------------
 
