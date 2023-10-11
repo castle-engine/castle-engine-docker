@@ -18,8 +18,9 @@ FROM debian:bookworm-slim
 
 # Reasons of packages:
 # - wget is for downloading in /usr/local/fpclazarus/bin/add_new_fpc_version.sh
-# - libglx-dev link with OpenGL
+# - libglx-dev, libgl-dev link with OpenGL
 # - libgtk2.0-dev link with GTK 2 (for CGE editor with default LCL backend on Linux)
+# - xorg-dev to link with additional X libs, used by CASTLE_WINDOW_XLIB (used by https://github.com/castle-engine/cge-www/blob/master/Jenkinsfile.convert-to-x3d )
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
 # - binutils-mingw-w64 and gcc
@@ -44,8 +45,9 @@ RUN apt-get --allow-releaseinfo-change update && \
     gcc \
     git \
     imagemagick \
-    libglx-dev \
+    libglx-dev libgl-dev \
     libgtk2.0-dev \
+    xorg-dev \
     libnvtt-bin \
     make \
     patch \
