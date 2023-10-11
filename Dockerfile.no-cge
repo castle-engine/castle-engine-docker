@@ -257,7 +257,7 @@ ENV FPCLAZARUS_VERSION="3.3.1"
 
 FROM fpc-${DOCKER_FPCLAZARUS_VERSION} AS fpc-default
 
-RUN /usr/local/fpclazarus/bin/set_default.sh ${DOCKER_FPCLAZARUS_VERSION}
+RUN /usr/local/fpclazarus/bin/set_default.sh ${FPCLAZARUS_VERSION}
 
 ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_VERSION}"
