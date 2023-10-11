@@ -83,21 +83,16 @@ set_ppc_symlink ppcross386
 set_ppc_symlink ppcrossarm
 set_ppc_symlink ppcrossa64 # aarch64
 
-# Fix permissions ------------------------------------------------------------
-
-/usr/local/fpclazarus/bin/fix_permissions.sh
-
-# ----------------------------------------------------------------------------
-# After updating FPC, always update also Lazarus, to recompile it with latest FPC trunk
-
-/usr/local/fpclazarus/bin/update_latest_lazarus.sh "${LAZARUS_GIT_HASH}"
-
 # Conserve disk space ------------------------------------------------------
 
 # Remove FPC sources and docs --  useless in a container, to conserve Docker image size
 rm -Rf /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/src/ \
        /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/man/ \
        /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/share/doc/
+
+# Fix permissions ------------------------------------------------------------
+
+/usr/local/fpclazarus/bin/fix_permissions.sh
 
 # Test new compiler ----------------------------------------------------------
 
@@ -110,3 +105,11 @@ fpc -Twin32 -Pi386 -l | head -n 1
 fpc -Twin64 -Px86_64 -l | head -n 1
 fpc -Tandroid -Parm -l | head -n 1
 set -e # ignore exit, "fpc .. -l" always makes error "No source file name in command line"
+
+# ----------------------------------------------------------------------------
+# After updating FPC, always update also Lazarus, to recompile it with latest FPC trunk
+
+# We have already switched above to use the new compiler.
+
+/usr/local/fpclazarus/bin/update_latest_lazarus.sh "${LAZARUS_GIT_HASH}"
+
