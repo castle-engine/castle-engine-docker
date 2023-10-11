@@ -1,6 +1,10 @@
 # Functions for building Docker images.
 
-# We use "COPY --chmod...", see https://docs.docker.com/develop/develop-images/build_enhancements/
+# Enable BuildKit ( https://docs.docker.com/build/#to-enable-buildkit-builds )
+# because:
+# - We use "COPY --chmod...", see https://docs.docker.com/develop/develop-images/build_enhancements/
+# - We may use other interesting features, see
+#   https://medium.com/@tonistiigi/advanced-multi-stage-build-patterns-6f741b852fae
 export DOCKER_BUILDKIT=1
 
 # cleanup --------------------------------------------------------------------------
@@ -122,7 +126,11 @@ EOF
 do_build ()
 {
   docker build -t castle-engine-cloud-builds-tools:cge-none -f Dockerfile.no-cge docker-context.no-cge/
-}
+  docker build -t castle-engine-cloud-builds-tools:cge-none-fpc320 -f Dockerfile.no-cge docker-context.no-cge/ \
+    --build-arg DOCKER_FPCLAZARUS_VERSION=3.2.0
+  docker build -t castle-engine-cloud-builds-tools:cge-none-fpc331 -f Dockerfile.no-cge docker-context.no-cge/ \
+    --build-arg DOCKER_FPCLAZARUS_VERSION=3.3.1
+}}
 
 # Run tests
 do_test ()

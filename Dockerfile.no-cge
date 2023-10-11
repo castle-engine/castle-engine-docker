@@ -7,12 +7,22 @@
 # This image contains prerequisites (like FPC and Android SDK) but not CGE.
 # Used by build.sh.
 
+# Docker build argument, see
+# https://medium.com/@tonistiigi/advanced-multi-stage-build-patterns-6f741b852fae .
+# The variable has verbose name, DOCKER_FPCLAZARUS_VERSION, to not be confused
+# with (in theory independent) FPCLAZARUS_VERSION we set inside Docker environment.
+# Allowed now (see bottom of this for implementation):
+# - 3.2.0
+# - 3.2.2
+# - 3.3.1 (FPC recent snapshot from GitLab "main" branch)
+ARG DOCKER_FPCLAZARUS_VERSION=3.2.2
+
 # Base image ------------------------------------------------------------------
 
 # We base on Debian bookworm.
 # It includes Java 17 (just default-jdk gives it), required by Android Gradle Plugin 8.0.1.
 # See https://hub.docker.com/_/debian about "slim" meaning.
-FROM debian:bookworm-slim
+FROM debian:bookworm-slim AS base-without-fpc
 
 # Install and configure Debian tools -----------------------------------------
 
@@ -156,7 +166,15 @@ RUN ( yes | /usr/local/android/android-sdk/cmdline-tools/latest/bin/sdkmanager -
   mkdir -p $ANDROID_NDK_HOME/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64 && \
   chmod -R a=rwX /usr/local/android/android-sdk/
 
-# FPC + Lazarus --------------------------------------------------------------
+# PasDoc ----------------------------------------------------------------------
+
+# This only sets up PasDoc source code.
+# We will compile PasDoc later, once we have FPC.
+
+COPY pasdoc/ /usr/local/pasdoc/
+ENV PATH="${PATH}:/usr/local/pasdoc/bin/"
+
+# FPC + Lazarus switchable -----------------------------------------------------
 
 # Expect fpclazarus-switchable already downloaded here
 # RUN git clone git@gitlab.com:admin-michalis.ii.uni.wroc.pl/fpclazarus-switchable.git
@@ -165,6 +183,27 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 # Don't bother with permissions inside Docker container
 #RUN chown -R root:staff /usr/local/fpclazarus/ && \
 #    chmod -R a+rX /usr/local/fpclazarus/
+
+# As of now, this sets up a framework to switch FPC/Lazarus at runtime
+# ('source /usr/local/fpclazarus/bin/setup.sh ...')
+# but we actually *do not use this framework and each Docker image has
+# only a single FPC / Lazarus version*.
+# Reasons:
+#
+# - In most usage cases, the alternative FPC / Lazarus are not necessary.
+#   For most people, we recommend using latest stable FPC / Lazarus,
+#   as is recommended by CGE.
+#
+# - As for 2023-10, GitHub is making more and more "tightnening" of disk
+#   space and large Docker images are problematic. And the alternative FPC/Lazarus
+#   versions are responsible for most of our Docker images disk size,
+#   since each FPC/Lazarus comes with a number of precompiled platforms too
+#   (we want to precompile for Windows, Linux, Android...).
+#   So we get disk space errors on GitHub Actions even with 3 FPC/Lazarus versions,
+#   we also have no hope to support more FPC/Lazarus testable...
+#
+# Ergo, it is friendlier for disk space on GitHub Actions
+# to have separate Docker images with separate FPC/Lazarus versions.
 
 # About Lazarus versions:
 # - For latest FPC stable 3.2.2 (used by default, used for official releases)
@@ -181,39 +220,50 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 #RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 2.0.0
 #RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
 
+# FPC 3.2.0 ----------------------------------------------------------------------
+
+FROM base-without-fpc AS fpc-3.2.0
+
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.12
+
+# Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
+# These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
+ENV FPCLAZARUS_VERSION="3.2.0"
+
+# FPC 3.2.2 ------------------------------------------------------------------------
+
+FROM base-without-fpc AS fpc-3.2.2
+
 RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.2.6
 
-# FPC/Lazarus trunk revisions last updated on 2023-03-29
+ENV FPCLAZARUS_VERSION="3.2.2"
+
+# FPC 3.3.1 ------------------------------------------------------------------
+
+FROM base-without-fpc AS fpc-3.3.1
+
+# FPC/Lazarus latest revisions last updated on 2023-03-29
 # See
 # - https://gitlab.com/freepascal.org/fpc/source
 # - https://gitlab.com/freepascal.org/lazarus/lazarus
 RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh db66d8f0570c3b4ccae736879067d6960feb0342 8ec140d3b2bf46f3945e8c87a10fe7a06f18ab86
 
-# We could remove subversion package now...
-# but it would not save disk space, since previous layers already record the state with subversion installed.
-
-# Make last stable default:
-RUN /usr/local/fpclazarus/bin/set_default.sh 3.2.2
-# Setup symlinks for FPC versions "trunk" and "android-default"
-RUN cd /usr/local/fpclazarus/ && \
-    ln -s 3.3.1 trunk && \
-    ln -s default android-default
-
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
-ENV FPCLAZARUS_VERSION="3.2.2"
+ENV FPCLAZARUS_VERSION="3.3.1"
+
+# ---------------------------------------------------------------------------
+# Finish, last FROM ... chooses the FPC version indicated by DOCKER_FPCLAZARUS_VERSION
+
+FROM fpc-${DOCKER_FPCLAZARUS_VERSION} AS fpc-default
+
+RUN /usr/local/fpclazarus/bin/set_default.sh ${DOCKER_FPCLAZARUS_VERSION}
+
 ENV PATH="${PATH}:/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/"
 ENV FPCLAZARUS_REAL_VERSION="${FPCLAZARUS_VERSION}"
 ENV FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
 
-# PasDoc ---------------------------------------------------------------------
-
-COPY pasdoc/ /usr/local/pasdoc/
 RUN cd /usr/local/pasdoc/ && make build-fpc-default build-tools
-ENV PATH="${PATH}:/usr/local/pasdoc/bin/"
-
-# Command to run by default ----------------------------------------------------
 
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
   echo 'Default FPC version (can be changed using /usr/local/fpclazarus/bin/setup.sh):' && \
