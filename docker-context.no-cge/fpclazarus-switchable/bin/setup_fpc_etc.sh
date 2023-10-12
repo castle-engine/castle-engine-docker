@@ -15,7 +15,5 @@ echo 'Using hardcoded /etc/fpc.cfg. Make sure it looks OK:'
 cat /etc/fpc.cfg
 echo 'End of /etc/fpc.cfg ---------------------------------------------'
 
-# For now, just remove fppkg stuff.
-mv -f /etc/fppkg* .
 echo '/etc/fp* config files: -----------------------------------------------'
 ls -Flah /etc/fp*
