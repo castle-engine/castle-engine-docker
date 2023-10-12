@@ -59,19 +59,7 @@ echo "Choosen ${FPC_INSTALL_DIR} as install prefix."
 # - 3x "No" for "Install Textmode IDE", "Install documentation", "Install demos".
 echo -e "${FPC_INSTALL_DIR}\nN\nN\nN\n" | ./install.sh
 
-# We want to maintain /etc/fpc.cfg manually.
-rm -f /etc/fpc.cfg
-ln -s /usr/local/fpclazarus/fpc.cfg /etc/fpc.cfg
-
-echo '---------------------------------------------------------------------'
-echo 'Using hardcoded /etc/fpc.cfg. Make sure it looks OK:'
-cat /etc/fpc.cfg
-echo 'End of /etc/fpc.cfg ---------------------------------------------'
-
-# For now, just remove fppkg stuff.
-mv -f /etc/fppkg* .
-echo '/etc/fp* config files: -----------------------------------------------'
-ls -Flah /etc/fp*
+/usr/local/fpclazarus/bin/setup_fpc_etc.sh
 
 # ----------------------------------------------------------------------------
 # install sources

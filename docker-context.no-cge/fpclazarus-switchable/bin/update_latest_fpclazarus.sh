@@ -94,6 +94,10 @@ rm -Rf /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/src/ \
 
 /usr/local/fpclazarus/bin/fix_permissions.sh
 
+# Make sure /etc/fpc.cfg is OK, so that FPC can actually be used to build lazarus next
+
+/usr/local/fpclazarus/bin/setup_fpc_etc.sh
+
 # Test new compiler ----------------------------------------------------------
 
 . /usr/local/fpclazarus/bin/setup.sh "${FPC_TRUNK_VERSION}"
