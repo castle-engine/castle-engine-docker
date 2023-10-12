@@ -136,17 +136,14 @@ do_build ()
 do_test ()
 {
   IFS=$' \n\t'
-  local DOCKER_TEST="docker run --name test-without-cge --rm --volume=`pwd`/tests:/usr/local/tests/:ro -it castle-engine-cloud-builds-tools:cge-none"
-  $DOCKER_TEST
+  local DOCKER_TEST="docker run --name test-without-cge --rm --volume=`pwd`/tests:/usr/local/tests/:ro -it"
+  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none
   echo 'Test setting FPC versions:'
-  $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
-  $DOCKER_TEST bash -c 'source /usr/local/fpclazarus/bin/setup.sh trunk'
+  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
   echo 'Performing all the tests:'
-  # Latest CGE requires FPC >= 3.2.0, https://castle-engine.io/supported_compilers.php
-  # $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.2
-  # $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.0.4
-  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.2.0
-  $DOCKER_TEST /usr/local/tests/bin/test_fpc_version.sh 3.2.2
+  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none /usr/local/tests/bin/test_fpc_version.sh 3.2.2
+  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none-fpc331 /usr/local/tests/bin/test_fpc_version.sh 3.3.1
+  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none-fpc320 /usr/local/tests/bin/test_fpc_version.sh 3.2.0
   # back to strict mode
   IFS=$'\n\t'
 }
