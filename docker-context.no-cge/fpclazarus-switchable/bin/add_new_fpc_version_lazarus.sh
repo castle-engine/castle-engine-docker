@@ -14,27 +14,16 @@ FPC_VERSION="$1"
 LAZARUS_VERSION="$2"
 shift 2
 
-case "${LAZARUS_VERSION}" in
-  '1.6.4')
-    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
-    ;;
-  '2.0.10')
-    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-2.tar.gz/download"
-    ;;
-  '2.2.2')
-    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
-    ;;
-  '2.2.6')
-    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
-    ;;
-  *)
-    LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download"
-    ;;
-esac
-
 cd /usr/local/fpclazarus/${FPC_VERSION}/
 rm -Rf lazarus
-wget "${WGET_OPTIONS:-}" "${LAZARUS_URL}" --output-document lazarus-src.tar.gz
+
+LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download"
+if ! wget "${WGET_OPTIONS:-}" "${LAZARUS_URL}" --output-document lazarus-src.tar.gz; then
+  # add -0 to URL
+  LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}-0.tar.gz/download"
+  wget "${WGET_OPTIONS:-}" "${LAZARUS_URL}" --output-document lazarus-src.tar.gz
+fi
+
 tar xzvf lazarus-src.tar.gz
 rm -f lazarus-src.tar.gz
 
