@@ -44,6 +44,7 @@ FROM debian:bookworm-slim AS base-without-fpc
 # - php-cli for "make tests" in pasdoc and in cge-www
 # - asciidoctor, coderay for "make tests" in cge-www
 # - imagemagick for update_image_sizes.sh in cge-www
+# - libqt5pas-dev for compiling LCL applications with qt5 widgetset
 RUN apt-get --allow-releaseinfo-change update && \
   apt-get --no-install-recommends -y install \
     asciidoctor \
@@ -55,6 +56,7 @@ RUN apt-get --allow-releaseinfo-change update && \
     gcc \
     git \
     imagemagick \
+    libqt5pas-dev \
     libglx-dev libgl-dev \
     libgtk2.0-dev \
     xorg-dev \
