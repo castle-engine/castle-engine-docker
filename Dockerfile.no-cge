@@ -211,6 +211,7 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 # - For latest FPC stable 3.2.2 (used by default, used for official releases)
 #   we want latest Lazarus stable.
 #   Note that Lazarus 2.0.12 contains GTK2 fixes for right-clicking after Andrzej fixes.
+#   Note that Lazarus 3.0 contains IdentComplIncludeKeywords which our latest pasls needs.
 # - For oldest FPC still supported by latest CGE (this means FPC 3.2.0 now,
 #   https://castle-engine.io/supported_compilers.php ) try oldest Lazarus supported.
 #   To make sure we still compile with older Lazarus versions.
@@ -236,7 +237,7 @@ ENV FPCLAZARUS_VERSION="3.2.0"
 
 FROM base-without-fpc AS fpc-3.2.2
 
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 2.2.6
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 3.2
 
 ENV FPCLAZARUS_VERSION="3.2.2"
 
