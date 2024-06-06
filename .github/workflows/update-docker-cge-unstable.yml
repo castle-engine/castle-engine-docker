@@ -28,3 +28,7 @@ jobs:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: ./build-cge-unstable.sh
+
+      # On self-hosted machine, we would do additionally
+      # ./remove_unused_docker_images.sh
+      # Seems not necessary on GH-hosted machine, as they are cleaned each time.
