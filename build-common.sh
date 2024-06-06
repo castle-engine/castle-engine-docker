@@ -183,7 +183,7 @@ do_test_cge ()
   IFS=$'\n\t'
 }
 
-if [ '(' "${docker_user:-}" = '' ')' -o '(' "${docker_password:-}" = '' ')' ]; then
+if [ '(' "${DOCKER_USER:-}" = '' ')' -o '(' "${DOCKER_PASSWORD:-}" = '' ')' ]; then
   echo 'Docker user/password environment variables not defined (or empty), uploading would fail.'
   exit 1
 fi
@@ -193,8 +193,8 @@ do_upload ()
   local CGE_VERSION_LABEL="$1"
   shift 1
 
-  export DOCKER_ID_USER="${docker_user}"
-  echo "${docker_password}" | docker login --username="${DOCKER_ID_USER}" --password-stdin
+  export DOCKER_ID_USER="${DOCKER_USER}"
+  echo "${DOCKER_PASSWORD}" | docker login --username="${DOCKER_ID_USER}" --password-stdin
   docker tag castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
   docker push "${DOCKER_ID_USER}"/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
 }
@@ -205,7 +205,7 @@ do_upload_github ()
   local CGE_VERSION_LABEL="$1"
   shift 1
 
-  echo "${docker_github_token}" | docker login docker.pkg.github.com --username="${docker_github_user}" --password-stdin
+  echo "${DOCKER_GITHUB_TOKEN}" | docker login docker.pkg.github.com --username="${DOCKER_GITHUB_USER}" --password-stdin
   docker tag castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" docker.pkg.github.com/castle-engine/castle-engine/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
   docker push docker.pkg.github.com/castle-engine/castle-engine/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
 }

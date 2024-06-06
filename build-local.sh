@@ -3,8 +3,8 @@ set -eu
 
 # Run build.sh, setting Docker user/password from local config
 
-export docker_user=kambi
-export docker_password=`cat docker_password.txt`
-export docker_github_user=michaliskambi
-export docker_github_token=`cat github_token.txt`
+export DOCKER_USER=kambi
+export DOCKER_PASSWORD=`cat docker_password.txt`
+export DOCKER_GITHUB_USER=michaliskambi
+export DOCKER_GITHUB_TOKEN=`cat github_token.txt`
 ./build.sh "$@"

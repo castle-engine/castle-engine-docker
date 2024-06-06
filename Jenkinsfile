@@ -29,8 +29,8 @@ pipeline {
     stage('Rebuild Docker Image') {
       steps {
         withCredentials([
-          string(credentialsId: 'docker-user', variable: 'docker_user'),
-          string(credentialsId: 'docker-password', variable: 'docker_password')
+          string(credentialsId: 'docker-user', variable: 'DOCKER_USER'),
+          string(credentialsId: 'docker-password', variable: 'DOCKER_PASSWORD')
         ]) {
           sh './build-cge-unstable.sh'
         }
