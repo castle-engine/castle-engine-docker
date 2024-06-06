@@ -7,4 +7,5 @@ source build-common.sh
 # main ---------------------------------------------------------------------------
 
 do_build_cge unstable master
-do_upload unstable
+# TODO: For now do not upload, as both Jenkins and GHA would try
+# do_upload unstable

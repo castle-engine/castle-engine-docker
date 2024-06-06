@@ -1,0 +1,27 @@
+# ----------------------------------------------------------------------------
+# GitHub Actions workflow that updates Docker image of Castle Game Engine
+# with latest unstable (snapshot) CGE version.
+# That is, Docker image kambi/castle-engine-cloud-builds-tools:cge-unstable,
+# which is
+# - cge-unstable tag
+# - of https://hub.docker.com/r/kambi/castle-engine-cloud-builds-tools/ .
+#
+# See https://castle-engine.io/docker for more about this Docker image.
+# ----------------------------------------------------------------------------
+
+name: Update CGE Docker Image cge-unstable
+
+on: [push, pull_request]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Update Docker image
+      run: ./build-cge-unstable.sh
