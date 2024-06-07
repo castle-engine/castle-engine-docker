@@ -11,7 +11,11 @@
 
 name: Update CGE Docker Image cge-unstable
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  repository_dispatch:
+    types: [cge-snapshot-changed]
 
 defaults:
   run:

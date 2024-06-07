@@ -6,5 +6,5 @@ source build-common.sh
 
 # main ---------------------------------------------------------------------------
 
-do_build_cge unstable master
+do_build_cge unstable snapshot
 do_upload unstable
