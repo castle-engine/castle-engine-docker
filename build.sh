@@ -7,7 +7,7 @@ source build-common.sh
 # main ---------------------------------------------------------------------------
 
 mkdir -p logs/
-if [ -f "${OVERRIDE_LOG_FILE}" ]; then
+if [ -n "${OVERRIDE_LOG_FILE:-}" ]; then
   LOG_FILE="${OVERRIDE_LOG_FILE}"
 else
   LOG_FILE="logs/build-$$.log"
