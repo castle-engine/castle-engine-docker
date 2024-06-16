@@ -61,8 +61,8 @@ do_prerequisite_pasdoc_src ()
 
 do_prerequisite_cleanup ()
 {
-  rm -Rf bin/
-  mkdir -p bin/
+  rm -Rf docker-context.no-cge/bin/
+  mkdir -p docker-context.no-cge/bin/
 }
 
 # Put GitHub CLI ( https://cli.github.com/ ) binary in docker-context.no-cge/bin/
@@ -71,7 +71,7 @@ do_prerequisite_gh_cli ()
   cd docker-context.no-cge/
 
   # just pick latest from https://github.com/cli/cli/releases
-  local GH_CLI_VERSION=2.12.1
+  local GH_CLI_VERSION=2.51.0
   wget https://github.com/cli/cli/releases/download/v"${GH_CLI_VERSION}"/gh_"${GH_CLI_VERSION}"_linux_amd64.tar.gz --output-document gh.tar.gz
 
   local GH_CLI_DIR=gh_"${GH_CLI_VERSION}"_linux_amd64
@@ -105,11 +105,11 @@ do_prerequisite_compressonator ()
   rm -Rf compressonatorcli compressonatorcli.tar.gz
 
   # Look at https://github.com/GPUOpen-Tools/Compressonator/releases for links
-  TARGZ_VERSION=4.2.5150
-  wget https://github.com/GPUOpen-Tools/compressonator/releases/download/V4.2.5185/compressonatorcli_linux_x86_64_"${TARGZ_VERSION}".tar.gz \
+  TARGZ_VERSION=4.5.52
+  wget https://github.com/GPUOpen-Tools/compressonator/releases/download/V"${TARGZ_VERSION}"/compressonatorcli_"${TARGZ_VERSION}"-Linux.tar.gz \
     --output-document compressonatorcli.tar.gz
   tar xzvf compressonatorcli.tar.gz
-  mv compressonatorcli_linux_x86_64_"${TARGZ_VERSION}"/ compressonatorcli/
+  mv compressonatorcli_"${TARGZ_VERSION}"-Linux/ compressonatorcli/
   rm -Rf compressonatorcli/documents compressonatorcli/images # not useful
 
   cat > bin/compressonatorcli <<EOF
