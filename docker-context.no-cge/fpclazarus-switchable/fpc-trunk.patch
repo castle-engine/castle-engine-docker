@@ -6,7 +6,7 @@ Index: utils/h2pas/fpmake.pp
  
      P.Options.Add('-Sg');
  
--    p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('pyacc', Defaults.BuildOS), '$(SOURCE) $(DEST)','h2pas.pas','h2pas.y');
+-    p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('pyacc', Defaults.BuildOS), '$(SOURCE) $(DEST)','h2pparse.pp','h2pas.y');
 -    p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('plex', Defaults.BuildOS), '$(SOURCE) $(DEST)','scan.pas','scan.l');
 +    { Sometimes it tries to execute in Docker, and then fails with:
 +    
@@ -20,7 +20,7 @@ Index: utils/h2pas/fpmake.pp
 +      FATAL: cannot open file /usr/lib/fpc/lexyacc/yyparse.cod
 +    }
 +    
-+    // p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('pyacc', Defaults.BuildOS), '$(SOURCE) $(DEST)','h2pas.pas','h2pas.y');
++    // p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('pyacc', Defaults.BuildOS), '$(SOURCE) $(DEST)','h2pparse.pp','h2pas.y');
 +    // p.Commands.AddCommand(caBeforeCompile, AddProgramExtension('plex', Defaults.BuildOS), '$(SOURCE) $(DEST)','scan.pas','scan.l');
 +
      T:=P.Targets.AddProgram('h2pas.pas');
