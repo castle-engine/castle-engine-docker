@@ -106,10 +106,10 @@ do_prerequisite_compressonator ()
 
   # Look at https://github.com/GPUOpen-Tools/Compressonator/releases for links
   TARGZ_VERSION=4.5.52
-  wget https://github.com/GPUOpen-Tools/compressonator/releases/download/V"${TARGZ_VERSION}"/compressonatorcli_"${TARGZ_VERSION}"-Linux.tar.gz \
+  wget https://github.com/GPUOpen-Tools/compressonator/releases/download/V"${TARGZ_VERSION}"/compressonatorcli-"${TARGZ_VERSION}"-Linux.tar.gz \
     --output-document compressonatorcli.tar.gz
   tar xzvf compressonatorcli.tar.gz
-  mv compressonatorcli_"${TARGZ_VERSION}"-Linux/ compressonatorcli/
+  mv compressonatorcli-"${TARGZ_VERSION}"-Linux/ compressonatorcli/
   rm -Rf compressonatorcli/documents compressonatorcli/images # not useful
 
   cat > bin/compressonatorcli <<EOF
