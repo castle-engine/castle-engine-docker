@@ -245,11 +245,11 @@ ENV FPCLAZARUS_VERSION="3.2.2"
 
 FROM base-without-fpc AS fpc-3.3.1
 
-# FPC/Lazarus latest revisions last updated on 2023-03-29
+# FPC/Lazarus latest revisions last updated on 2024-06-16
 # See
 # - https://gitlab.com/freepascal.org/fpc/source
 # - https://gitlab.com/freepascal.org/lazarus/lazarus
-RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh db66d8f0570c3b4ccae736879067d6960feb0342 8ec140d3b2bf46f3945e8c87a10fe7a06f18ab86
+RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh b98df20b4e881ac66d1f7b577460ee44d291fbb0 424f279df484c064ab910828d7cffe6db8701c23
 
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
