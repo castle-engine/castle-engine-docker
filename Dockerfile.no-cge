@@ -40,7 +40,7 @@ FROM debian:bookworm-slim AS base-without-fpc
 # - make to compile FPC, and for various jobs
 # - file is used by Android compilation (although it seems it works without it too, but there's some error about "file" binary missing)
 # - curl for TestFairy uploader
-# - git for "make tests" in pasdoc
+# - git for 1. "make tests" in pasdoc, 2. for GH Actions actions/checkout (LFS useful for some games with larger data like unholy-society) (this is unlike Jenkins, that does checkout/clone outside of Docker)
 # - php-cli for "make tests" in pasdoc and in cge-www
 # - asciidoctor, coderay for "make tests" in cge-www
 # - imagemagick for update_image_sizes.sh in cge-www
@@ -54,7 +54,7 @@ RUN apt-get --allow-releaseinfo-change update && \
     default-jdk \
     file \
     gcc \
-    git \
+    git git-lfs \
     imagemagick \
     libqt5pas-dev \
     libglx-dev libgl-dev \
