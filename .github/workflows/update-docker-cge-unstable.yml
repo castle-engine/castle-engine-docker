@@ -31,6 +31,7 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        OVERRIDE_LOG_FILE: /dev/stdout
       run: ./build-cge-unstable.sh
 
       # On self-hosted machine, we would do additionally

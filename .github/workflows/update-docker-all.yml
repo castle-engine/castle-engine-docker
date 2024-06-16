@@ -1,0 +1,37 @@
+# ----------------------------------------------------------------------------
+# GitHub Actions workflow that updates all Docker images of Castle Game Engine:
+#
+# - cge-none (prerequisites, like FPC (stable versuib),
+#   Android SDK/NDK, texture tools...),
+# - cge-none-fpxXXX (same as cge-none but with alternative FPC version,
+#   see https://hub.docker.com/r/kambi/castle-engine-cloud-builds-tools/ )
+# - cge-stable, cge-unstable
+#
+# See https://castle-engine.io/docker for more about this Docker image.
+# ----------------------------------------------------------------------------
+
+name: Update All CGE Docker Images
+
+on:
+  # Manually trigger the workflow.
+  # This is seldom necessary (and takes a long time).
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Update Docker image
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_GITHUB_USER: ${{ secrets.DOCKER_GITHUB_USER }}
+        DOCKER_GITHUB_TOKEN: ${{ secrets.DOCKER_GITHUB_TOKEN }}
+        OVERRIDE_LOG_FILE: /dev/stdout
+      run: ./build.sh
