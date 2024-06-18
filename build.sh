@@ -34,7 +34,7 @@ do_test_cge stable
 do_upload stable
 do_upload_github stable
 
-do_build_cge unstable master
+do_build_cge unstable snapshot
 do_test_cge unstable
 do_upload unstable
 do_upload_github unstable
