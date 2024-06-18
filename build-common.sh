@@ -136,7 +136,7 @@ do_build ()
 do_test ()
 {
   IFS=$' \n\t'
-  local DOCKER_TEST="docker run --name test-without-cge --rm --volume=`pwd`/tests:/usr/local/tests/:ro -it"
+  local DOCKER_TEST="docker run --name test-without-cge --rm --volume=`pwd`/tests:/usr/local/tests/:ro"
   $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none
   echo 'Test setting FPC versions:'
   $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
@@ -176,7 +176,7 @@ do_test_cge ()
   shift 1
 
   IFS=$' \n\t'
-  local DOCKER_TEST="docker run --name test-with-cge --rm -it castle-engine-cloud-builds-tools:cge-${CGE_VERSION_LABEL}"
+  local DOCKER_TEST="docker run --name test-with-cge --rm castle-engine-cloud-builds-tools:cge-${CGE_VERSION_LABEL}"
   $DOCKER_TEST
   $DOCKER_TEST bash -c 'cd /usr/local/castle-engine/examples/fps_game/ && castle-engine compile'
   # back to strict mode
