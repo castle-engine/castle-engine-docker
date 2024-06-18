@@ -31,6 +31,8 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_GITHUB_USER: ${{ secrets.DOCKER_GITHUB_USER }}
+        DOCKER_GITHUB_TOKEN: ${{ secrets.DOCKER_GITHUB_TOKEN }}
       run: ./build-cge-unstable.sh
 
       # On self-hosted machine, we would do additionally
