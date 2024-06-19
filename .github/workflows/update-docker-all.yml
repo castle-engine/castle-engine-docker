@@ -27,11 +27,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Update Docker image
+
+    # Split build.sh into 3 smaller jobs,
+    # to avoid "disk size exceeded" errors from GH actions on GH-hosted runners.
+
+    - name: cge-none, cge-none-fpxXXX
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_GITHUB_USER: ${{ secrets.DOCKER_GITHUB_USER }}
         DOCKER_GITHUB_TOKEN: ${{ secrets.DOCKER_GITHUB_TOKEN }}
-        OVERRIDE_LOG_FILE: /dev/stdout
-      run: ./build.sh
+      run: |
+        set -euo pipefail
+        IFS=$'\n\t'
+        source build-common.sh
+        do_everything_for_image_none
+
+    - name: cge-stable
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_GITHUB_USER: ${{ secrets.DOCKER_GITHUB_USER }}
+        DOCKER_GITHUB_TOKEN: ${{ secrets.DOCKER_GITHUB_TOKEN }}
+      run: |
+        set -euo pipefail
+        IFS=$'\n\t'
+        source build-common.sh
+        do_everything_for_image_stable
+
+    - name: cge-unstable
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_GITHUB_USER: ${{ secrets.DOCKER_GITHUB_USER }}
+        DOCKER_GITHUB_TOKEN: ${{ secrets.DOCKER_GITHUB_TOKEN }}
+      run: |
+        set -euo pipefail
+        IFS=$'\n\t'
+        source build-common.sh
+        do_everything_for_image_unstable
