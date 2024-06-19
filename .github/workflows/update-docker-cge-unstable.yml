@@ -24,6 +24,9 @@ defaults:
 jobs:
   build:
     name: Build
+    # Since we upload Docker images in this job (and the Docker images are
+    # not tagged with GitHub branch) we should not run this on every branch.
+    if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4

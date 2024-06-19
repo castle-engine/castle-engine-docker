@@ -21,16 +21,19 @@ defaults:
   run:
     shell: bash
 
+# Split build.sh into 3 smaller jobs,
+# to avoid "disk size exceeded" errors from GH actions on GH-hosted runners.
+# As a bonus: build-stable and build-unstable can run in parallel.
+
 jobs:
-  build:
-    name: Build
+  build-none:
+    name: Build cge-none, cge-none-fpxXXX
+    # Since we upload Docker images in this job (and the Docker images are
+    # not tagged with GitHub branch) we should not run this on every branch.
+    if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-
-    # Split build.sh into 3 smaller jobs,
-    # to avoid "disk size exceeded" errors from GH actions on GH-hosted runners.
-
     - name: cge-none, cge-none-fpxXXX
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -43,6 +46,15 @@ jobs:
         source build-common.sh
         do_everything_for_image_none
 
+  build-stable:
+    name: Build stable
+    # Since we upload Docker images in this job (and the Docker images are
+    # not tagged with GitHub branch) we should not run this on every branch.
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    needs: [build-none]
+    steps:
+    - uses: actions/checkout@v4
     - name: cge-stable
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -55,6 +67,15 @@ jobs:
         source build-common.sh
         do_everything_for_image_stable
 
+  build-unstable:
+    name: Build cge-unstable
+    # Since we upload Docker images in this job (and the Docker images are
+    # not tagged with GitHub branch) we should not run this on every branch.
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    needs: [build-none]
+    steps:
+    - uses: actions/checkout@v4
     - name: cge-unstable
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
