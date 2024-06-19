@@ -13,8 +13,9 @@
 name: Update All CGE Docker Images
 
 on:
-  # Manually trigger the workflow.
-  # This is seldom necessary (and takes a long time).
+  push:
+  pull_request:
+  # Allow to manually trigger the workflow.
   workflow_dispatch:
 
 defaults:
