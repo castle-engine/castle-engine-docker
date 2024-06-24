@@ -29,6 +29,8 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     steps:
+    - name: Castle Game Engine GIT SHA that caused this action
+      run: echo "${{ github.event.client_payload.cge_commit_sha }}"
     - uses: actions/checkout@v4
     - name: Update Docker image
       env:
