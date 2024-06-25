@@ -88,3 +88,8 @@ jobs:
         IFS=$'\n\t'
         source build-common.sh
         do_everything_for_image_unstable
+
+  after_build:
+    name: After Build
+    needs: [build-none, build-stable, build-unstable]
+    uses: ./.github/workflows/after-build.yml

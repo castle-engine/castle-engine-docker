@@ -43,3 +43,8 @@ jobs:
       # On self-hosted machine, we would do additionally
       # ./remove_unused_docker_images.sh
       # Seems not necessary on GH-hosted machine, as they are cleaned each time.
+
+  after_build:
+    name: After Build
+    needs: build
+    uses: ./.github/workflows/after-build.yml
