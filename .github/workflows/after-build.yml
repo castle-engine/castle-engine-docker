@@ -8,7 +8,12 @@
 name: After Build
 
 # Called by other xxx.yml
-on: [workflow_call]
+on:
+  workflow_call:
+    secrets:
+      GH_TOKEN_DISPATCH_AFTER_UPDATE:
+        description: 'GitHub token to allow dispatching workflows to all other CGE repos'
+        required: true
 
 defaults:
   run:
