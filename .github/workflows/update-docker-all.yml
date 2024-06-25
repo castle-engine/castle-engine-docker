@@ -93,3 +93,7 @@ jobs:
     name: After Build
     needs: [build-none, build-stable, build-unstable]
     uses: ./.github/workflows/after-build.yml
+    # Pass secrets to the after-build.yml, otherwise they are not available there.
+    # See https://docs.github.com/en/actions/using-workflows/reusing-workflows#passing-inputs-and-secrets-to-a-reusable-workflow
+    secrets:
+      GH_TOKEN_DISPATCH_AFTER_UPDATE: ${{ secrets.GH_TOKEN_DISPATCH_AFTER_UPDATE }}
