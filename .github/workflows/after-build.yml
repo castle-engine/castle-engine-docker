@@ -28,10 +28,6 @@ jobs:
 
     # Make https://github.com/castle-engine/castle-engine-docker
     # rebuild Docker image with the latest CGE snapshot.
-    #
-    # See repository_dispatch docs:
-    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#repository_dispatch
-    # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event
     - name: Dispatch updating Docker cge-unstable
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN_DISPATCH_AFTER_UPDATE }}

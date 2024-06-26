@@ -13,6 +13,12 @@ IFS=$'\n\t'
 #      to track what commit caused the rebuild.
 #      Pass ${{ github.sha }} from .github/workflows/after-build.yml
 # $2 - GitHub repository name (e.g. "castle-engine/castle-model-viewer").
+#
+# See repository_dispatch docs:
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#repository_dispatch
+# https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event
+#
+# Needs GH CLI installed, and $GH_TOKEN set (with proper permissions, see above docs).
 # --------------------------------------------------------------------------
 
 CGE_DOCKER_COMMIT_SHA="$1"
