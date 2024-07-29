@@ -33,6 +33,12 @@ rm -f lazarus-src.tar.gz
 . /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
 
 cd /usr/local/fpclazarus/${FPC_VERSION}/lazarus/
+
+# Workaround
+# https://github.com/castle-engine/castle-engine/issues/543
+# https://gitlab.com/freepascal.org/lazarus/lazarus/-/issues/28840
+patch -p1 < /usr/local/fpclazarus/lazarus-workaround-tree-view-editing-crash.patch
+
 make
 make OS_TARGET=win32 CPU_TARGET=i386
 make OS_TARGET=win64 CPU_TARGET=x86_64

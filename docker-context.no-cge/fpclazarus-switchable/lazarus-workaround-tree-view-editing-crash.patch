@@ -1,0 +1,18 @@
+diff --git a/lcl/interfaces/gtk2/gtk2callback.inc b/lcl/interfaces/gtk2/gtk2callback.inc
+index 9740440a..bc28a906 100644
+--- a/lcl/interfaces/gtk2/gtk2callback.inc
++++ b/lcl/interfaces/gtk2/gtk2callback.inc
+@@ -1071,7 +1071,12 @@ begin
+       exit;
+     end;
+ 
+-    g_idle_add(@GtkEntryDelayClearCursorPos, Widget);
++    { Michalis: Workaround
++        https://github.com/castle-engine/castle-engine/issues/543
++        https://gitlab.com/freepascal.org/lazarus/lazarus/-/issues/28840
++      by commenting this out. }
++    //g_idle_add(@GtkEntryDelayClearCursorPos, Widget);
++
+     //save now CursorPos and SelStart in WidgetInfo
+     if (Widget <> nil) then
+     begin
