@@ -37,7 +37,7 @@ cd /usr/local/fpclazarus/${FPC_VERSION}/lazarus/
 # Workaround
 # https://github.com/castle-engine/castle-engine/issues/543
 # https://gitlab.com/freepascal.org/lazarus/lazarus/-/issues/28840
-patch -p1 < /usr/local/fpclazarus/0001-LCL-GTK2-Fix-a-crash-due-to-postponed-focus-loss-Iss.patch
+patch -p1 < /usr/local/fpclazarus/fix-edit-crash-9dccbc008faef7f7e7300dfad4b562ad3f385d94.diff
 
 make
 make OS_TARGET=win32 CPU_TARGET=i386
