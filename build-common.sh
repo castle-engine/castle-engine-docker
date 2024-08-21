@@ -238,7 +238,7 @@ do_everything_for_image_none ()
 # Do everything necessary to build and upload cge-stable image.
 do_everything_for_image_stable ()
 {
-  do_build_cge stable v7.0-alpha.2
+  do_build_cge stable v7.0-alpha.3
   do_test_cge stable
   do_upload stable
   do_upload_github stable
