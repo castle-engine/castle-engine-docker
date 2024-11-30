@@ -43,6 +43,7 @@ jobs:
         ./dispatch_cge_docker_unstable_changed.sh "${{ github.sha }}" castle-engine/castle-radiance-transfer
         ./dispatch_cge_docker_unstable_changed.sh "${{ github.sha }}" castle-engine/kambi-lines
         ./dispatch_cge_docker_unstable_changed.sh "${{ github.sha }}" castle-engine/glplotter
+        ./dispatch_cge_docker_unstable_changed.sh "${{ github.sha }}" castle-engine/castle-library-model-viewer
         ./dispatch_cge_docker_unstable_changed.sh "${{ github.sha }}" cat-astrophe-games/dragon-squash
         ./dispatch_cge_docker_unstable_changed.sh "${{ github.sha }}" cat-astrophe-games/escape-universe
         ./dispatch_cge_docker_unstable_changed.sh "${{ github.sha }}" cat-astrophe-games/unholy-society
