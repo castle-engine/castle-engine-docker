@@ -19,7 +19,10 @@ COPY castle-engine-projects/ /usr/local/castle-engine-projects/
 # TODO: retest with 7.0-alpha.3
 # RUN cd /usr/local/castle-engine-projects/get-android-resources/ && castle-engine package --target=android && castle-engine clean
 
-RUN cd /usr/local/castle-engine-projects/build-lazarus-packages/ && castle-engine compile && castle-engine clean
+RUN cd /usr/local/castle-engine-projects/build-lazarus-packages/ && \
+  ./adjust_to_cge_version.sh && \
+  castle-engine compile && \
+  castle-engine clean
 
 CMD echo 'Docker container with CGE Cloud Builds Tools.' && \
   echo 'Default FPC version (can be changed using /usr/local/fpclazarus/bin/setup.sh):' && \
