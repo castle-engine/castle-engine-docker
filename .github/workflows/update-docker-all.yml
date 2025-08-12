@@ -34,7 +34,7 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: cge-none, cge-none-fpxXXX
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-none]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: cge-stable
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -76,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-none]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: cge-unstable
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}

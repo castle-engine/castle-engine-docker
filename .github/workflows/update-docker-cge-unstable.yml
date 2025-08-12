@@ -31,7 +31,7 @@ jobs:
     steps:
     - name: Castle Game Engine GIT SHA that caused this action
       run: echo "${{ github.event.client_payload.cge_commit_sha }}"
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Update Docker image
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}

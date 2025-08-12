@@ -24,7 +24,7 @@ jobs:
     name: Dispatch Rebuild To Other Repos
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     # Make https://github.com/castle-engine/castle-engine-docker
     # rebuild Docker image with the latest CGE snapshot.
