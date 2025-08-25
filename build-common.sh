@@ -178,7 +178,7 @@ do_test_cge ()
   IFS=$' \n\t'
   local DOCKER_TEST="docker run --name test-with-cge --rm castle-engine-cloud-builds-tools:cge-${CGE_VERSION_LABEL}"
   $DOCKER_TEST
-  $DOCKER_TEST bash -c 'cd /usr/local/castle-engine/examples/fps_game/ && castle-engine compile'
+  $DOCKER_TEST bash -c 'cd /usr/local/castle-engine/examples/3d_games/explore_impressive_castle/ && castle-engine compile'
   # back to strict mode
   IFS=$'\n\t'
 }
