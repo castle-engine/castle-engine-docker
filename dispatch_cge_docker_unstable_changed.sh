@@ -31,3 +31,5 @@ gh api --method POST \
   /repos/"${REPO_NAME}"/dispatches \
   -f "event_type=cge-docker-unstable-changed"  \
   -F "client_payload[cge_docker_commit_sha]=${CGE_DOCKER_COMMIT_SHA}"
+
+echo 'OK: Dispatched repository_dispatch to '"${REPO_NAME}"
