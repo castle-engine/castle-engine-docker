@@ -26,9 +26,9 @@ jobs:
     steps:
     - uses: actions/checkout@v5
 
-    # Make https://github.com/castle-engine/castle-engine-docker
-    # rebuild Docker image with the latest CGE snapshot.
-    - name: Dispatch updating Docker cge-unstable
+    # When we changed cge-unstable Docker image, rebuild repositories that use it,
+    # or that use "snapshot" tag of CGE directly (through git clone).
+    - name: Dispatch Docker cge-unstable change to other repos
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN_DISPATCH_AFTER_UPDATE }}
       run: |
