@@ -30,6 +30,7 @@ FROM debian:bookworm-slim AS base-without-fpc
 # - wget is for downloading in /usr/local/fpclazarus/bin/add_new_fpc_version.sh
 # - libglx-dev, libgl-dev link with OpenGL
 # - libgtk2.0-dev link with GTK 2 (for CGE editor with default LCL backend on Linux)
+# - libgtk-3-dev link with GTK 3 (for TCastleWindow with GTK 3 backend)
 # - xorg-dev to link with additional X libs, used by CASTLE_WINDOW_XLIB (used by https://github.com/castle-engine/cge-www/blob/master/Jenkinsfile.convert-to-x3d )
 # - default-jdk is for Android SDK
 # - unzip is needed by Android sdkmanager
@@ -59,6 +60,7 @@ RUN apt-get --allow-releaseinfo-change update && \
     libqt5pas-dev \
     libglx-dev libgl-dev \
     libgtk2.0-dev \
+    libgtk-3-dev \
     xorg-dev \
     libnvtt-bin \
     make \
