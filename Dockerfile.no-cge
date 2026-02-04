@@ -220,17 +220,11 @@ COPY fpclazarus-switchable /usr/local/fpclazarus
 #   To make sure we still compile with older Lazarus versions.
 # - For other FPC versions, in general try latest Lazarus version possible that works.
 
-# Removed versions not supported by CGE anymore
-# (see https://castle-engine.io/supported_compilers.php ),
-# they caused Docker image to be big and GH Actions were failing with disk space.
-#RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.2 2.0.0
-#RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.0.4 2.0.12
-
 # FPC 3.2.0 ----------------------------------------------------------------------
 
 FROM base-without-fpc AS fpc-3.2.0
 
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 2.0.12
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.0 3.2
 
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
@@ -240,7 +234,7 @@ ENV FPCLAZARUS_VERSION="3.2.0"
 
 FROM base-without-fpc AS fpc-3.2.2
 
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 3.2
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 4.4
 
 ENV FPCLAZARUS_VERSION="3.2.2"
 
@@ -248,11 +242,18 @@ ENV FPCLAZARUS_VERSION="3.2.2"
 
 FROM base-without-fpc AS fpc-3.3.1
 
-# FPC/Lazarus latest revisions last updated on 2024-06-16
+# FPC/Lazarus latest revisions.
 # See
 # - https://gitlab.com/freepascal.org/fpc/source
 # - https://gitlab.com/freepascal.org/lazarus/lazarus
-RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh b98df20b4e881ac66d1f7b577460ee44d291fbb0 424f279df484c064ab910828d7cffe6db8701c23
+#
+# FPC hash synchronized with castle-fpc script:
+# https://github.com/castle-engine/castle-fpc/blob/master/build_fpc#L92C24-L92C64
+#
+# Lazarus hash: latest on 2026-02-04
+# (note: our castle-lazarus doesn't have now "Lazarus unstable" option,
+# so nothing to synchronize with there).
+RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh bdb427b08454cff85dca2fbaccf7249716962845 9ac18157ff81dcf01b85ae357630788a99a9ecb0
 
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.

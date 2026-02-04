@@ -34,10 +34,11 @@ rm -f lazarus-src.tar.gz
 
 cd /usr/local/fpclazarus/${FPC_VERSION}/lazarus/
 
-# Workaround
+# Old: Workaround
 # https://github.com/castle-engine/castle-engine/issues/543
 # https://gitlab.com/freepascal.org/lazarus/lazarus/-/issues/28840
-patch -p1 < /usr/local/fpclazarus/fix-edit-crash-9dccbc008faef7f7e7300dfad4b562ad3f385d94.diff
+# Not necessary anymore, we now use newer Lazarus version.
+# patch -p1 < /usr/local/fpclazarus/fix-edit-crash-9dccbc008faef7f7e7300dfad4b562ad3f385d94.diff
 
 make
 make OS_TARGET=win32 CPU_TARGET=i386
