@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eux
+#!/usr/bin/env bash
+set -euxo pipefail
 
 # Test Lazarus with FPC/Lazarus combination from $1.
 
@@ -44,7 +44,7 @@ end.
 EOF
 
 bash <<EOF
-. /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
+. /usr/local/fpclazarus/bin/setup.sh "${FPC_VERSION}"
 
 type lazarus-ide # cannot run, requires X
 lazbuild --version
@@ -53,7 +53,7 @@ lrstolfm
 type startlazarus # cannot run, requires X
 updatepofiles
 
-. /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
+. /usr/local/fpclazarus/bin/setup.sh "${FPC_VERSION}"
 # lazbuild should be an alias that uses --lazarusdir=... always
 lazbuild                         test_package.lpk
 lazbuild --os=win32 --cpu=i386   test_package.lpk
@@ -66,8 +66,8 @@ else
   echo '~/.lazarus/environmentoptions.xml does not exists, and we will not create it'
 fi
 
-echo '~/.cge-jenkins-lazarus/${FPC_VERSION}/environmentoptions.xml should exist and contain proper <LazarusDirectory Value="..." />'
-cat ~/.cge-jenkins-lazarus/${FPC_VERSION}/environmentoptions.xml
+echo "~/.cge-jenkins-lazarus/${FPC_VERSION}/environmentoptions.xml should exist and contain proper <LazarusDirectory Value=\"...\" />"
+cat ~/.cge-jenkins-lazarus/"${FPC_VERSION}"/environmentoptions.xml
 EOF
 
 # Remove temp files, conserve Docker image size

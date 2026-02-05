@@ -1,17 +1,19 @@
+# shellcheck shell=bash
 # Source this script in your shell.
 # Note that this doesn't switch any symlinks,
 # we do not have anything like /usr/local/fpclazarus/current/ ,
 # to enable to compile various projects with various FPC versions in parallel by Jenkins.
 
 export FPCLAZARUS_VERSION="$1"
-echo 'Configured environment for FPC/Lazarus:' ${FPCLAZARUS_VERSION}
-export PATH=/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/:"${PATH}"
+echo 'Configured environment for FPC/Lazarus:' "${FPCLAZARUS_VERSION}"
+export PATH="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/bin/:${PATH}"
 
-export FPCLAZARUS_REAL_VERSION=`fpc -iV`
-echo 'Real FPC version:' ${FPCLAZARUS_REAL_VERSION}
+FPCLAZARUS_REAL_VERSION="$(fpc -iV)"
+export FPCLAZARUS_REAL_VERSION
+echo 'Real FPC version:' "${FPCLAZARUS_REAL_VERSION}"
 
 # This makes fpmake work OK.
-export FPCDIR=/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/
+export FPCDIR="/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/fpc/lib/fpc/${FPCLAZARUS_REAL_VERSION}/"
 
 # The aliases are not automatically used in the Makefile, see
 # https://stackoverflow.com/questions/7897549/make-ignores-my-python-bash-alias

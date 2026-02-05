@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eux
+#!/usr/bin/env bash
+set -euxo pipefail
 
 # ---------------------------------------------------------------------
 # Set up /etc/fpc.cfg to point to FPC installation in /usr/local/fpclazarus/ .

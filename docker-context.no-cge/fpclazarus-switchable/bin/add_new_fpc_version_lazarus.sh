@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eux
+#!/usr/bin/env bash
+set -euxo pipefail
 
 # Compile and add Lazarus, with units for native and cross-compiling.
 # At the beginning it removes existing Lazarus version in the same directory,
@@ -14,7 +14,7 @@ FPC_VERSION="$1"
 LAZARUS_VERSION="$2"
 shift 2
 
-cd /usr/local/fpclazarus/${FPC_VERSION}/
+cd "/usr/local/fpclazarus/${FPC_VERSION}/"
 rm -Rf lazarus
 
 LAZARUS_URL="https://sourceforge.net/projects/lazarus/files/Lazarus%20Zip%20_%20GZip/Lazarus%20${LAZARUS_VERSION}/lazarus-${LAZARUS_VERSION}.tar.gz/download"
@@ -30,9 +30,11 @@ rm -f lazarus-src.tar.gz
 # ----------------------------------------------------------------------------
 # Compile Lazarus
 
-. /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
+# Note for shellcheck comment below: this prevents "shellcheck --external-sources ..." reporting errors here.
+# shellcheck source=/dev/null
+. /usr/local/fpclazarus/bin/setup.sh "${FPC_VERSION}"
 
-cd /usr/local/fpclazarus/${FPC_VERSION}/lazarus/
+cd "/usr/local/fpclazarus/${FPC_VERSION}/lazarus/"
 
 # Old: Workaround
 # https://github.com/castle-engine/castle-engine/issues/543
@@ -49,14 +51,14 @@ make OS_TARGET=win64 CPU_TARGET=x86_64
 # mkdir /tmp/fpcinst/laz-temp-install/
 # make install INSTALL_PREFIX=/tmp/fpcinst/laz-temp-install/
 
-ln -s ../../lazarus/lazarus /usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/lazarus-ide
-ln -s ../../lazarus/tools/lazres /usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/
-ln -s ../../lazarus/tools/lrstolfm /usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/
-ln -s ../../lazarus/startlazarus /usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/
-ln -s ../../lazarus/tools/updatepofiles /usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/
+ln -s ../../lazarus/lazarus "/usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/lazarus-ide"
+ln -s ../../lazarus/tools/lazres "/usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/"
+ln -s ../../lazarus/tools/lrstolfm "/usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/"
+ln -s ../../lazarus/startlazarus "/usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/"
+ln -s ../../lazarus/tools/updatepofiles "/usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/"
 # We simply have a single lazbuild implementation,
 # symlink it only to have all binaries in one directory.
-ln -s /usr/local/fpclazarus/bin/lazbuild /usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/
+ln -s /usr/local/fpclazarus/bin/lazbuild "/usr/local/fpclazarus/${FPC_VERSION}/fpc/bin/"
 
 # Fix permissions
 /usr/local/fpclazarus/bin/fix_permissions.sh

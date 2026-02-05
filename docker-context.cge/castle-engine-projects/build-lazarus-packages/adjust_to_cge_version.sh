@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -19,7 +19,7 @@ do_replace ()
   sed -i "s/${OLD}/${NEW}/g" build_lazarus_packages.lpr
 }
 
-if [ `castle-engine --version` '!=' 'castle-engine 7.0-alpha.3' ]; then
+if [[ "$(castle-engine --version)" != 'castle-engine 7.0-alpha.3' ]]; then
   echo 'Not cge-stable, so not doing anything from adjust_to_cge_version.sh (as the example is already good for cge-unstable).'
   exit 0
 fi

@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eu
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Change the "default" FPC version meaning to $1.
 # Call from any directory, `pwd` doesn't matter.

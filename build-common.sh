@@ -1,4 +1,6 @@
+# shellcheck shell=bash
 # Functions for building Docker images.
+# This file is sourced by other scripts, not executed directly.
 
 # Enable BuildKit ( https://docs.docker.com/build/#to-enable-buildkit-builds )
 # because:
@@ -9,11 +11,11 @@ export DOCKER_BUILDKIT=1
 
 # cleanup --------------------------------------------------------------------------
 
-ORIGINAL_DIR=`pwd`
+ORIGINAL_DIR="$(pwd)"
 
-function finish ()
+finish ()
 {
-  cd $ORIGINAL_DIR
+  cd "${ORIGINAL_DIR}"
 
   # These are paranoid cleanups, during normal execution these should be removed anyway:
   rm -f docker-context.no-cge/android-cmdline-tools-linux.zip
@@ -136,14 +138,15 @@ do_build ()
 do_test ()
 {
   IFS=$' \n\t'
-  local DOCKER_TEST="docker run --name test-without-cge --rm --volume=`pwd`/tests:/usr/local/tests/:ro"
-  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none
+  local DOCKER_TEST
+  DOCKER_TEST="docker run --name test-without-cge --rm --volume=$(pwd)/tests:/usr/local/tests/:ro"
+  ${DOCKER_TEST} castle-engine-cloud-builds-tools:cge-none
   echo 'Test setting FPC versions:'
-  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
+  ${DOCKER_TEST} castle-engine-cloud-builds-tools:cge-none bash -c 'source /usr/local/fpclazarus/bin/setup.sh default'
   echo 'Performing all the tests:'
-  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none /usr/local/tests/bin/test_fpc_version.sh 3.2.2
-  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none-fpc331 /usr/local/tests/bin/test_fpc_version.sh 3.3.1
-  $DOCKER_TEST castle-engine-cloud-builds-tools:cge-none-fpc320 /usr/local/tests/bin/test_fpc_version.sh 3.2.0
+  ${DOCKER_TEST} castle-engine-cloud-builds-tools:cge-none /usr/local/tests/bin/test_fpc_version.sh 3.2.2
+  ${DOCKER_TEST} castle-engine-cloud-builds-tools:cge-none-fpc331 /usr/local/tests/bin/test_fpc_version.sh 3.3.1
+  ${DOCKER_TEST} castle-engine-cloud-builds-tools:cge-none-fpc320 /usr/local/tests/bin/test_fpc_version.sh 3.2.0
   # back to strict mode
   IFS=$'\n\t'
 }
@@ -177,15 +180,15 @@ do_test_cge ()
 
   IFS=$' \n\t'
   local DOCKER_TEST="docker run --name test-with-cge --rm castle-engine-cloud-builds-tools:cge-${CGE_VERSION_LABEL}"
-  $DOCKER_TEST
+  ${DOCKER_TEST}
   # When choosing this test, remember it has to be an example that is both
   # in CGE stable and unstable versions.
-  $DOCKER_TEST bash -c 'cd /usr/local/castle-engine/examples/animations/play_animation && castle-engine compile'
+  ${DOCKER_TEST} bash -c 'cd /usr/local/castle-engine/examples/animations/play_animation && castle-engine compile'
   # back to strict mode
   IFS=$'\n\t'
 }
 
-if [ '(' "${DOCKER_USER:-}" = '' ')' -o '(' "${DOCKER_PASSWORD:-}" = '' ')' ]; then
+if [[ -z "${DOCKER_USER:-}" ]] || [[ -z "${DOCKER_PASSWORD:-}" ]]; then
   echo 'Docker user/password environment variables not defined (or empty), uploading would fail.'
   exit 1
 fi

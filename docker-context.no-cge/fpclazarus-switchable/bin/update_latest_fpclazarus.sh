@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eu
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Use this to update FPC from trunk now.
 
@@ -20,9 +20,9 @@ FPC_HOST_CPU=x86_64
 
 # FPC GIT clone ---------------------------------------------------------------
 
-FPC_SOURCE_DIR=/usr/local/fpclazarus/"${FPC_TRUNK_VERSION}"/fpc/src
-FPC_SOURCE_DIR_PARENT="`dirname \"${FPC_SOURCE_DIR}\"`"
-FPC_SOURCE_DIR_BASENAME="`basename \"${FPC_SOURCE_DIR}\"`"
+FPC_SOURCE_DIR="/usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/src"
+FPC_SOURCE_DIR_PARENT="$(dirname "${FPC_SOURCE_DIR}")"
+FPC_SOURCE_DIR_BASENAME="$(basename "${FPC_SOURCE_DIR}")"
 
 echo 'FPC clone:'
 mkdir -p "${FPC_SOURCE_DIR_PARENT}"
@@ -70,7 +70,7 @@ set_ppc_symlink ()
   TARGET_NAME="$1"
   TARGET="../lib/fpc/${FPC_TRUNK_VERSION}/${TARGET_NAME}"
 
-  if [ -f "${TARGET}" ]; then
+  if [[ -f "${TARGET}" ]]; then
     rm -f "${TARGET_NAME}"
     ln -s "${TARGET}" .
   fi
@@ -100,11 +100,13 @@ rm -Rf /usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/src/ \
 
 # Test new compiler ----------------------------------------------------------
 
+# Note for shellcheck comment below: this prevents "shellcheck --external-sources ..." reporting errors here.
+# shellcheck source=/dev/null
 . /usr/local/fpclazarus/bin/setup.sh "${FPC_TRUNK_VERSION}"
 echo 'New FPC version logo:'
 set +e
 fpc -l
-fpc -Tlinux -P${FPC_HOST_CPU} -l | head -n 1
+fpc -Tlinux -P"${FPC_HOST_CPU}" -l | head -n 1
 fpc -Twin32 -Pi386 -l | head -n 1
 fpc -Twin64 -Px86_64 -l | head -n 1
 fpc -Tandroid -Parm -l | head -n 1

@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eux
+#!/usr/bin/env bash
+set -euxo pipefail
 
 # Test what add_new_fpc_version_native.sh did.
 # Pass the same arguments.
@@ -10,7 +10,7 @@ shift 1
 bash <<EOF
 mkdir -p /tmp/fpc-test/
 cd /tmp/fpc-test/
-. /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
+. /usr/local/fpclazarus/bin/setup.sh "${FPC_VERSION}"
 
 set +e
 fpc -l

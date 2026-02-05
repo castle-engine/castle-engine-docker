@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eux
+#!/usr/bin/env bash
+set -euxo pipefail
 
 # Compile and add FPC native version.
 # At the beginning it removes existing FPC version in the same directory,
@@ -17,8 +17,8 @@ shift 1
 FPC_HOST_CPU=x86_64
 
 # clean previous
-rm -Rf /usr/local/fpclazarus/${FPC_VERSION}/fpc/
-mkdir -p /usr/local/fpclazarus/${FPC_VERSION}/fpc/
+rm -Rf "/usr/local/fpclazarus/${FPC_VERSION}/fpc/"
+mkdir -p "/usr/local/fpclazarus/${FPC_VERSION}/fpc/"
 
 rm -Rf /tmp/fpcinst/
 mkdir /tmp/fpcinst/
@@ -28,7 +28,7 @@ cd /tmp/fpcinst/
 # install official version for Linux with $FPC_HOST_CPU
 
 # see https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/ for links
-if [ "${FPC_VERSION}" = '3.2.0' ]; then
+if [[ "${FPC_VERSION}" = '3.2.0' ]]; then
   FPC_URL="https://sourceforge.net/projects/freepascal/files/Linux/${FPC_VERSION}/fpc-${FPC_VERSION}-${FPC_HOST_CPU}-linux.tar/download"
   FPC_SUBDIR="fpc-${FPC_VERSION}-${FPC_HOST_CPU}-linux"
 else
@@ -65,9 +65,9 @@ echo -e "${FPC_INSTALL_DIR}\nN\nN\nN\n" | ./install.sh
 # install sources
 
 cd /tmp/fpcinst/
-wget "${WGET_OPTIONS:-}" https://sourceforge.net/projects/freepascal/files/Source/${FPC_VERSION}/fpc-${FPC_VERSION}.source.tar.gz/download --output-document src.tar.gz
+wget "${WGET_OPTIONS:-}" "https://sourceforge.net/projects/freepascal/files/Source/${FPC_VERSION}/fpc-${FPC_VERSION}.source.tar.gz/download" --output-document src.tar.gz
 tar xzvf src.tar.gz
-mv fpc-${FPC_VERSION} /usr/local/fpclazarus/${FPC_VERSION}/fpc/src
+mv "fpc-${FPC_VERSION}" "/usr/local/fpclazarus/${FPC_VERSION}/fpc/src"
 
 # ----------------------------------------------------------------------------
 # Fix permissions (may be bad because of my restrictive umask)

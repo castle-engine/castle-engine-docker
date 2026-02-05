@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eux
+#!/usr/bin/env bash
+set -euxo pipefail
 
 # Test what add_new_fpc_version_cross.sh did.
 # Pass the same arguments.
@@ -14,14 +14,14 @@ bash <<EOF
 
 mkdir -p /tmp/fpc-test/
 cd /tmp/fpc-test/
-. /usr/local/fpclazarus/bin/setup.sh ${FPC_VERSION}
+. /usr/local/fpclazarus/bin/setup.sh "${FPC_VERSION}"
 
 set +e
-fpc -T${FPC_OS} -P${FPC_CPU} -l
+fpc -T"${FPC_OS}" -P"${FPC_CPU}" -l
 set -e # ignore exit, it always makes error "No source file name in command line"
 
 echo "begin Writeln('Hello from FPC'); end." > jenkins_fpclazarus_test.lpr
-fpc -T${FPC_OS} -P${FPC_CPU} jenkins_fpclazarus_test.lpr
+fpc -T"${FPC_OS}" -P"${FPC_CPU}" jenkins_fpclazarus_test.lpr
 file jenkins_fpclazarus_test.exe
 EOF
 

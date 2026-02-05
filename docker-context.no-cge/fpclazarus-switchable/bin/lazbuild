@@ -1,5 +1,5 @@
-#!/bin/bash
-set -eu
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Use different --primary-config-path for different FPC versions.
 # This way we don't reuse stored FPC path from previous invocations
@@ -11,11 +11,11 @@ set -eu
 # thus CGE packages cannot be compiled inside.
 # Note that $HOME seems to be reset at each bash invocation,
 # so we fix it specifically in this script.
-if [ "${HOME}" = "/" ]; then
+if [[ "${HOME}" = "/" ]]; then
   export HOME="${WORKSPACE}"
 fi
 
 # Call the real lazbuild, with proper --lazarusdir
-/usr/local/fpclazarus/"${FPCLAZARUS_VERSION}"/lazarus/lazbuild \
+"/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/lazarus/lazbuild" \
   --primary-config-path="${HOME}/.cge-jenkins-lazarus/${FPCLAZARUS_REAL_VERSION}" \
-  --lazarusdir=/usr/local/fpclazarus/"${FPCLAZARUS_VERSION}"/lazarus "$@"
+  "--lazarusdir=/usr/local/fpclazarus/${FPCLAZARUS_VERSION}/lazarus" "$@"
