@@ -210,6 +210,13 @@ do_upload_github ()
   local CGE_VERSION_LABEL="$1"
   shift 1
 
+  # 2026-02-17: Uploading it fails with new token,
+  # "unknown: unexpected status from HEAD request to ...: 401 Unauthorized".
+  # Resigning for now -- nobody uses the GitHub-uploaded Docker images anyway,
+  # everyone uses Dockerhub.
+  echo 'Not uploading to GitHub Packages, as it stopped working.'
+  return 0
+
   echo "${DOCKER_GITHUB_TOKEN}" | docker login docker.pkg.github.com --username="${DOCKER_GITHUB_USER}" --password-stdin
   docker tag castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}" docker.pkg.github.com/castle-engine/castle-engine/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
   docker push docker.pkg.github.com/castle-engine/castle-engine/castle-engine-cloud-builds-tools:cge-"${CGE_VERSION_LABEL}"
