@@ -96,8 +96,12 @@ do_prerequisite_repository_cleanup ()
 # License on https://github.com/floooh/oryol/blob/master/tools/PowerVR_SDK_End_User_Licence_Agreement.txt
 do_prerequisite_PVRTexToolCLI ()
 {
-  wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?raw=true' \
-    --output-document docker-context.no-cge/bin/PVRTexToolCLI
+  # wget 'https://github.com/floooh/oryol/blob/master/tools/linux/PVRTexToolCLI?raw=true' \
+  #   --output-document docker-context.no-cge/bin/PVRTexToolCLI
+
+  # Avoid GHA errors "HTTP request sent, awaiting response... 429 Too Many Requests",
+  # just keep PVRTexToolCLI ready.
+  mv docker-context.no-cge/bin-cached/PVRTexToolCLI docker-context.no-cge/bin/
 }
 
 # Get Compressonator https://gpuopen.com/compressonator/ into docker-context.no-cge/
