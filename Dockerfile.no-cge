@@ -46,6 +46,7 @@ FROM debian:bookworm-slim AS base-without-fpc
 # - asciidoctor, coderay, ruby-rouge for "make tests" in cge-www
 # - imagemagick for update_image_sizes.sh in cge-www
 # - libqt5pas-dev for compiling LCL applications with qt5 widgetset
+# - xz-utils for compressing to .tar.xz (used by new pack_release.sh)
 RUN apt-get --allow-releaseinfo-change update && \
   apt-get --no-install-recommends -y install \
     asciidoctor \
@@ -69,6 +70,7 @@ RUN apt-get --allow-releaseinfo-change update && \
     php-cli \
     unzip \
     wget \
+    xz-utils \
     zip && \
   rm -rf /var/lib/apt/lists/*
 
