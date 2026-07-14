@@ -24,7 +24,7 @@ jobs:
     name: Dispatch Rebuild To Other Repos
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     # When we changed cge-unstable Docker image, rebuild repositories that use it,
     # or that use "snapshot" tag of CGE directly (through git clone).
