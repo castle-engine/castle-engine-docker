@@ -250,12 +250,12 @@ FROM base-without-fpc AS fpc-3.3.1
 # - https://gitlab.com/freepascal.org/lazarus/lazarus
 #
 # FPC hash synchronized with castle-fpc script:
-# https://github.com/castle-engine/castle-fpc/blob/master/build_fpc#L92C24-L92C64
+# https://github.com/castle-engine/castle-fpc/blob/master/build_fpc#L98C24-L98C64
 #
-# Lazarus hash: latest on 2026-02-04
+# Lazarus hash: latest on 2026-11-20
 # (note: our castle-lazarus doesn't have now "Lazarus unstable" option,
 # so nothing to synchronize with there).
-RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh bdb427b08454cff85dca2fbaccf7249716962845 9ac18157ff81dcf01b85ae357630788a99a9ecb0
+RUN /usr/local/fpclazarus/bin/update_latest_fpclazarus.sh 2f2835deb795ce0f00e94c1e8ab31d22967ba5cd 2be28f7e2f0010f5a5fc12b2ad9bb01c267afdb0
 
 # Make the default FPC available without even doing 'source /usr/local/fpclazarus/bin/setup.sh default'.
 # These ENV commands simulate what 'source /usr/local/fpclazarus/bin/setup.sh default' does.
