@@ -35,8 +35,14 @@ cd "${LAZARUS_SOURCE_DIR}"
 # shellcheck source=/dev/null
 . /usr/local/fpclazarus/bin/setup.sh "${FPC_TRUNK_VERSION}"
 make
-make OS_TARGET=win32 CPU_TARGET=i386
-make OS_TARGET=win64 CPU_TARGET=x86_64
+# Specify LCL_PLATFORM explicitly when cross-compiling.
+# Lazarus main (2026-11) Makefile builds by calling lazbuild,
+# and passes --ws only if LCL_PLATFORM is defined.
+# Otherwise lazbuild uses the widgetset from previous (Linux) build, gtk3,
+# and fails compiling lcl/interfaces/gtk3/gtk3int.pas for Windows.
+# Note: LCL "win32" widgetset is used for both win32 and win64.
+make OS_TARGET=win32 CPU_TARGET=i386 LCL_PLATFORM=win32
+make OS_TARGET=win64 CPU_TARGET=x86_64 LCL_PLATFORM=win32
 
 # Remove previous symlinks, if any
 rm -f "/usr/local/fpclazarus/${FPC_TRUNK_VERSION}/fpc/bin/lazarus-ide" \
