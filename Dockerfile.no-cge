@@ -236,7 +236,7 @@ ENV FPCLAZARUS_VERSION="3.2.0"
 
 FROM base-without-fpc AS fpc-3.2.2
 
-RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 4.4
+RUN /usr/local/fpclazarus/bin/add_new_fpc_version.sh 3.2.2 4.8
 
 ENV FPCLAZARUS_VERSION="3.2.2"
 
